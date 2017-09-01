@@ -311,17 +311,18 @@
       <!-- /.search form -->
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
-        <li class="active">MAIN NAVIGATION</li>
+        <li class="header"><h4>Menu principal</h4></li>
         <li class="active">
           <a href="#">
-            <i class="fa fa-dashboard"></i> <span>Cadastros</span>
+            <i class="fa fa-address-card"></i> <span>Cadastros</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="active treeview-menu">
+              <li><a href="index2.html"><i class="fa fa-circle-o"></i> Clientes</a></li>
               <li class="active"><a href="index.html"><i class="fa fa-circle-o"></i> Cidades</a></li>
-            <li><a href="index2.html"><i class="fa fa-circle-o"></i> Dashboard v2</a></li>
+            
           </ul>
         </li>
         <li class="treeview">
@@ -529,9 +530,10 @@
               </div>
               <!-- /.box-body -->
               <div class="box-footer">
-                  <button type="submit" class="btn btn-dropbox ">Localizar</button>
-                <button type="submit" class="btn btn-danger pull-right">Excluir</button>
-                <button type="submit" class="btn btn-success pull-right">Salvar</button> 
+
+                <button type="submit" class="btn btn-dropbox pull-right-container">Salvar</button> 
+                <button type="submit" class="btn btn-danger pull-left-container">Excluir</button>
+                
              </div>
               <!-- /.box-footer -->
             </form>
@@ -545,16 +547,129 @@
       </div>
       <!-- /.row -->
     </section>
+    
+    <!--table-->
+    <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">Listagem de cidades</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Nome</th>
+                  <th></th>                  
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                  <td>Trident</td>
+                  <td>Internet
+                    Explorer 4.0                    
+                  </td>
+                  <td><a href=""><span class="label label-primary pull-left-container">Editar</span></a>
+                  <a href=""><span class="label label-danger pull-right-container">Excluir</span></a></td>
+                                
+                </tr>              
+                <tr>
+                  <td>KHTML</td>
+                  <td>Konqureror 3.3</td>
+                  <td><a href=""><span class="label label-primary pull-left-container">Editar</span></a>
+                  <a href=""><span class="label label-danger pull-right-container">Excluir</span></a></td>
+                  
+                </tr>                
+                <tr>
+                  <td>Misc</td>
+                  <td>Links</td>
+                  <td><a href=""><span class="label label-primary pull-left-container">Editar</span></a>
+                  <a href=""><span class="label label-danger pull-right-container">Excluir</span></a></td>
+                  
+                </tr>
+                <tr>
+                  <td>Misc</td>
+                  <td>Lynx</td>
+                  <td><a href=""><span class="label label-primary pull-left-container">Editar</span></a>
+                  <a href=""><span class="label label-danger pull-right-container">Excluir</span></a></td>
+                 
+                </tr>
+                <tr>
+                  <td>Misc</td>
+                  <td>IE Mobile</td>
+                  <td><a href=""><span class="label label-primary pull-left-container">Editar</span></a>
+                  <a href=""><span class="label label-danger pull-right-container">Excluir</span></a></td>
+                 
+                </tr>
+                 <tr>
+                  <td>Misc</td>
+                  <td>IE Mobile</td>
+                  <td><a href=""><span class="label label-primary pull-left-container">Editar</span></a>
+                  <a href=""><span class="label label-danger pull-right-container">Excluir</span></a></td>
+                
+                </tr>
+                 <tr>
+                  <td>Misc</td>
+                  <td>IE Mobile</td>
+                  <td><a href=""><span class="label label-primary pull-left-container">Editar</span></a>
+                  <a href=""><span class="label label-danger pull-right-container">Excluir</span></a></td>
+              
+                </tr> <tr>
+                  <td>Misc</td>
+                  <td>IE Mobile</td>
+                  <td><a href=""><span class="label label-primary pull-left-container">Editar</span></a>
+                  <a href=""><span class="label label-danger pull-right-container">Excluir</span></a></td>
+                  
+                </tr>
+                 <tr>
+                  <td>Misc</td>
+                  <td>IE Mobile</td>
+                  <td><a href=""><span class="label label-primary pull-left-container">Editar</span></a>
+                  <a href=""><span class="label label-danger pull-right-container">Excluir</span></a></td>
+                
+                </tr>
+                
+                <tr>
+                  <td>Misc</td>
+                  <td>PSP browser</td>
+                  <td><a href=""><span class="label label-primary pull-left-container">Editar</span></a>
+                  <a href=""><span class="label label-danger pull-right-container">Excluir</span></a></td>
+                  
+                </tr>
+                <tr>
+                  <td>Other browsers</td>
+                  <td>All others</td>
+                  <td><a href=""><span class="label label-primary pull-left-container">Editar</span></a>
+                  <a href=""><span class="label label-danger pull-right-container">Excluir</span></a></td>
+                  
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                  <th>ID</th>
+                  <th>Nome</th>
+                  <th></th>
+                  
+                </tr>
+                
+                </tfoot>
+              </table>
+            </div>
+            <!-- /.box-body -->
+          </div>
+    
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-  <footer class="main-footer">
+
+  
+<!--  <footer class="main-footer">
     <div class="pull-right hidden-xs">
       <b>Version</b> 2.4.0
     </div>
     <strong>Copyright &copy; 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
     reserved.
-  </footer>
+  </footer>-->
 
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
@@ -752,15 +867,48 @@
 </div>
 <!-- ./wrapper -->
 
-<!-- jQuery 3 -->
-<script src="bower_components/jquery/dist/jquery.min.js"></script>
-<!-- Bootstrap 3.3.7 -->
-<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<!-- FastClick -->
-<script src="bower_components/fastclick/lib/fastclick.js"></script>
-<!-- AdminLTE App -->
-<script src="dist/js/adminlte.min.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="dist/js/demo.js"></script>
+
+
+ <!-- jQuery 3 -->
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap 3.3.7 -->
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- DataTables -->
+    <script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <!-- SlimScroll -->
+    <script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+    <!-- FastClick -->
+    <script src="bower_components/fastclick/lib/fastclick.js"></script>
+    <!-- AdminLTE App -->
+    <script src="dist/js/adminlte.min.js"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="dist/js/demo.js"></script>
+    <!-- page script -->
+    <script>
+      $(function () {
+        $('#example1').DataTable()
+        $('#example2').DataTable({
+          'paging'      : true,
+          'lengthChange': false,
+          'searching'   : false,
+          'ordering'    : true,
+          'info'        : true,
+          'autoWidth'   : false
+        })
+      })
+    </script>
+
+    <!--
+     jQuery 3 
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+     Bootstrap 3.3.7 
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+     FastClick 
+    <script src="bower_components/fastclick/lib/fastclick.js"></script>
+     AdminLTE App 
+    <script src="dist/js/adminlte.min.js"></script>
+     AdminLTE for demo purposes 
+    <script src="dist/js/demo.js"></script>-->
 </body>
 </html>
