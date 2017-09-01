@@ -20,6 +20,15 @@
 
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
+    
+<!--    <%
+            Cidade cid = (Cidade) request.getAttribute("objcid");
+
+            if (cid == null) {
+                cid = new Cidade();
+            }
+
+        %>-->
 <div class="wrapper">
 
   <header class="main-header">
@@ -506,7 +515,7 @@
             </div>
             <!-- /.box-header -->
             <!-- form start -->
-            <form class="form-horizontal">
+            <form name="cadCidade" class="form-horizontal" action="/HelpWeb/acaoCidade?parametro=cadCidade" method="post">
               <div class="box-body">
                 <div class="form-group">
                   <label for="id" class="col-sm-2 control-label" >ID</label>
@@ -530,7 +539,7 @@
               </div>
               <!-- /.box-body -->
               <div class="box-footer">
-
+                <a href="#"class="btn btn-dropbox pull-right-container" >Teste</a></h3>
                 <button type="submit" class="btn btn-dropbox pull-right-container">Salvar</button> 
                 <button type="submit" class="btn btn-danger pull-left-container">Excluir</button>
                 
