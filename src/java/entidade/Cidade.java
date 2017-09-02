@@ -17,6 +17,7 @@ public class Cidade  implements java.io.Serializable {
      private Set clientes = new HashSet(0);
 
     public Cidade() {
+        descricao = "";
     }
 
 	

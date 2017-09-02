@@ -1,3 +1,6 @@
+<%@page import="entidade.Cidade"%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,14 +24,7 @@
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
     
-<!--    <%
-            Cidade cid = (Cidade) request.getAttribute("objcid");
 
-            if (cid == null) {
-                cid = new Cidade();
-            }
-
-        %>-->
 <div class="wrapper">
 
   <header class="main-header">
@@ -495,6 +491,18 @@
     <!-- /.sidebar -->
   </aside>
 
+  
+  <%
+      Cidade cid = new Cidade();
+            //Cidade cid  = (Cidade) request.getAttribute("objuser");
+
+            if (cid == null) {
+                cid = new Cidade();
+                cid.setSituacao('A');
+            }
+            
+        %>
+  
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -515,20 +523,21 @@
             </div>
             <!-- /.box-header -->
             <!-- form start -->
-            <form name="cadCidade" class="form-horizontal" action="/HelpWeb/acaoCidade?parametro=cadCidade" method="post">
+            <form name="cadCidade" class="form-horizontal" action="/HelpWeb/acaoCidade" method="post">
               <div class="box-body">
                 <div class="form-group">
                   <label for="id" class="col-sm-2 control-label" >ID</label>
 
                   <div class="col-sm-2">
-                      <input type="text" class="form-control" id="inputEmail3" Use readonly="true" >
+                      <input type="text" class="form-control" name="id" value="<%= cid.getId()%>" Use readonly="true" >
                   </div>
                 </div>
                 <div class="form-group">
                   <label for="nome" class="col-sm-2 control-label">Nome</label>
 
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" id="inputPassword3" placeholder="nome da cidade">
+                      <input type="text" class="form-control" name="descricao" value="<%= cid.getDescricao()%>">
+                    
                   </div>
                 </div>
                 <div class="form-group">
@@ -539,9 +548,9 @@
               </div>
               <!-- /.box-body -->
               <div class="box-footer">
-                <a href="#"class="btn btn-dropbox pull-right-container" >Teste</a></h3>
-                <button type="submit" class="btn btn-dropbox pull-right-container">Salvar</button> 
-                <button type="submit" class="btn btn-danger pull-left-container">Excluir</button>
+<!--                <a href="#"class="btn btn-dropbox pull-right-container" >Teste</a></h3>-->
+              <input type="submit" class="btn btn-dropbox pull-right-container" name="enviar" value="Salvar"> 
+<!--                <button type="submit" class="btn btn-danger pull-left-container">Excluir</button>-->
                 
              </div>
               <!-- /.box-footer -->

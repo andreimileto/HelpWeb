@@ -8,6 +8,7 @@ package servlet;
 import DAO.CidadeDAO;
 import DAO.UsuarioDAO;
 import entidade.Cidade;
+import entidade.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
@@ -39,7 +40,7 @@ public class acaoCidade extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet acao</title>");
+            out.println("<title>Servlet acaoCidade  </title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet acao at " + request.getContextPath() + "</h1>");
@@ -78,29 +79,35 @@ public class acaoCidade extends HttpServlet {
 
 //        String parametro = request.getParameter("parametro");
 //        if (parametro.equals("cadUsuario")) {
-        System.out.println("Entrou no POST");
-        Cidade cid = new Cidade();
-        cid.setDescricao(request.getParameter("nome"));
-        cid.setSituacao('A');
+       System.out.println("Entrei no POST!");
 
-//        
-//        System.out.println(cid.getNome());
-//        System.out.println(cid.getLogin());
-//        System.out.println(cid.getSenha());
-        boolean retorno = new CidadeDAO().salvar(cid);
+        String parametro = request.getParameter("parametro");
 
-        if (retorno) {
-            //deu certo
-            RequestDispatcher rd = request.getRequestDispatcher("sucesso.jsp");
-            rd.forward(request, response);
-        } else {
-            //deu errado
-            RequestDispatcher rd = request.getRequestDispatcher("erro.jsp");
-            rd.forward(request, response);
-        }
-//        } else if (parametro.equals("xxx")) {
-//
-//        }
+        //if (parametro.equals("cadCidade")) {
+            Cidade cid = new Cidade();
+
+            int id = Integer.parseInt(String.valueOf(request.getParameter("id")));
+            cid.setId(id);
+            cid.setDescricao(request.getParameter("descricao"));
+            cid.setSituacao('T');
+            
+
+            boolean retorno;
+
+            
+                retorno = new CidadeDAO().salvar(cid);
+            
+
+            request.setAttribute("paginaOrigem", "cadastroCidade.jsp");
+
+            if (retorno) {
+                encaminharPagina("sucesso.jsp", request, response);
+            } else {
+                encaminharPagina("erro.jsp", request, response);
+            }
+
+        //}
+
     }
 
     /**
@@ -113,4 +120,14 @@ public class acaoCidade extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+    
+    private void encaminharPagina(String pagina, HttpServletRequest request, HttpServletResponse response) {
+        try {
+            RequestDispatcher rd = request.getRequestDispatcher(pagina);
+            rd.forward(request, response);
+        } catch (Exception e) {
+            System.out.println("Erro ao encaminhar: " + e);
+        }
+    }
+    
 }
