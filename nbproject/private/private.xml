@@ -9,7 +9,7 @@
             <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/web/cadastroCidade.jsp</file>
             <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/src/java/DAO/MotivoDAO.java</file>
             <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/src/java/apoio/ConexaoBD.java</file>
-            <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/src/java/DAO/UsuarioDAO.java</file>
+            <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/web/listaCidades.jsp</file>
             <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/web/index-old.html</file>
             <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/src/java/DAO/ProjetoDAO.java</file>
             <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/src/java/controle/ControleProjeto.java</file>
@@ -21,19 +21,22 @@
             <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/web/usuarioLista.jsp</file>
             <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/web/index.html</file>
             <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/web/index2.html</file>
-            <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/src/java/servlet/acaoCidade.java</file>
             <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/src/java/DAO/CidadeDAO.java</file>
             <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/src/java/apoio/HibernateUtil.java</file>
             <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/src/java/entidade/Cidade.java</file>
-            <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/web/WEB-INF/web.xml</file>
+            <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/web/pages/tables/tablemodificado.html</file>
             <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/src/java/controle/ControleUsuario.java</file>
             <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/src/java/apoio/hibernate.reveng.xml</file>
             <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/src/java/controle/ControleCidade.java</file>
             <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/src/java/DAO/Script.sql</file>
+            <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/src/java/servlet/acaoOLD.java</file>
             <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/web/usuario.jsp</file>
+            <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/web/datamodificado.html</file>
             <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/src/java/controle/ControleFase.java</file>
             <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/web/erro.jsp</file>
+            <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/web/datamodificado.jsp</file>
             <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/src/java/servlet/acao.java</file>
+            <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/web/pages/tables/datamodificado.jsp</file>
             <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/src/java/DAO/DAO.java</file>
         </group>
     </open-files>

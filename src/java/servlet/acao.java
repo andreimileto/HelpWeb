@@ -5,10 +5,13 @@
  */
 package servlet;
 
+import DAO.CidadeDAO;
 import DAO.UsuarioDAO;
+import entidade.Cidade;
 import entidade.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -38,7 +41,7 @@ public class acao extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet acao</title>");
+            out.println("<title>Servlet acaoCidade  </title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet acao at " + request.getContextPath() + "</h1>");
@@ -60,6 +63,20 @@ public class acao extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+
+        String parametro = request.getParameter("parametro");
+
+        if (parametro.equals("edCidade")) {
+            int id = Integer.parseInt(String.valueOf(request.getParameter("id")));
+
+            ArrayList<Cidade> cidades = new CidadeDAO().consultarId(id);
+            Cidade cid = new Cidade();
+            cid = cidades.get(0);
+            request.setAttribute("objcid", cid);
+            // request.setAttribute("cadastroCidade.jsp",cid);
+
+            encaminharPagina("cadastroCidade.jsp", request, response);
+        }
     }
 
     /**
@@ -77,33 +94,36 @@ public class acao extends HttpServlet {
 
 //        String parametro = request.getParameter("parametro");
 //        if (parametro.equals("cadUsuario")) {
-        System.out.println("Entrou no POST");
-        Usuario u = new Usuario();
-        u.setNome(request.getParameter("nome"));
-        u.setLogin(request.getParameter("email"));
-        u.setSenha(request.getParameter("senha"));
-        u.setSituacao('A');
+        System.out.println("Entrei no POST!");
 
-        
-        
-        System.out.println(u.getNome());
-        System.out.println(u.getLogin());
-        System.out.println(u.getSenha());
+        String parametro = request.getParameter("parametro");
 
-        boolean retorno = new UsuarioDAO().salvar(u);
+        if (parametro.equals("cadCidade")) {
+            Cidade cid = new Cidade();
+            int id;
+            if (request.getParameter("id").equals("")) {
+                id = 0;
+            } else {
+                id = Integer.parseInt(String.valueOf(request.getParameter("id")));
+            }
+            cid.setId(id);
+            cid.setDescricao(request.getParameter("descricao"));
+            cid.setSituacao('A');
 
-        if (retorno) {
-            //deu certo
-            RequestDispatcher rd = request.getRequestDispatcher("sucesso.jsp");
-            rd.forward(request, response);
-        } else {
-            //deu errado
-            RequestDispatcher rd = request.getRequestDispatcher("erro.jsp");
-            rd.forward(request, response);
+            boolean retorno;
+
+            retorno = new CidadeDAO().salvar(cid);
+
+            request.setAttribute("paginaOrigem", "cadastroCidade.jsp");
+
+            if (retorno) {
+                encaminharPagina("sucesso.jsp", request, response);
+            } else {
+                encaminharPagina("erro.jsp", request, response);
+            }
+
         }
-//        } else if (parametro.equals("xxx")) {
-//
-//        }
+
     }
 
     /**
@@ -115,5 +135,14 @@ public class acao extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    private void encaminharPagina(String pagina, HttpServletRequest request, HttpServletResponse response) {
+        try {
+            RequestDispatcher rd = request.getRequestDispatcher(pagina);
+            rd.forward(request, response);
+        } catch (Exception e) {
+            System.out.println("Erro ao encaminhar: " + e);
+        }
+    }
 
 }
