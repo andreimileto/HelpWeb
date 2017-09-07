@@ -62,7 +62,7 @@ public class acao extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+       // processRequest(request, response);
 
         String parametro = request.getParameter("parametro");
 
@@ -77,7 +77,42 @@ public class acao extends HttpServlet {
 
             encaminharPagina("cadastroCidade.jsp", request, response);
         }
-    }
+        
+        if (parametro.equals("exCidade")) {
+//            int id = Integer.parseInt(String.valueOf(request.getParameter("id")));
+//
+//            ArrayList<Cidade> cidades = new CidadeDAO().consultarId(id);
+//            Cidade cid = new Cidade();
+//            cid = cidades.get(0);
+//            request.setAttribute("objcid", cid);
+//            // request.setAttribute("cadastroCidade.jsp",cid);
+//
+//            encaminharPagina("cadastroCidade.jsp", request, response);
+//            
+            
+               int id = Integer.parseInt(String.valueOf(request.getParameter("id")));
+            Cidade cid = new Cidade();
+            cid.setId(id);
+            cid.setId(id);
+            
+            cid.setSituacao('I');
+
+            boolean retorno;
+
+            retorno = new CidadeDAO().salvar(cid);
+
+            request.setAttribute("paginaOrigem", "cadastroCidade.jsp");
+
+            if (retorno) {
+                encaminharPagina("sucesso.jsp", request, response);
+            } else {
+                encaminharPagina("erro.jsp", request, response);
+            }
+
+        }
+        }
+        
+    
 
     /**
      * Handles the HTTP <code>POST</code> method.

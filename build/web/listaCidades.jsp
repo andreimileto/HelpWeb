@@ -69,8 +69,8 @@
                         <tr>
                             <td><%=cidades.get(i).getId()%></td>
                             <td><%=cidades.get(i).getDescricao()%></td>
-                            <td><a href="/HelpWeb/acao?parametro=edCidade&id=<%=cidades.get(i).getId()%> "><span class="label label-primary pull-left-container">Editar</span></a>
-                            <a href="/HelpWeb/acao?parametro=exUsuario&id=<%=cidades.get(i).getId()%> "><span class="label label-danger pull-right-container">Excluir</span></a>
+                            <td><a href="/HelpWeb/acao?parametro=edCidade&id=<%=cidades.get(i).getId()%>"><span class="label label-primary pull-left-container">Editar</span></a>
+                            <a href="/HelpWeb/acao?parametro=exCidade&id=<%=cidades.get(i).getId()%>"><span class="label label-danger pull-right-container">Excluir</span></a>
                             </td>
                             
                         </tr>

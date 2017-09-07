@@ -74,29 +74,28 @@ public class CidadeDAO extends DAO {
             Session session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             String sql = "";
-            
-                sql = "from Cidade  "
-                        + "where "
-                        + "situacao ='A'"
-                        + " order by descricao";
 
-                String sel = sql;
-                System.out.println(sel);
-                org.hibernate.Query q = session.createQuery(sql);
+            sql = "from Cidade  "
+                    + "where "
+                    + " id =" + id;
 
-                resultado = q.list();
+            String sel = sql;
+            System.out.println(sel);
+            org.hibernate.Query q = session.createQuery(sql);
 
-                for (Object o : resultado) {
-                    Cidade cid = ((Cidade) ((Object) o));
-                    lista.add(cid);
-                }
+            resultado = q.list();
 
-            }catch (HibernateException he) {
+            for (Object o : resultado) {
+                Cidade cid = ((Cidade) ((Object) o));
+                lista.add(cid);
+            }
+
+        } catch (HibernateException he) {
             he.printStackTrace();
         }// finally {
 //            session.close();
 //        }
-            return lista;
+        return lista;
 
 //            ResultSet resultado = ConexaoBD.getInstance().getConnection().createStatement().executeQuery(sql);
 //
@@ -114,6 +113,6 @@ public class CidadeDAO extends DAO {
 //
 //        return u;
 //    }
-        }
-
     }
+
+}
