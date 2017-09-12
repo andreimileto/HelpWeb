@@ -42,7 +42,7 @@ public class CidadeDAO extends DAO {
             } else {
                 sql = "from Cidade  "
                         + "where "
-                        + "descricao  like '%" + cidade.getDescricao() + "%' "
+                        + "upper (descricao)  like '%" + cidade.getDescricao().toUpperCase() + "%' "
                         + "and situacao ='A'"
                         + " order by descricao";
             }

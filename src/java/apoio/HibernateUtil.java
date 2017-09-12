@@ -5,32 +5,67 @@
  */
 package apoio;
 
-import org.hibernate.cfg.AnnotationConfiguration;
+
+import java.net.URL;
+import javax.swing.JOptionPane;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.cfg.Environment;
+import org.hibernate.service.ServiceRegistry;
 
 /**
  * Hibernate Utility class with a convenient method to get Session Factory
  * object.
  *
- * @author Mileto
+ * @author Tiago
  */
 public class HibernateUtil {
 
-    private static final SessionFactory sessionFactory;
-    
-    static {
-        try {
-            // Create the SessionFactory from standard (hibernate.cfg.xml) 
-            // config file.
-            sessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
-        } catch (Throwable ex) {
-            // Log the exception. 
-            System.err.println("Initial SessionFactory creation failed." + ex);
-            throw new ExceptionInInitializerError(ex);
-        }
-    }
-    
+    private static ServiceRegistry registry;
+    private static SessionFactory sessionFactory;
+    private static Session session;
+    private static Transaction transaction;
+
     public static SessionFactory getSessionFactory() {
+        if (sessionFactory == null) {
+            try {
+
+                //Carrega o arquivo de configuracao do Hibernate
+                URL cfg = HibernateUtil.class.getResource("/hibernate.cfg.xml");
+
+                Configuration c = new Configuration().configure(cfg);
+
+         
+    
+                sessionFactory = c.buildSessionFactory();
+
+            } catch (HibernateException e) {
+
+                JOptionPane.showMessageDialog(null, "Erro ao conectar com o banco de dados " + e.getMessage());
+                
+
+            }
+        }
+        // MemoryHelper.forceGc();
+
         return sessionFactory;
     }
+
+    //To shut down
+    public static void shutdown() {
+        if (registry != null) {
+            StandardServiceRegistryBuilder.destroy(registry);
+        }
+        if (sessionFactory != null) {
+
+            sessionFactory.close();
+            sessionFactory = null;
+        }
+        
+    }
+
 }

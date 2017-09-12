@@ -62,13 +62,13 @@ public class acao extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       // processRequest(request, response);
+        // processRequest(request, response);
 
         String parametro = request.getParameter("parametro");
-
+        
         if (parametro.equals("edCidade")) {
             int id = Integer.parseInt(String.valueOf(request.getParameter("id")));
-
+            
             ArrayList<Cidade> cidades = new CidadeDAO().consultarId(id);
             Cidade cid = new Cidade();
             cid = cidades.get(0);
@@ -90,29 +90,27 @@ public class acao extends HttpServlet {
 //            encaminharPagina("cadastroCidade.jsp", request, response);
 //            
             
-               int id = Integer.parseInt(String.valueOf(request.getParameter("id")));
+            int id = Integer.parseInt(String.valueOf(request.getParameter("id")));
             Cidade cid = new Cidade();
             cid.setId(id);
             cid.setId(id);
             
             cid.setSituacao('I');
-
+            
             boolean retorno;
-
+            
             retorno = new CidadeDAO().salvar(cid);
-
+            
             request.setAttribute("paginaOrigem", "cadastroCidade.jsp");
-
+            
             if (retorno) {
                 encaminharPagina("sucesso.jsp", request, response);
             } else {
                 encaminharPagina("erro.jsp", request, response);
             }
-
+            
         }
-        }
-        
-    
+    }
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -129,10 +127,12 @@ public class acao extends HttpServlet {
 
 //        String parametro = request.getParameter("parametro");
 //        if (parametro.equals("cadUsuario")) {
+
+    
         System.out.println("Entrei no POST!");
-
+        
         String parametro = request.getParameter("parametro");
-
+        
         if (parametro.equals("cadCidade")) {
             Cidade cid = new Cidade();
             int id;
@@ -144,7 +144,7 @@ public class acao extends HttpServlet {
             cid.setId(id);
             cid.setDescricao(request.getParameter("descricao"));
             cid.setSituacao('A');
-
+            
             boolean retorno = true;
             
             if (cid.getDescricao().length() < 2) {
@@ -152,7 +152,7 @@ public class acao extends HttpServlet {
             }
             
             CidadeDAO cidDAO = new CidadeDAO();
-
+            
             ArrayList<Cidade> cidades = cidDAO.listar(cid);
             for (int i = 0; i < cidades.size(); i++) {
                 if (cidades.get(i).getDescricao().equalsIgnoreCase(cid.getDescricao())) {
@@ -163,18 +163,17 @@ public class acao extends HttpServlet {
             if (retorno) {
                 retorno = cidDAO.salvar(cid);
             }
-
+            
             request.setAttribute("paginaOrigem", "cadastroCidade.jsp");
             
-            
             if (retorno) {
-                encaminharPagina("cadastroCidade.jsp", request, response);
+                redirecionarPagina("cadastroCidade.jsp?m=1", request, response);
             } else {
-                encaminharPagina("erro.jsp", request, response);
+                redirecionarPagina("cadastroCidade.jsp?m=2", request, response);
             }
-
+            
         }
-
+        
     }
 
     /**
@@ -191,9 +190,22 @@ public class acao extends HttpServlet {
         try {
             RequestDispatcher rd = request.getRequestDispatcher(pagina);
             rd.forward(request, response);
+
+           // response.sendRedirect(pagina);
         } catch (Exception e) {
             System.out.println("Erro ao encaminhar: " + e);
         }
     }
+    
+    private void redirecionarPagina(String pagina, HttpServletRequest request, HttpServletResponse response) {
+        try {
+           // RequestDispatcher rd = request.getRequestDispatcher(pagina);
+           // rd.forward(request, response);
 
+            response.sendRedirect(pagina);
+        } catch (Exception e) {
+            System.out.println("Erro ao encaminhar: " + e);
+        }
+    }
+    
 }
