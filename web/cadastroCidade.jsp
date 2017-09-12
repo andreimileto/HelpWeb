@@ -21,7 +21,12 @@
              folder instead of downloading all of them to reduce the load. -->
         <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
 
+
     </head>
+
+
+
+
     <body class="hold-transition skin-blue sidebar-mini">
 
 
@@ -495,13 +500,19 @@
             <%
                 // Cidade cid = new Cidade();
                 Cidade cid = (Cidade) request.getAttribute("objcid");
-
+                
+                
                 if (cid == null) {
                     cid = new Cidade();
                     cid.setSituacao('A');
-                }
+                }else{
+                
+            }
 
             %>
+
+
+
 
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
@@ -521,6 +532,8 @@
                                 <div class="box-header with-border">
                                     <h3 class="box-title">Cadastro de cidade</h3>
                                 </div>
+
+
                                 <!-- /.box-header -->
                                 <!-- form start -->
                                 <form name="cadCidade" class="form-horizontal" action="/HelpWeb/acao?parametro=cadCidade" method="post">
@@ -529,13 +542,13 @@
                                             <label for="id" class="col-sm-2 control-label" >ID</label>
 
                                             <div class="col-sm-2">
-                                                <%
-                                                    
-                                                //    if (cid.getId()>0) {%>
+                                                <%                                                    //    if (cid.getId()>0) {%>
                                                 <input type="text" class="form-control" name="id" value="<%= cid.getId()%>" Use readonly="true" >
-                                                
+
                                             </div>
                                         </div>
+
+
                                         <div class="form-group">
                                             <label for="nome" class="col-sm-2 control-label">Nome</label>
 
@@ -550,6 +563,12 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="alert alert-success alert-dismissible">
+                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                        <h4><i class="icon fa fa-check"></i> Sucesso!</h4>
+                                        Cidade salva com sucesso!
+                                    </div>
+
                                     <!-- /.box-body -->
                                     <div class="box-footer">
                                         <!--                <a href="#"class="btn btn-dropbox pull-right-container" >Teste</a></h3>-->
@@ -557,8 +576,13 @@
                                         <!--                <button type="submit" class="btn btn-danger pull-left-container">Excluir</button>-->
 
                                     </div>
+
+
+
                                     <!-- /.box-footer -->
                                 </form>
+
+
                             </div>
                             <!-- /.box -->
                             <!-- general form elements disabled -->
@@ -569,133 +593,15 @@
                     </div>
                     <!-- /.row -->
                 </section>
+
+
                 <%@include file = "listaCidades.jsp"%>
-                <!--table-->
-                <!-- 
-                table 1 listagem
-                <div class="box">
-                            <div class="box-header">
-                              <h3 class="box-title">Listagem de cidades</h3>
-                            </div>
-                             /.box-header 
-                            <div class="box-body">
-                              <table id="example1" class="table table-bordered table-striped">
-                                <thead>
-                                <tr>
-                                  <th>ID</th>
-                                  <th>Nome</th>
-                                  <th></th>                  
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                  <td>Trident</td>
-                                  <td>Internet
-                                    Explorer 4.0                    
-                                  </td>
-                                  <td><a href=""><span class="label label-primary pull-left-container">Editar</span></a>
-                                  <a href=""><span class="label label-danger pull-right-container">Excluir</span></a></td>
-                                                
-                                </tr>              
-                                <tr>
-                                  <td>KHTML</td>
-                                  <td>Konqureror 3.3</td>
-                                  <td><a href=""><span class="label label-primary pull-left-container">Editar</span></a>
-                                  <a href=""><span class="label label-danger pull-right-container">Excluir</span></a></td>
-                                  
-                                </tr>                
-                                <tr>
-                                  <td>Misc</td>
-                                  <td>Links</td>
-                                  <td><a href=""><span class="label label-primary pull-left-container">Editar</span></a>
-                                  <a href=""><span class="label label-danger pull-right-container">Excluir</span></a></td>
-                                  
-                                </tr>
-                                <tr>
-                                  <td>Misc</td>
-                                  <td>Lynx</td>
-                                  <td><a href=""><span class="label label-primary pull-left-container">Editar</span></a>
-                                  <a href=""><span class="label label-danger pull-right-container">Excluir</span></a></td>
-                                 
-                                </tr>
-                                <tr>
-                                  <td>Misc</td>
-                                  <td>IE Mobile</td>
-                                  <td><a href=""><span class="label label-primary pull-left-container">Editar</span></a>
-                                  <a href=""><span class="label label-danger pull-right-container">Excluir</span></a></td>
-                                 
-                                </tr>
-                                 <tr>
-                                  <td>Misc</td>
-                                  <td>IE Mobile</td>
-                                  <td><a href=""><span class="label label-primary pull-left-container">Editar</span></a>
-                                  <a href=""><span class="label label-danger pull-right-container">Excluir</span></a></td>
-                                
-                                </tr>
-                                 <tr>
-                                  <td>Misc</td>
-                                  <td>IE Mobile</td>
-                                  <td><a href=""><span class="label label-primary pull-left-container">Editar</span></a>
-                                  <a href=""><span class="label label-danger pull-right-container">Excluir</span></a></td>
-                              
-                                </tr> <tr>
-                                  <td>Misc</td>
-                                  <td>IE Mobile</td>
-                                  <td><a href=""><span class="label label-primary pull-left-container">Editar</span></a>
-                                  <a href=""><span class="label label-danger pull-right-container">Excluir</span></a></td>
-                                  
-                                </tr>
-                                 <tr>
-                                  <td>Misc</td>
-                                  <td>IE Mobile</td>
-                                  <td><a href=""><span class="label label-primary pull-left-container">Editar</span></a>
-                                  <a href=""><span class="label label-danger pull-right-container">Excluir</span></a></td>
-                                
-                                </tr>
-                                
-                                <tr>
-                                  <td>Misc</td>
-                                  <td>PSP browser</td>
-                                  <td><a href=""><span class="label label-primary pull-left-container">Editar</span></a>
-                                  <a href=""><span class="label label-danger pull-right-container">Excluir</span></a></td>
-                                  
-                                </tr>
-                                <tr>
-                                  <td>Other browsers</td>
-                                  <td>All others</td>
-                                  <td><a href=""><span class="label label-primary pull-left-container">Editar</span></a>
-                                  <a href=""><span class="label label-danger pull-right-container">Excluir</span></a></td>
-                                  
-                                </tr>
-                                </tbody>
-                                <tfoot>
-                                <tr>
-                                  <th>ID</th>
-                                  <th>Nome</th>
-                                  <th></th>
-                                  
-                                </tr>
-                                
-                                </tfoot>
-                              </table>
-                            </div>
-                             /.box-body 
-                          </div>
-                table 1 listagem
+                
                 -->
 
                 <!-- /.content -->
             </div>
-            <!-- /.content-wrapper -->
-
-
-            <!--  <footer class="main-footer">
-                <div class="pull-right hidden-xs">
-                  <b>Version</b> 2.4.0
-                </div>
-                <strong>Copyright &copy; 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
-                reserved.
-              </footer>-->
+            
 
             <!-- Control Sidebar -->
             <aside class="control-sidebar control-sidebar-dark">

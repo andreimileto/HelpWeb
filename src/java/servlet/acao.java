@@ -145,14 +145,30 @@ public class acao extends HttpServlet {
             cid.setDescricao(request.getParameter("descricao"));
             cid.setSituacao('A');
 
-            boolean retorno;
+            boolean retorno = true;
+            
+            if (cid.getDescricao().length() < 2) {
+                retorno = false;
+            }
+            
+            CidadeDAO cidDAO = new CidadeDAO();
 
-            retorno = new CidadeDAO().salvar(cid);
+            ArrayList<Cidade> cidades = cidDAO.listar(cid);
+            for (int i = 0; i < cidades.size(); i++) {
+                if (cidades.get(i).getDescricao().equalsIgnoreCase(cid.getDescricao())) {
+                    retorno = false;
+                }
+            }
+            
+            if (retorno) {
+                retorno = cidDAO.salvar(cid);
+            }
 
             request.setAttribute("paginaOrigem", "cadastroCidade.jsp");
-
+            
+            
             if (retorno) {
-                encaminharPagina("sucesso.jsp", request, response);
+                encaminharPagina("cadastroCidade.jsp", request, response);
             } else {
                 encaminharPagina("erro.jsp", request, response);
             }

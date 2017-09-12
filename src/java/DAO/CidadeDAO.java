@@ -43,7 +43,7 @@ public class CidadeDAO extends DAO {
                 sql = "from Cidade  "
                         + "where "
                         + "descricao  like '%" + cidade.getDescricao() + "%' "
-                        + "situacao ='A'"
+                        + "and situacao ='A'"
                         + " order by descricao";
             }
             String sel = sql;
