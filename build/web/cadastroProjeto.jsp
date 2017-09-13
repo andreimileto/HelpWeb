@@ -1,5 +1,5 @@
+<%@page import="entidade.Projeto"%>
 <%@page import="entidade.Cidade"%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <!--<html>-->
@@ -11,12 +11,13 @@
 <%//@include file = "inicio-teste.jsp"%>
 
 <%
-    // Cidade cid = new Cidade();
-    Cidade cid = (Cidade) request.getAttribute("objcid");
 
-    if (cid == null) {
-        cid = new Cidade();
-        cid.setSituacao('A');
+    Projeto proj = (Projeto) request.getAttribute("objproj");
+
+    if (proj == null) {
+        proj = new Projeto();
+        proj.setSituacao('A');
+        proj.setDescricao("");
     }
 %>
 
@@ -32,17 +33,17 @@
                 <!-- Horizontal Form -->
                 <div class="box box-info">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Cadastro de cidade</h3>
+                        <h3 class="box-title">Cadastro de projeto</h3>
                     </div>
 
-                    <form name="cadCidade" class="form-horizontal" action="/HelpWeb/acao?parametro=cadCidade" method="post">
+                    <form name="cadProjeto" class="form-horizontal" action="/HelpWeb/acao?parametro=cadProjeto" method="post">
                         <div class="box-body">
                             <div class="form-group">
                                 <label for="id" class="col-sm-2 control-label" >ID</label>
 
                                 <div class="col-sm-2">
-                                    <%                                                       if (cid.getId() > 0) {%>
-                                    <input type="text" class="form-control" name="id" value="<%= cid.getId()%>" Use readonly="true" >
+                                    <%                                                       if (proj.getId() > 0) {%>
+                                    <input type="text" class="form-control" name="id" value="<%= proj.getId()%>" Use readonly="true" >
                                     <%} else {
                                     %>
 
@@ -56,7 +57,7 @@
                                 <label for="nome" class="col-sm-2 control-label">Nome</label>
 
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" name="descricao" value="<%= cid.getDescricao()%>">
+                                    <input type="text" class="form-control" name="descricao" value="<%= proj.getDescricao()%>">
 
                                 </div>
                             </div>
@@ -67,12 +68,22 @@
                             </div>
                         </div>
                         <%
-                            if (request.getParameterMap().containsKey("m") && request.getParameter("m").equals("1")) {
+                            if (request.getParameterMap().containsKey("m") && (request.getParameter("m").equals("1") || request.getParameter("m").equals("10"))) {
                         %>
                         <div class="alert alert-success alert-dismissible">
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                             <h4><i class="icon fa fa-check"></i> Sucesso!</h4>
-                            Cidade salva com sucesso!
+                            <%if (request.getParameter("m").equals("1")) {
+                            %>
+                            Projeto salva com sucesso!
+                            <%
+                            } else if (request.getParameter("m").equals("10")) {
+                            %>
+                            Projeto excluído com sucesso!
+                            <%
+                                }
+                            %>
+
                         </div>
                         <%                                        }
                         %>
@@ -85,14 +96,14 @@
                             <h4><i class="icon fa fa-ban"></i> Erro!</h4>
                             <%if (request.getParameter("m").equals("2")) {
                             %>
-                            <h5>Erro ao salvar cidade!</h5><br>
+                            <h5>Erro ao salvar projeto!</h5><br>
                             <h5>Nome precisa ter de 3 até 150 caracteres.</h5>   
                             <% } else if (request.getParameter("m").equals("3")) {
 
                             %>
 
-                            Erro ao salvar cidade!<br>  
-                            Cidade já cadastrada.
+                            Erro ao salvar projeto!<br>  
+                            Projeto já cadastrada.
 
                             <%                                }
 
@@ -118,7 +129,7 @@
         <!-- /.row -->
     </section>
 
-    <%@include file = "listaCidades.jsp"%>
+    <%@include file = "listaProjetos.jsp"%>
     <!-- /.content -->
 </div>
 <%@include file = "inferior.jsp"%>

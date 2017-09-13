@@ -6,8 +6,10 @@
 package servlet;
 
 import DAO.CidadeDAO;
+import DAO.ProjetoDAO;
 import DAO.UsuarioDAO;
 import entidade.Cidade;
+import entidade.Projeto;
 import entidade.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -33,6 +35,8 @@ public class acao extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    int idRetorno;
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -65,6 +69,7 @@ public class acao extends HttpServlet {
         // processRequest(request, response);
 
         String parametro = request.getParameter("parametro");
+        System.out.println(parametro);
         
         if (parametro.equals("edCidade")) {
             int id = Integer.parseInt(String.valueOf(request.getParameter("id")));
@@ -78,18 +83,23 @@ public class acao extends HttpServlet {
             encaminharPagina("cadastroCidade.jsp", request, response);
         }
         
-        if (parametro.equals("exCidade")) {
-//            int id = Integer.parseInt(String.valueOf(request.getParameter("id")));
-//
-//            ArrayList<Cidade> cidades = new CidadeDAO().consultarId(id);
-//            Cidade cid = new Cidade();
-//            cid = cidades.get(0);
-//            request.setAttribute("objcid", cid);
-//            // request.setAttribute("cadastroCidade.jsp",cid);
-//
-//            encaminharPagina("cadastroCidade.jsp", request, response);
-//            
+        
+        
+        if (parametro.equals("edProjeto")) {
+            int id = Integer.parseInt(String.valueOf(request.getParameter("id")));
             
+            ArrayList<Projeto> projetos = new ProjetoDAO().consultarId(id);
+            Projeto proj = new Projeto();
+            proj = projetos.get(0);
+            request.setAttribute("objproj", proj);
+            // request.setAttribute("cadastroCidade.jsp",cid);
+
+            encaminharPagina("cadastroProjeto.jsp", request, response);
+        }
+        
+        
+        if (parametro.equals("exCidade")) {
+    
             int id = Integer.parseInt(String.valueOf(request.getParameter("id")));
             Cidade cid = new Cidade();
             cid.setId(id);
@@ -110,6 +120,30 @@ public class acao extends HttpServlet {
             }
             
         }
+        
+            if (parametro.equals("exProjeto")) {
+    
+            int id = Integer.parseInt(String.valueOf(request.getParameter("id")));
+            Projeto proj = new Projeto();
+            proj.setId(id);
+           
+            proj.setDescricao("");
+            proj.setSituacao('I');
+            
+            boolean retorno;
+            
+            retorno = new ProjetoDAO().salvar(proj);
+            
+            request.setAttribute("paginaOrigem", "cadastroProjeto.jsp");
+            
+            if (retorno) {
+                redirecionarPagina("cadastroProjeto.jsp?m=10", request, response);
+            } else {
+                redirecionarPagina("cadastroProjeto.jsp?m=11", request, response);
+            }
+            
+        }
+        
     }
 
     /**
@@ -123,16 +157,13 @@ public class acao extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//        processRequest(request, response);
-
-//        String parametro = request.getParameter("parametro");
-//        if (parametro.equals("cadUsuario")) {
-
-    
-        System.out.println("Entrei no POST!");
-        
+            
         String parametro = request.getParameter("parametro");
         
+        /*---------------------------------
+        //verifica se o parametro é para cadastrar cidade
+        ----------------
+        */
         if (parametro.equals("cadCidade")) {
             Cidade cid = new Cidade();
             int id;
@@ -149,14 +180,15 @@ public class acao extends HttpServlet {
             
             if (cid.getDescricao().length() < 2) {
                 retorno = false;
+                idRetorno = 2;
             }
             
-            CidadeDAO cidDAO = new CidadeDAO();
-            
+            CidadeDAO cidDAO = new CidadeDAO();            
             ArrayList<Cidade> cidades = cidDAO.listar(cid);
             for (int i = 0; i < cidades.size(); i++) {
                 if (cidades.get(i).getDescricao().equalsIgnoreCase(cid.getDescricao())) {
                     retorno = false;
+                    idRetorno = 3;
                 }
             }
             
@@ -169,11 +201,67 @@ public class acao extends HttpServlet {
             if (retorno) {
                 redirecionarPagina("cadastroCidade.jsp?m=1", request, response);
             } else {
-                redirecionarPagina("cadastroCidade.jsp?m=2", request, response);
+                redirecionarPagina("cadastroCidade.jsp?m="+idRetorno, request, response);
+            }
+            
+        }else{
+        
+        
+        
+        /*-------------------
+        Verifica se a ação é cadastrr um projeto
+        -------------------
+        */        
+         if (parametro.equals("cadProjeto")) {
+            Projeto proj = new Projeto();
+            int id;
+            if (request.getParameter("id").equals("")) {
+                id = 0;
+            } else {
+                id = Integer.parseInt(String.valueOf(request.getParameter("id")));
+            }
+            proj.setId(id);
+            proj.setDescricao(request.getParameter("descricao"));
+            proj.setSituacao('A');
+            
+            boolean retorno = true;
+            
+            if (proj.getDescricao().length() < 2) {
+                retorno = false;
+                idRetorno = 2;
+            }
+            
+            ProjetoDAO projDAO = new ProjetoDAO();            
+            ArrayList<Projeto> projetos = projDAO.listar(proj);
+            for (int i = 0; i < projetos.size(); i++) {
+                if (projetos.get(i).getDescricao().equalsIgnoreCase(proj.getDescricao())) {
+                    retorno = false;
+                    idRetorno = 3;
+                }
+            }
+            
+            if (retorno) {
+                retorno = projDAO.salvar(proj);
+            }
+            
+            request.setAttribute("paginaOrigem", "cadastroProjeto.jsp");
+            
+            if (retorno) {
+                redirecionarPagina("cadastroProjeto.jsp?m=1", request, response);
+            } else {
+                redirecionarPagina("cadastroProjeto.jsp?m="+idRetorno, request, response);
             }
             
         }
         
+        
+         
+         
+         
+         
+         
+         
+        }
     }
 
     /**

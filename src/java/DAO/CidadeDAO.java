@@ -97,22 +97,7 @@ public class CidadeDAO extends DAO {
 //        }
         return lista;
 
-//            ResultSet resultado = ConexaoBD.getInstance().getConnection().createStatement().executeQuery(sql);
-//
-//            if (resultado.next()) {
-//
-//                u.setId(resultado.getInt("id"));
-//                u.setNome(resultado.getString("nome"));
-//                u.setEmail(resultado.getString("e_mail"));
-//                u.setSituacao(resultado.getString("situacao").charAt(0));
-//            }
-//
-//        } catch (Exception e) {
-//            System.out.println("erro ao consultar usuário: " + e);
-//        }
-//
-//        return u;
-//    }
+
     }
 
 }
