@@ -32,7 +32,7 @@
     <body class="hold-transition skin-blue sidebar-mini" >
     <header class="main-header">
                 <!-- Logo -->
-                <a href="index2.html" class="logo">
+                <a href="inicio.jsp" class="logo">
 
                     <span class="logo-lg"><b>Help</b>Web</span>
                 </a>

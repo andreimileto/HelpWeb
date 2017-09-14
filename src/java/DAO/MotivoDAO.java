@@ -8,6 +8,7 @@ package DAO;
 import apoio.HibernateUtil;
 import entidade.Cidade;
 import entidade.Motivo;
+import entidade.Projeto;
 import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.HibernateException;
@@ -29,12 +30,19 @@ public class MotivoDAO extends DAO {
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
-            String sql = "from Motivo  "
-                    //                    + "where 1=1 "
-                    //                    + parametro
-                    + "where upper(descricao)  like '" + motivo.getDescricao().toUpperCase() + "%' "
-                    + "and situacao ='A'"
-                    + " order by descricao";
+            String sql = "";
+            if (motivo.getDescricao().equals("") || motivo.getDescricao() == null) {
+                sql = "from Motivo  "
+                        + "where "
+                        + "situacao ='A'"
+                        + " order by descricao";
+            } else {
+                sql = "from Motivo  "
+                        + "where "
+                        + "upper (descricao)  like '%" + motivo.getDescricao().toUpperCase() + "%' "
+                        + "and situacao ='A'"
+                        + " order by descricao";
+            }
             String sel = sql;
             System.out.println(sel);
             org.hibernate.Query q = session.createQuery(sql);
@@ -53,4 +61,41 @@ public class MotivoDAO extends DAO {
 //        }
         return lista;
     }
+    
+    
+     public ArrayList<Motivo> consultarId(int id) {
+        //this.projeto = projeto;
+        List resultado = null;
+
+        ArrayList<Motivo> listas = new ArrayList<>();
+        try {
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+            String sql = "";
+
+            sql = "from Motivo  "
+                    + "where "
+                    + " id =" + id;
+
+            String sel = sql;
+            System.out.println(sel);
+            org.hibernate.Query q = session.createQuery(sql);
+
+            resultado = q.list();
+
+            for (Object o : resultado) {    
+                Motivo motiv = ((Motivo) ((Object) o));
+                listas.add(motiv);
+            }
+
+        } catch (HibernateException he) {
+            he.printStackTrace();
+        }// finally {
+//            session.close();
+//        }
+        return listas;
+
+
+    }
+    
 }

@@ -33,18 +33,39 @@
                     <!-- /.search form -->
                     <!-- sidebar menu: : style can be found in sidebar.less -->
                     <ul class="sidebar-menu" data-widget="tree">
-                        <li class="header"><h4>Menu principal</h4></li>
-                        <li class="active">
-                            <a href="#">
-                                <i class="fa fa-address-card"></i> <span>Cadastros</span>
+                        <li class="header"><h4>Menu principal</h4>
+                        </li>
+                        <li class="treeview">
+                            <a href="">
+                                <i class="fa fa-address-card"></i> 
+                                <span>Cadastros</span>
                                 <span class="pull-right-container">
                                     <i class="fa fa-angle-left pull-right"></i>
                                 </span>
                             </a>
-                            <ul class="active treeview-menu">
-                                <li><a href="#"><i class="fa fa-circle-o"></i> Clientes</a></li>
-                                <li class="active"><a href="cadastroCidade.jsp"><i class="fa fa-circle-o"></i> Cidades</a></li>
+                            <ul class="treeview-menu">
+                                <li><a href="cadastroCliente.jsp"><i class="fa fa-circle-o"></i> Clientes</a></li>
+                               <!-- <li class="active"><a href="cadastroCidade.jsp"><i class="fa fa-circle-o"></i> Cidades</a></li>-->  
+                                <li><a href="cadastroCidade.jsp"><i class="fa fa-circle-o"></i> Cidades</a></li>
 
+                            </ul>
+                        </li>
+                        
+                        <li class="treeview">
+                            <a href="">
+                                <i class="fa fa-cogs"> </i>
+                                <span>Gerência</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="#"><i class="fa fa-vimeo"></i> Cadastro de Versão</a></li>
+                                <li><a href="cadastroMotivo.jsp"><i class="fa fa-commenting-o"></i> Cadastro de Motivo</a></li>
+                                <li><a href="cadastroProjeto.jsp"><i class="fa fa-cogs"></i> Cadastro de Projeto</a></li>
+                                <li><a href="cadastroModulo.jsp"><i class="fa fa-cubes"></i> Cadastro de Módulo</a></li>
+                                <li><a href="#"><i class="fa fa-cubes"></i> Cadastro de Prioridade</a></li>
+                                <li><a href="#"><i class="fa fa-cubes"></i> Cadastro de Fase</a></li>
                             </ul>
                         </li>
                         
@@ -56,21 +77,7 @@
                                 </span>
                             </a>
                         </li>
-                        <li class="treeview">
-                            <a href="#">
-                                <i class="fa fa-cogs"></i>
-                                <span>Gerência</span>
-                                <span class="pull-right-container">
-                                    <i class="fa fa-angle-left pull-right"></i>
-                                </span>
-                            </a>
-                            <ul class="treeview-menu">
-                                <li><a href="pages/charts/chartjs.html"><i class="fa fa-vimeo"></i> Cadastro de Versão</a></li>
-                                <li><a href="pages/charts/morris.html"><i class="fa fa-commenting-o"></i> Cadastro de Motivo</a></li>
-                                <li><a href="cadastroProjeto.jsp"><i class="fa fa-cogs"></i> Cadastro de Projeto</a></li>
-                                <li><a href="pages/charts/inline.html"><i class="fa fa-cubes"></i> Cadastro de Módulo</a></li>
-                            </ul>
-                        </li>
+                        
                         <li class="treeview">
                             <a href="#">
                                 <i class="fa fa-laptop"></i>

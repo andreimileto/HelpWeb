@@ -67,12 +67,22 @@
                             </div>
                         </div>
                         <%
-                            if (request.getParameterMap().containsKey("m") && request.getParameter("m").equals("1")) {
+                            if (request.getParameterMap().containsKey("m") && (request.getParameter("m").equals("1") || request.getParameter("m").equals("10"))) {
                         %>
                         <div class="alert alert-success alert-dismissible">
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                             <h4><i class="icon fa fa-check"></i> Sucesso!</h4>
+                            <%if (request.getParameter("m").equals("1")) {
+                            %>
                             Cidade salva com sucesso!
+                            <%
+                            } else if (request.getParameter("m").equals("10")) {
+                            %>
+                            Cidade excluída com sucesso!
+                            <%
+                                }
+                            %>
+
                         </div>
                         <%                                        }
                         %>
