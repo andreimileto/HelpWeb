@@ -12,6 +12,8 @@ import entidade.Projeto;
 import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 
 /**
@@ -21,37 +23,48 @@ import org.hibernate.Session;
 public class ModuloDAO extends DAO {
 
     Modulo modulo;
+    List<Object[]> listResult;
 
     public ArrayList<Modulo> listar(Modulo modulo) {
         this.modulo = modulo;
         List resultado = null;
-
-        ArrayList<Modulo> lista = new ArrayList<>();
+        ArrayList<Modulo> listaModulo = new ArrayList<>();
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
-            String sql = "";
+            SQLQuery sql;
+            String hql;
             if (modulo.getDescricao().equals("") || modulo.getDescricao() == null) {
-                sql = "from Modulo m  left join  m.projeto  "
-                        + "where "
+//                sql = session.createSQLQuery(" select m.id idmodulo, m.id_projeto, m.descricao descricaomodulo, m.situacao,p.id idprojeto, p.descricao descricaoprojeto,p.situacao projeto from modulo m, projeto p  "
+//                        + "where p.id = m.id_projeto and "
+//                        + "m.situacao ='A'"
+//                        + " order by m.descricao");
+//                
+
+                hql = "from Modulo m , Projeto p "
+                        + "where p.id = m.id and "
                         + "m.situacao ='A'"
                         + " order by m.descricao";
-                
+
 //                
 //                sql = "select * from modulo m, projeto p where p.id = m.id  "
 //                        + "and" 
 //                        + "  m.situacao = 'A'"
 //                        + "order by m.descricao";
-
 //                sql = "from Modulo m , Projeto p "
 //                        + "where p.id = m.id and "
 //                        + "m.situacao ='A'"
 //                        + " order by m.descricao";
             } else {
-                sql = "from Modulo m  left join  m.Projeto p  "
-                        + "where "
-                        + "upper (m.descricao)  like '%" + modulo.getDescricao().toUpperCase() + "%' "
-                        + "and m.situacao ='A'"
+//                sql = session.createSQLQuery("select m.id idmodulo, m.id_projeto, m.descricao descricaomodulo, m.situacao,p.id idprojeto, p.descricao descricaoprojeto,p.situacao projeto from modulo m, projeto p  "
+//                        + "where p.id = m.id_projeto and "
+//                        + "m.descricao  like '%" + modulo.getDescricao().toUpperCase() + "%' "
+//                        + "and m.situacao = 'A'"
+//                        + " order by m.descricao");
+
+                hql = "from Modulo m , Projeto p "
+                        + "where p.id = m.id and "
+                        + "m.situacao ='A'"
                         + " order by m.descricao";
 
 //                sql = "from Modulo m , Projeto p "
@@ -63,25 +76,26 @@ public class ModuloDAO extends DAO {
 //                        + "and descricao like '%" + modulo.getDescricao() + "%'"
 //                        + " and m.situacao = 'A'"
 //                        + "order by m.descricao";
-
             }
-            String sel = sql;
-            System.out.println(sel);
-            org.hibernate.Query q = session.createQuery(sql);
 
-            resultado = q.list();
+            Query query = session.createQuery(hql);
+            List<Object[]> listResult = query.list();
 
-            for (Object o : resultado) {
-                Modulo modul = ((Modulo) ((Object) o));
-                lista.add(modul);
+            for (Object[] aRow : listResult) {
+                Modulo modu = (Modulo) aRow[0];
+                Projeto proj = (Projeto) aRow[1];
+                System.out.println(modu.getDescricao() + " - " + proj.getDescricao());
+                
+                listaModulo.add(modu);
             }
 
         } catch (HibernateException he) {
             he.printStackTrace();
         }// finally {
+
 //            session.close();
 //        }
-        return lista;
+        return listaModulo;
     }
 
     public ArrayList<Modulo> consultarId(int id) {
