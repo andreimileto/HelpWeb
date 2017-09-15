@@ -32,16 +32,38 @@ public class ModuloDAO extends DAO {
             session.beginTransaction();
             String sql = "";
             if (modulo.getDescricao().equals("") || modulo.getDescricao() == null) {
-                sql = "from Modulo  "
+                sql = "from Modulo m  left join  m.projeto  "
                         + "where "
-                        + "situacao ='A'"
-                        + " order by descricao";
+                        + "m.situacao ='A'"
+                        + " order by m.descricao";
+                
+//                
+//                sql = "select * from modulo m, projeto p where p.id = m.id  "
+//                        + "and" 
+//                        + "  m.situacao = 'A'"
+//                        + "order by m.descricao";
+
+//                sql = "from Modulo m , Projeto p "
+//                        + "where p.id = m.id and "
+//                        + "m.situacao ='A'"
+//                        + " order by m.descricao";
             } else {
-                sql = "from Modulo  "
+                sql = "from Modulo m  left join  m.Projeto p  "
                         + "where "
-                        + "upper (descricao)  like '%" + modulo.getDescricao().toUpperCase() + "%' "
-                        + "and situacao ='A'"
-                        + " order by descricao";
+                        + "upper (m.descricao)  like '%" + modulo.getDescricao().toUpperCase() + "%' "
+                        + "and m.situacao ='A'"
+                        + " order by m.descricao";
+
+//                sql = "from Modulo m , Projeto p "
+//                        + "where p.id = m.id and "
+//                        + "upper (m.descricao)  like '%" + modulo.getDescricao().toUpperCase() + "%' "
+//                        + "and m.situacao ='A'"
+//                        + " order by m.descricao";
+//                sql = "select * from modulo m, projeto p where p.id = m.id  "
+//                        + "and descricao like '%" + modulo.getDescricao() + "%'"
+//                        + " and m.situacao = 'A'"
+//                        + "order by m.descricao";
+
             }
             String sel = sql;
             System.out.println(sel);
@@ -61,9 +83,8 @@ public class ModuloDAO extends DAO {
 //        }
         return lista;
     }
-    
-    
-     public ArrayList<Modulo> consultarId(int id) {
+
+    public ArrayList<Modulo> consultarId(int id) {
         //this.projeto = projeto;
         List resultado = null;
 
@@ -83,7 +104,7 @@ public class ModuloDAO extends DAO {
 
             resultado = q.list();
 
-            for (Object o : resultado) {    
+            for (Object o : resultado) {
                 Modulo modulo = ((Modulo) ((Object) o));
                 listas.add(modulo);
             }
@@ -95,7 +116,6 @@ public class ModuloDAO extends DAO {
 //        }
         return listas;
 
-
     }
-    
+
 }

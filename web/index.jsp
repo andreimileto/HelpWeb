@@ -71,43 +71,7 @@
                                 <div class="box-header with-border">
                                     <h3 class="box-title">Web Help - Login</h3>
                                 </div>
-                                <!-- /.box-header -->
-                                <!-- form start -->
-                                <!--            <form class="form-horizontal">
-                                              <div class="box-body">
-                                                <div class="form-group">
-                                                  <label for="inputEmail3" class="col-sm-2 control-label">Login</label>
-                                
-                                                  <div class="col-sm-10">
-                                                    <input type="usuario" class="form-control" id="inputEmail3" placeholder="Usuario">
-                                                  </div>
-                                                </div>
-                                                <div class="form-group">
-                                                  <label for="inputPassword3" class="col-sm-2 control-label">Senha</label>
-                                
-                                                  <div class="col-sm-10">
-                                                      <input type="password" class="form-control" id="inputPassword3" placeholder="Senha">
-                                                  </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    
-                                                  <div class="col-sm-offset-2 col-sm-10">
-                                                
-                                                  </div>
-                                                </div>
-                                              </div>
-                                               /.box-body 
-                                              <div class="box-footer">
-                                                  <button type="submit" class="btn btn-danger pull-right">Cancelar </button>
-                                                  <input type="button" class="btn btn-danger pull-right" name="Cancelar" value="Cancelar">
-                                                  <input type="button" class="btn btn-info pull-right" name="Entrar" value="Entrar" onclick=window.location.href=("inicio.jsp");>
-                                                  <input type="button" name="chama_funcao" value="Chamar função" onclick="Opa();">
-                                                  
-                                                
-                                              </div>
-                                               /.box-footer 
-                                            </form>-->
-
+                             
 
                                 <form name="login" class="form-horizontal" action="/HelpWeb/acao?parametro=login" method="post">
                                     <div class="box-body">

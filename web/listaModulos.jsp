@@ -2,6 +2,7 @@
 <%@page import="DAO.ModuloDAO"%>
 <%@page import="entidade.Modulo"%>
 <%@page import="java.util.ArrayList"%>
+
 <!DOCTYPE html>
 
 
@@ -24,11 +25,11 @@
                     </thead>
                     <tbody>
                         <%
-                            Modulo modulo = new Modulo();
-                            Projeto projeto = new Projeto();
-                            modulo.setProjeto(projeto);
-                            modulo.setDescricao("");
-                            ArrayList<Modulo> modulos = new ModuloDAO().listar(modulo);
+                            Modulo mod = new Modulo();
+                            Projeto proj = new Projeto();
+                            mod.setProjeto(proj);
+                            mod.setDescricao("");
+                            ArrayList<Modulo> modulos = new ModuloDAO().listar(mod);
 
                             for (int i = 0; i < modulos.size(); i++) {
                         %>

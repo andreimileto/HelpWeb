@@ -73,10 +73,10 @@ public class acao extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // processRequest(request, response);
-
+        response.setContentType("text/html;charset=UTF-8");
         String parametro = request.getParameter("parametro");
         System.out.println(parametro);
-        
+
         if (parametro.equals("logout")) {
             System.out.println("LOGOUTTTTTT");
             HttpSession sessao = request.getSession();
@@ -237,7 +237,7 @@ public class acao extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        response.setContentType("text/html;charset=UTF-8");
         String parametro = request.getParameter("parametro");
 
         /*---------------------------------
@@ -250,39 +250,34 @@ public class acao extends HttpServlet {
             user.setSenha(Formatacao.get_SHA_512_SecurePassword(request.getParameter("senha")));
             UsuarioDAO usuarioDAO = new UsuarioDAO();
             ArrayList<Usuario> usuarios = usuarioDAO.listar(user);
-            
+
             boolean retorno = false;
             try {
-                if (usuarios.size()>0) {
+                if (usuarios.size() > 0) {
                     if ((user.getLogin().equalsIgnoreCase(usuarios.get(0).getLogin()) && user.getSenha().equals(usuarios.get(0).getSenha()))) {
-                         retorno = true;
-                         
-                    }else{
+                        retorno = true;
+
+                    } else {
                         retorno = false;
                     }
                 }
             } catch (Exception e) {
                 retorno = false;
             }
-            
+
             if (retorno) {
                 if (user != null) {
-            HttpSession sessao = request.getSession();
-            sessao.setAttribute("usuarioLogado", user);
-            
-            
-        }
+                    HttpSession sessao = request.getSession();
+                    sessao.setAttribute("usuarioLogado", user);
+
+                }
                 response.sendRedirect("inicio.jsp");
-            }else{
-                 redirecionarPagina("index.jsp?m=2", request, response);
+            } else {
+                redirecionarPagina("index.jsp?m=2", request, response);
             }
-            
-            
-            
+
         }
-        
-        
-        
+
         if (parametro.equals("cadCidade")) {
             Cidade cid = new Cidade();
             int id;
@@ -414,50 +409,51 @@ public class acao extends HttpServlet {
                 } else {
                     if (parametro.equals("cadModulo")) {
                         String id = request.getParameter("projeto");
-                        System.out.println(".i.d"+id);
-//                        Modulo modulo = new Modulo();
-//                        int id;
-//                        if (request.getParameter("id").equals("")) {
-//                            id = 0;
-//                        } else {
-//                            id = Integer.parseInt(String.valueOf(request.getParameter("id")));
-//                        }
-//                        modulo.setId(id);
-//                        modulo.setDescricao(request.getParameter("descricao"));
-//                        modulo.setSituacao('A');
-//
-//                        boolean retorno = true;
-//
-//                        if (modulo.getDescricao().length() < 2) {
-//                            retorno = false;
-//                            idRetorno = 2;
-//                        }
-//
-//                        ModuloDAO moduloDAO = new ModuloDAO();
-//                        ArrayList<Modulo> modulos = moduloDAO.listar(modulo);
-//                        for (int i = 0; i < modulos.size(); i++) {
-//                            if (modulos.get(i).getDescricao().equalsIgnoreCase(modulo.getDescricao())) {
-//                                retorno = false;
-//                                idRetorno = 3;
-//                            }
-//                        }
-//
-//                        if (retorno) {
-//                            retorno = moduloDAO.salvar(modulo);
-//                        }
-//
-//                        request.setAttribute("paginaOrigem", "cadastroModulo.jsp");
-//
-//                        if (retorno) {
-//                            redirecionarPagina("cadastroModulo.jsp?m=1", request, response);
-//                        } else {
-//                            redirecionarPagina("cadastroModulo.jsp?m=" + idRetorno, request, response);
-//                        }
+                        System.out.println(".i.d" + id);
+                        Modulo modulo = new Modulo();
+                        int idModulo;
+                        if (request.getParameter("id").equals("")) {
+                            idModulo = 0;
+                        } else {
+                            idModulo = Integer.parseInt(String.valueOf(request.getParameter("id")));
+                        }
+                        modulo.setId(idModulo);
+                        modulo.setDescricao(request.getParameter("descricao"));
+                        modulo.setSituacao('A');
+                        Projeto projeto = new Projeto();
+                        projeto.setId(Integer.parseInt(id));
+                        modulo.setProjeto(projeto);
+
+                        boolean retorno = true;
+
+                        if (modulo.getDescricao().length() < 2) {
+                            retorno = false;
+                            idRetorno = 2;
+                        }
+
+                        ModuloDAO moduloDAO = new ModuloDAO();
+                        ArrayList<Modulo> modulos = moduloDAO.listar(modulo);
+                        for (int i = 0; i < modulos.size(); i++) {
+                            if (modulos.get(i).getDescricao().equalsIgnoreCase(modulo.getDescricao())) {
+                                retorno = false;
+                                idRetorno = 3;
+                            }
+                        }
+
+                        if (retorno) {
+                            retorno = moduloDAO.salvar(modulo);
+                        }
+
+                        request.setAttribute("paginaOrigem", "cadastroModulo.jsp");
+
+                        if (retorno) {
+                            redirecionarPagina("cadastroModulo.jsp?m=1", request, response);
+                        } else {
+                            redirecionarPagina("cadastroModulo.jsp?m=" + idRetorno, request, response);
+                        }
 
                     }
-                    
-                    
-                    
+
                 }
             }
 

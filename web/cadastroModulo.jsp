@@ -5,7 +5,7 @@
 <%@page import="entidade.Projeto"%>
 <%@page import="entidade.Modulo"%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 
 <%@include file = "topo.jsp"%>
@@ -39,7 +39,7 @@
                 <!-- Horizontal Form -->
                 <div class="box box-info">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Cadastro de m√≥dulos</h3>
+                        <h3 class="box-title">Cadastro de mÛdulos</h3>
                     </div>
 
                     <form name="cadModulo" class="form-horizontal" action="/HelpWeb/acao?parametro=cadModulo" method="post">
@@ -107,11 +107,11 @@
                             <h4><i class="icon fa fa-check"></i> Sucesso!</h4>
                             <%if (request.getParameter("m").equals("1")) {
                             %>
-                            M√≥dulo salvo com sucesso!
+                            MÛdulo salvo com sucesso!
                             <%
                             } else if (request.getParameter("m").equals("10")) {
                             %>
-                            M√≥dulo exclu√≠do com sucesso!
+                            MÛdulo excluÌdo com sucesso!
                             <%
                                 }
                             %>
@@ -128,14 +128,14 @@
                             <h4><i class="icon fa fa-ban"></i> Erro!</h4>
                             <%if (request.getParameter("m").equals("2")) {
                             %>
-                            <h5>Erro ao salvar m√≥dulo!</h5>
-                            <h5>Nome precisa ter de 3 at√© 150 caracteres.</h5>   
+                            <h5>Erro ao salvar mÛdulo!</h5>
+                            <h5>Nome precisa ter de 3 atÈ 150 caracteres.</h5>   
                             <% } else if (request.getParameter("m").equals("3")) {
 
                             %>
 
-                            Erro ao salvar m√≥dulo!<br>  
-                            M√≥dulo j√° cadastrado.
+                            Erro ao salvar mÛdulo!<br>  
+                            MÛdulo j· cadastrado.
 
                             <%                                }
 
@@ -162,7 +162,7 @@
     </section>
 
 
-    <%//@include file = "listaProjetos.jsp"%>
+    <%@include file = "listaModulos.jsp"%>
 
 
     <!-- /.content -->
