@@ -75,7 +75,7 @@
                             <h4><i class="icon fa fa-check"></i> Sucesso!</h4>
                             <%if (request.getParameter("m").equals("1")) {
                             %>
-                            Projeto salva com sucesso!
+                            Projeto salvo com sucesso!
                             <%
                             } else if (request.getParameter("m").equals("10")) {
                             %>

@@ -1,19 +1,16 @@
 <%@page import="DAO.ProjetoDAO"%>
-<%@page import="DAO.CidadeDAO"%>
+
 <%@page import="java.util.ArrayList"%>
-<%@page import="entidade.Cidade"%>
+
 <%@page import="entidade.Projeto"%>
 <%@page import="entidade.Modulo"%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<!--<html>-->
 
-
-<!--    <body class="hold-transition skin-blue sidebar-mini">-->
 <%@include file = "topo.jsp"%>
 <%@include file = "barraLateral.jsp"%>
-<%//@include file = "inicio-teste.jsp"%>
+
 
 <%
     // Cidade cid = new Cidade();
@@ -23,8 +20,9 @@
         modulo = new Modulo();
         modulo.setSituacao('A');
         modulo.setDescricao("");
+
         Projeto projeto = new Projeto();
-        projeto.setId(1);
+
         modulo.setProjeto(projeto);
     }
 %>
@@ -66,40 +64,33 @@
                             <div class="form-group">
                                 <label for="nome" class="col-sm-2 control-label">Nome</label>
 
-                                <div class="col-sm-10">
+                                <div class="col-sm-6">
                                     <input type="text" class="form-control" name="descricao" value="<%= modulo.getDescricao()%>">
 
                                 </div>
                             </div>
 
-                            <!--                            <div class="form-group">
-                                                            <label for="projeto" class="col-sm-2 control-label">Projeto</label>
-                            
-                                                            <div class="col-sm-10">
-                                                                <input type="" class="" name="descricaoProjeto" value="<%//=modulo.getProjeto().getDescricao()%>">
-                            
-                                                            </div>
-                                                        </div>-->
-
-
 
 
 
                             <label for="projeto" class="col-sm-2 control-label">Projeto</label>
-                            <select class="form-control select2" style="width: 30%;">
+                            <select class="form-control select2" style="width: 49%;" name="projeto">
                                 <%
+
                                     Projeto projeto = new Projeto();
                                     projeto.setDescricao("");
+                                    projeto.setSituacao('A');
+
                                     ArrayList<Projeto> projetos = new ProjetoDAO().listar(projeto);
 
                                     for (int i = 0; i < projetos.size(); i++) {
                                 %>
-                                <option><%=projetos.get(i).getDescricao()%></option>
+                                <option value="<%=projetos.get(i).getId()%>"><%=projetos.get(i).getDescricao()%></option>
+                                <%
+                                    }
 
+                                %>
                             </select>
-                            <%
-                                }
-                            %>
 
 
 
@@ -171,7 +162,7 @@
     </section>
 
 
-    <%//@include file = "listaModulos.jsp"%>
+    <%//@include file = "listaProjetos.jsp"%>
 
 
     <!-- /.content -->

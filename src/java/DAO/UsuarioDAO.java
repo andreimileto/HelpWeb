@@ -29,11 +29,11 @@ public class UsuarioDAO extends DAO {
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
-            String sql = "from Projeto  "
-                    + "where (upper(nome)  like '" + usuario.getNome().toUpperCase() + "%' "
-                    + "or upper(login)  like '" +usuario.getLogin().toUpperCase()+"% )"
+            String sql = "from Usuario  "
+                   // + "where ( upper(nome)  like '" + usuario.getNome().toUpperCase() + "%' "
+                    + "where upper(login)  like '" +usuario.getLogin().toUpperCase()+"%' "
                     + "and situacao ='A'"
-                    + " order by nome";
+                    + " order by login";
             String sel = sql;
             System.out.println(sel);
             org.hibernate.Query q = session.createQuery(sql);

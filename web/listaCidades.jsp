@@ -13,7 +13,7 @@
             </div>
 
             <div class="box-body">
-                <table id="example1" class="table table-bordered table-striped">
+                <table id="example1" class="table table-bordered table-striped table-hover">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -34,7 +34,7 @@
                             <td><%=cidades.get(i).getId()%></td>
                             <td><%=cidades.get(i).getDescricao()%></td>
                             <td><a href="/HelpWeb/acao?parametro=edCidade&id=<%=cidades.get(i).getId()%>"><span class="label label-primary pull-left-container">Editar</span></a>
-                                <a href="/HelpWeb/acao?parametro=exCidade&id=<%=cidades.get(i).getId()%>"><span class="label label-danger pull-right-container">Excluir</span></a>
+                                <a href="/HelpWeb/acao?parametro=exCidade&id=<%=cidades.get(i).getId()%>" onclick="return confirm('Are you sure you want to delete this i');"><span class="label label-danger pull-right-container">Excluir</span></a>
                             </td>
 
                         </tr>

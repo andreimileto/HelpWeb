@@ -6,7 +6,7 @@ CREATE TABLE usuario (
   id serial,
   nome VARCHAR(150) NOT NULL,
   login VARCHAR(100) NOT NULL unique,
-  senha VARCHAR(45) NOT NULL,
+  senha VARCHAR(200) NOT NULL,
   situacao CHAR(1) NOT NULL,
   PRIMARY KEY (id));
 

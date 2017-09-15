@@ -1,3 +1,4 @@
+<%@page import="entidade.Projeto"%>
 <%@page import="DAO.ModuloDAO"%>
 <%@page import="entidade.Modulo"%>
 <%@page import="java.util.ArrayList"%>
@@ -13,7 +14,7 @@
             </div>
 
             <div class="box-body">
-                <table id="example1" class="table table-bordered table-striped">
+                <table id="example1" class="table table-bordered table-striped table-hover">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -24,6 +25,8 @@
                     <tbody>
                         <%
                             Modulo modulo = new Modulo();
+                            Projeto projeto = new Projeto();
+                            modulo.setProjeto(projeto);
                             modulo.setDescricao("");
                             ArrayList<Modulo> modulos = new ModuloDAO().listar(modulo);
 
