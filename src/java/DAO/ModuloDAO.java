@@ -27,12 +27,12 @@ public class ModuloDAO extends DAO {
 
     public ArrayList<Modulo> listar(Modulo modulo) {
         this.modulo = modulo;
-        List resultado = null;
+        
         ArrayList<Modulo> listaModulo = new ArrayList<>();
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
-            SQLQuery sql;
+          
             String hql;
             if (modulo.getDescricao().equals("") || modulo.getDescricao() == null) {
 //                sql = session.createSQLQuery(" select m.id idmodulo, m.id_projeto, m.descricao descricaomodulo, m.situacao,p.id idprojeto, p.descricao descricaoprojeto,p.situacao projeto from modulo m, projeto p  "
