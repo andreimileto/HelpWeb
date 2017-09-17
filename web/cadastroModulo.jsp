@@ -84,11 +84,17 @@
                                     ArrayList<Projeto> projetos = new ProjetoDAO().listar(projeto);
 
                                     for (int i = 0; i < projetos.size(); i++) {
+                                        if (modulo.getProjeto().getId() == projetos.get(i).getId()) {
+                                %>
+                                <option value="<%=projetos.get(i).getId()%>" selected><%=projetos.get(i).getDescricao()%> </option>
+                                
+                                <%
+                                }else{
                                 %>
                                 <option value="<%=projetos.get(i).getId()%>"><%=projetos.get(i).getDescricao()%></option>
                                 <%
+                                        }
                                     }
-
                                 %>
                             </select>
 
@@ -186,25 +192,9 @@
 
 <script src="dist/js/adminlte.min.js"></script>
 
-<script src="dist/js/demo.js"></script>
-
-<script>
-    $(function () {
-        $('#example1').DataTable()
-        $('#example2').DataTable({
-            'paging': true,
-            'lengthChange': false,
-            'searching': false,
-            'ordering': true,
-            'info': true,
-            'autoWidth': false
-        })
-    })
-</script>    
-
-
-
-<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<script src="dist/js/demo.js">
+    
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap 3.3.7 -->
 <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <!-- Select2 -->
@@ -233,9 +223,29 @@
 <script src="dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
+    
+</script>
 
 <script>
     $(function () {
+        $('#example1').DataTable()
+        $('#example2').DataTable({
+            'paging': true,
+            'lengthChange': false,
+            'searching': false,
+            'ordering': true,
+            'info': true,
+            'autoWidth': false
+        })
+    })
+</script>    
+
+
+
+
+
+<script>
+    $(function () { 
         //Initialize Select2 Elements
         $('.select2').select2()
 

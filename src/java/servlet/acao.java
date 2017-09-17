@@ -46,6 +46,7 @@ public class acao extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
@@ -73,7 +74,10 @@ public class acao extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // processRequest(request, response);
+        
         response.setContentType("text/html;charset=UTF-8");
+        
+        request.setCharacterEncoding("UTF-8");
         String parametro = request.getParameter("parametro");
         System.out.println(parametro);
 
@@ -238,6 +242,9 @@ public class acao extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
+        
+        
         String parametro = request.getParameter("parametro");
 
         /*---------------------------------
@@ -434,7 +441,7 @@ public class acao extends HttpServlet {
                         ModuloDAO moduloDAO = new ModuloDAO();
                         ArrayList<Modulo> modulos = moduloDAO.listar(modulo);
                         for (int i = 0; i < modulos.size(); i++) {
-                            if (modulos.get(i).getDescricao().equalsIgnoreCase(modulo.getDescricao())) {
+                            if (modulos.get(i).getDescricao().equalsIgnoreCase(modulo.getDescricao()) && modulos.get(i).getId() != modulo.getId() ) {
                                 retorno = false;
                                 idRetorno = 3;
                             }
