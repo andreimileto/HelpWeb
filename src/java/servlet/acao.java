@@ -6,16 +6,29 @@
 package servlet;
 
 import DAO.CidadeDAO;
+import DAO.FaseDAO;
 import DAO.ModuloDAO;
 import DAO.MotivoDAO;
+import DAO.PrioridadeDAO;
 import DAO.ProjetoDAO;
 import DAO.UsuarioDAO;
+import DAO.VersaoDAO;
 import apoio.Formatacao;
+import controle.ControleCidade;
+import controle.ControleFase;
+import controle.ControleModulo;
+import controle.ControleMotivo;
+import controle.ControlePrioridade;
+import controle.ControleProjeto;
+import controle.ControleVersao;
 import entidade.Cidade;
+import entidade.Fase;
 import entidade.Modulo;
 import entidade.Motivo;
+import entidade.Prioridade;
 import entidade.Projeto;
 import entidade.Usuario;
+import entidade.Versao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -46,7 +59,8 @@ public class acao extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+        // response.setCharacterEncoding("UTF-8");
+
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
@@ -73,16 +87,13 @@ public class acao extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // processRequest(request, response);
-        
-        response.setContentType("text/html;charset=UTF-8");
-        
+
         request.setCharacterEncoding("UTF-8");
+
         String parametro = request.getParameter("parametro");
         System.out.println(parametro);
 
         if (parametro.equals("logout")) {
-            System.out.println("LOGOUTTTTTT");
             HttpSession sessao = request.getSession();
             sessao.invalidate();
             response.sendRedirect("index.jsp");
@@ -95,24 +106,27 @@ public class acao extends HttpServlet {
             Cidade cid = new Cidade();
             cid = cidades.get(0);
             request.setAttribute("objcid", cid);
-            // request.setAttribute("cadastroCidade.jsp",cid);
 
             encaminharPagina("cadastroCidade.jsp", request, response);
-        }
-
-        if (parametro.equals("edProjeto")) {
+        } else if (parametro.equals("edProjeto")) {
             int id = Integer.parseInt(String.valueOf(request.getParameter("id")));
 
             ArrayList<Projeto> projetos = new ProjetoDAO().consultarId(id);
             Projeto proj = new Projeto();
             proj = projetos.get(0);
             request.setAttribute("objproj", proj);
-            // request.setAttribute("cadastroCidade.jsp",cid);
 
             encaminharPagina("cadastroProjeto.jsp", request, response);
-        }
+        } else if (parametro.equals("edPrioridade")) {
+            int id = Integer.parseInt(String.valueOf(request.getParameter("id")));
 
-        if (parametro.equals("edMotivo")) {
+            ArrayList<Prioridade> prioridades = new PrioridadeDAO().consultarId(id);
+            Prioridade prior = new Prioridade();
+            prior = prioridades.get(0);
+            request.setAttribute("objprio", prior);
+
+            encaminharPagina("cadastroPrioridade.jsp", request, response);
+        } else if (parametro.equals("edMotivo")) {
             int id = Integer.parseInt(String.valueOf(request.getParameter("id")));
 
             ArrayList<Motivo> motivos = new MotivoDAO().consultarId(id);
@@ -122,67 +136,98 @@ public class acao extends HttpServlet {
             // request.setAttribute("cadastroCidade.jsp",cid);
 
             encaminharPagina("cadastroMotivo.jsp", request, response);
-        }
-
-        if (parametro.equals("edModulo")) {
+        } else if (parametro.equals("edModulo")) {
             int id = Integer.parseInt(String.valueOf(request.getParameter("id")));
 
             ArrayList<Modulo> modulos = new ModuloDAO().consultarId(id);
             Modulo modulo = new Modulo();
             modulo = modulos.get(0);
             request.setAttribute("objmod", modulo);
-            // request.setAttribute("cadastroCidade.jsp",cid);
 
             encaminharPagina("cadastroModulo.jsp", request, response);
-        }
 
-        if (parametro.equals("exCidade")) {
+        } else if (parametro.equals("edVersao")) {
+            int id = Integer.parseInt(String.valueOf(request.getParameter("id")));
+
+            ArrayList<Versao> versoes = new VersaoDAO().consultarId(id);
+            Versao versao = new Versao();
+            versao = versoes.get(0);
+            request.setAttribute("objver", versao);
+
+            encaminharPagina("cadastroVersao.jsp", request, response);
+
+        } else if (parametro.equals("edFase")) {
+            int id = Integer.parseInt(String.valueOf(request.getParameter("id")));
+
+            ArrayList<Fase> fases = new FaseDAO().consultarId(id);
+            Fase fase = new Fase();
+            fase = fases.get(0);
+            request.setAttribute("objfas", fase);
+
+            encaminharPagina("cadastroFase.jsp", request, response);
+        } else if (parametro.equals("exCidade")) {
 
             int id = Integer.parseInt(String.valueOf(request.getParameter("id")));
             Cidade cid = new Cidade();
             cid.setId(id);
-            cid.setId(id);
 
             cid.setSituacao('I');
 
-            boolean retorno;
-
-            retorno = new CidadeDAO().salvar(cid);
+            int retorno = new ControleCidade().salvar(cid);
 
             request.setAttribute("paginaOrigem", "cadastroCidade.jsp");
 
-            if (retorno) {
+            if (retorno == 1) {
                 encaminharPagina("cadastroCidade.jsp?m=10", request, response);
             } else {
                 encaminharPagina("cadastroCidade.jsp?m=11", request, response);
             }
 
-        }
-
-        if (parametro.equals("exProjeto")) {
+        } else if (parametro.equals("exProjeto")) {
 
             int id = Integer.parseInt(String.valueOf(request.getParameter("id")));
             Projeto proj = new Projeto();
             proj.setId(id);
-
-            proj.setDescricao("");
+            ControleProjeto controleProjeto = new ControleProjeto();
+            ArrayList<Projeto> projetos = controleProjeto.consultarId(proj.getId());
+            proj.setDescricao(projetos.get(0).getDescricao());
             proj.setSituacao('I');
 
-            boolean retorno;
+            int retorno;
 
-            retorno = new ProjetoDAO().salvar(proj);
+            retorno = new ControleProjeto().salvar(proj);
 
             request.setAttribute("paginaOrigem", "cadastroProjeto.jsp");
 
-            if (retorno) {
+            if (retorno == 1) {
                 redirecionarPagina("cadastroProjeto.jsp?m=10", request, response);
             } else {
                 redirecionarPagina("cadastroProjeto.jsp?m=11", request, response);
             }
 
-        }
+        } else if (parametro.equals("exPrioridade")) {
 
-        if (parametro.equals("exMotivo")) {
+            int id = Integer.parseInt(String.valueOf(request.getParameter("id")));
+            Prioridade prio = new Prioridade();
+            prio.setId(id);
+            ControlePrioridade controlePrioridade = new ControlePrioridade();
+            ArrayList<Prioridade> prioridades = controlePrioridade.consultarId(prio.getId());
+            prio.setDescricao(prioridades.get(0).getDescricao());
+            prio.setSituacao('I');
+
+            int retorno;
+
+            retorno = new ControlePrioridade().salvar(prio);
+
+            request.setAttribute("paginaOrigem", "cadastroPrioridade.jsp");
+
+            if (retorno == 1) {
+                redirecionarPagina("cadastroPrioridade.jsp?m=10", request, response);
+            } else {
+                redirecionarPagina("cadastroPrioridade.jsp?m=11", request, response);
+            }
+
+        } else if (parametro.equals("exMotivo")) {
 
             int id = Integer.parseInt(String.valueOf(request.getParameter("id")));
             Motivo motiv = new Motivo();
@@ -191,13 +236,11 @@ public class acao extends HttpServlet {
             motiv.setDescricao("");
             motiv.setSituacao('I');
 
-            boolean retorno;
-
-            retorno = new MotivoDAO().salvar(motiv);
+            int retorno = new ControleMotivo().salvar(motiv);
 
             request.setAttribute("paginaOrigem", "cadastroMotivo.jsp");
 
-            if (retorno) {
+            if (retorno == 1) {
                 redirecionarPagina("cadastroMotivo.jsp?m=10", request, response);
             } else {
                 redirecionarPagina("cadastroMotivo.jsp?m=11", request, response);
@@ -207,22 +250,70 @@ public class acao extends HttpServlet {
             if (parametro.equals("exModulo")) {
 
                 int id = Integer.parseInt(String.valueOf(request.getParameter("id")));
-                Modulo mod = new Modulo();
-                mod.setId(id);
-                mod.setId(id);
+                ModuloDAO moduloDAO = new ModuloDAO();
 
+                Modulo mod = new Modulo();
+                ArrayList<Modulo> modulos = moduloDAO.consultarId(id);
+                mod.setId(id);
+                mod.setDescricao(modulos.get(0).getDescricao());
+                Projeto projeto = new Projeto();
+                projeto.setId(modulos.get(0).getProjeto().getId());
+                mod.setProjeto(projeto);
                 mod.setSituacao('I');
 
-                boolean retorno;
-
-                retorno = new ModuloDAO().salvar(mod);
+                int retorno = new ControleModulo().salvar(mod);
 
                 request.setAttribute("paginaOrigem", "cadastroModulo.jsp");
 
-                if (retorno) {
+                if (retorno == 1) {
                     encaminharPagina("cadastroModulo.jsp?m=10", request, response);
                 } else {
                     encaminharPagina("cadastroModulo.jsp?m=11", request, response);
+                }
+
+            } else if (parametro.equals("exVersao")) {
+
+                int id = Integer.parseInt(String.valueOf(request.getParameter("id")));
+                VersaoDAO versaoDAO = new VersaoDAO();
+
+                Versao ver = new Versao();
+                ArrayList<Versao> versoes = versaoDAO.consultarId(id);
+                ver.setId(id);
+                ver.setDescricao(versoes.get(0).getDescricao());
+                Projeto projeto = new Projeto();
+                projeto.setId(versoes.get(0).getProjeto().getId());
+                ver.setProjeto(projeto);
+                ver.setSituacao('I');
+
+                int retorno = new ControleVersao().salvar(ver);
+
+                request.setAttribute("paginaOrigem", "cadastroVersao.jsp");
+
+                if (retorno == 1) {
+                    encaminharPagina("cadastroVersao.jsp?m=10", request, response);
+                } else {
+                    encaminharPagina("cadastroVersao.jsp?m=11", request, response);
+                }
+
+            } else if (parametro.equals("exFase")) {
+
+                int id = Integer.parseInt(String.valueOf(request.getParameter("id")));
+                Fase fas = new Fase();
+                fas.setId(id);
+                ControleFase controleFase = new ControleFase();
+                ArrayList<Fase> fases = controleFase.consultarId(fas.getId());
+                fas.setDescricao(fases.get(0).getDescricao());
+                fas.setSituacao('I');
+                int retorno;
+
+                retorno = controleFase.salvar(fas);
+
+                request.setAttribute("paginaOrigem", "cadastroFase.jsp");
+
+                if (retorno == 1) {
+                    encaminharPagina("cadastroFase.jsp?m=10", request, response);
+                } else {
+                    encaminharPagina("cadastroFase.jsp?m=11", request, response);
                 }
 
             }
@@ -242,28 +333,188 @@ public class acao extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("UTF-8");
-        
-        
+        response.setCharacterEncoding("UTF-8");
         String parametro = request.getParameter("parametro");
 
-        /*---------------------------------
-        //verifica se o parametro é para cadastrar cidade
-        ----------------
-         */
+        if (parametro.equals("cadCidade")) {
+            Cidade cid = new Cidade();
+            int id;
+            if (request.getParameter("id").equals("")) {
+                id = 0;
+            } else {
+                id = Integer.parseInt(String.valueOf(request.getParameter("id")));
+            }
+            cid.setId(id);
+            cid.setDescricao(request.getParameter("descricao"));
+            cid.setSituacao('A');
+            ControleCidade controleCidade = new ControleCidade();
+            int retorno = controleCidade.salvar(cid);
+            request.setAttribute("paginaOrigem", "cadastroCidade.jsp");
+
+            if (retorno == 1) {
+                redirecionarPagina("cadastroCidade.jsp?m=1", request, response);
+            } else {
+                redirecionarPagina("cadastroCidade.jsp?m=" + retorno, request, response);
+            }
+
+        } else if (parametro.equals("cadProjeto")) {
+            Projeto proj = new Projeto();
+            int id;
+            if (request.getParameter("id").equals("")) {
+                id = 0;
+            } else {
+                id = Integer.parseInt(String.valueOf(request.getParameter("id")));
+            }
+            proj.setId(id);
+            proj.setDescricao(request.getParameter("descricao"));
+            proj.setSituacao('A');
+
+            ControleProjeto controleProjeto = new ControleProjeto();
+            int retorno = controleProjeto.salvar(proj);
+
+            request.setAttribute("paginaOrigem", "cadastroProjeto.jsp");
+
+            if (retorno == 1) {
+                redirecionarPagina("cadastroProjeto.jsp?m=1", request, response);
+            } else {
+                redirecionarPagina("cadastroProjeto.jsp?m=" + retorno, request, response);
+            }
+
+        } else if (parametro.equals("cadPrioridade")) {
+            Prioridade prio = new Prioridade();
+            int id;
+            if (request.getParameter("id").equals("")) {
+                id = 0;
+            } else {
+                id = Integer.parseInt(String.valueOf(request.getParameter("id")));
+            }
+            prio.setId(id);
+            prio.setDescricao(request.getParameter("descricao"));
+            prio.setSituacao('A');
+
+            ControlePrioridade controlePrioridade = new ControlePrioridade();
+            int retorno = controlePrioridade.salvar(prio);
+
+            request.setAttribute("paginaOrigem", "cadastroPrioridade.jsp");
+
+            if (retorno == 1) {
+                redirecionarPagina("cadastroPrioridade.jsp?m=1", request, response);
+            } else {
+                redirecionarPagina("cadastroPrioridade.jsp?m=" + retorno, request, response);
+            }
+
+        } else if (parametro.equals("cadMotivo")) {
+            Motivo motiv = new Motivo();
+            int id;
+            if (request.getParameter("id").equals("")) {
+                id = 0;
+            } else {
+                id = Integer.parseInt(String.valueOf(request.getParameter("id")));
+            }
+            motiv.setId(id);
+            motiv.setDescricao(request.getParameter("descricao"));
+            motiv.setSituacao('A');
+
+            ControleMotivo controleMotivo = new ControleMotivo();
+            int retorno = controleMotivo.salvar(motiv);
+
+            request.setAttribute("paginaOrigem", "cadastroProjeto.jsp");
+
+            if (retorno == 1) {
+                redirecionarPagina("cadastroMotivo.jsp?m=1", request, response);
+            } else {
+                redirecionarPagina("cadastroMotivo.jsp?m=" + retorno, request, response);
+            }
+
+        } else if (parametro.equals("cadModulo")) {
+            String idProjeto = request.getParameter("projeto");
+            // System.out.println(".i.d" + id);
+            Modulo modulo = new Modulo();
+            int idModulo;
+            if (request.getParameter("id").equals("")) {
+                idModulo = 0;
+            } else {
+                idModulo = Integer.parseInt(String.valueOf(request.getParameter("id")));
+            }
+            modulo.setId(idModulo);
+            modulo.setDescricao(request.getParameter("descricao"));
+            modulo.setSituacao('A');
+            Projeto projeto = new Projeto();
+            projeto.setId(Integer.parseInt(idProjeto));
+            modulo.setProjeto(projeto);
+
+            ControleModulo controleModulo = new ControleModulo();
+            int retorno = controleModulo.salvar(modulo);
+
+            request.setAttribute("paginaOrigem", "cadastroModulo.jsp");
+
+            if (retorno == 1) {
+                redirecionarPagina("cadastroModulo.jsp?m=1", request, response);
+            } else {
+                redirecionarPagina("cadastroModulo.jsp?m=" + retorno, request, response);
+            }
+
+        } else if (parametro.equals("cadFase")) {
+
+            String id = request.getParameter("fase");
+            Fase fase = new Fase();
+            int idFase;
+            if (request.getParameter("id").equals("")) {
+                idFase = 0;
+            } else {
+                idFase = Integer.parseInt(String.valueOf(request.getParameter("id")));
+            }
+            fase.setId(idFase);
+            fase.setDescricao(request.getParameter("descricao"));
+            fase.setSituacao('A');
+            int retorno = 1;
+            ControleFase controleFase = new ControleFase();
+            retorno = controleFase.salvar(fase);
+
+            request.setAttribute("paginaOrigem", "cadastroFase.jsp");
+
+            redirecionarPagina("cadastroFase.jsp?m=" + retorno, request, response);
+
+        } else if (parametro.equals("cadVersao")) {
+            String idProjeto = request.getParameter("projeto");
+            // System.out.println(".i.d" + id);
+            Versao versao = new Versao();
+            int idVersao;
+            if (request.getParameter("id").equals("")) {
+                idVersao = 0;
+            } else {
+                idVersao = Integer.parseInt(String.valueOf(request.getParameter("id")));
+            }
+            versao.setId(idVersao);
+            versao.setDescricao(request.getParameter("descricao"));
+            versao.setSituacao('A');
+            Projeto projeto = new Projeto();
+            projeto.setId(Integer.parseInt(idProjeto));
+            versao.setProjeto(projeto);
+
+            ControleVersao controleVersao = new ControleVersao();
+            int retorno = controleVersao.salvar(versao);
+
+            request.setAttribute("paginaOrigem", "cadastroVersao.jsp");
+
+            if (retorno == 1) {
+                redirecionarPagina("cadastroVersao.jsp?m=1", request, response);
+            } else {
+                redirecionarPagina("cadastroVersao.jsp?m=" + retorno, request, response);
+            }
+        }
+
         if (parametro.equals("login")) {
             Usuario user = new Usuario();
             user.setLogin(request.getParameter("login"));
             user.setSenha(Formatacao.get_SHA_512_SecurePassword(request.getParameter("senha")));
             UsuarioDAO usuarioDAO = new UsuarioDAO();
             ArrayList<Usuario> usuarios = usuarioDAO.listar(user);
-
             boolean retorno = false;
             try {
                 if (usuarios.size() > 0) {
                     if ((user.getLogin().equalsIgnoreCase(usuarios.get(0).getLogin()) && user.getSenha().equals(usuarios.get(0).getSenha()))) {
                         retorno = true;
-
                     } else {
                         retorno = false;
                     }
@@ -285,186 +536,6 @@ public class acao extends HttpServlet {
 
         }
 
-        if (parametro.equals("cadCidade")) {
-            Cidade cid = new Cidade();
-            int id;
-            if (request.getParameter("id").equals("")) {
-                id = 0;
-            } else {
-                id = Integer.parseInt(String.valueOf(request.getParameter("id")));
-            }
-            cid.setId(id);
-            cid.setDescricao(request.getParameter("descricao"));
-            cid.setSituacao('A');
-
-            boolean retorno = true;
-
-            if (cid.getDescricao().length() < 2) {
-                retorno = false;
-                idRetorno = 2;
-            }
-
-            CidadeDAO cidDAO = new CidadeDAO();
-            ArrayList<Cidade> cidades = cidDAO.listar(cid);
-            for (int i = 0; i < cidades.size(); i++) {
-                if (cidades.get(i).getDescricao().equalsIgnoreCase(cid.getDescricao())) {
-                    retorno = false;
-                    idRetorno = 3;
-                }
-            }
-
-            if (retorno) {
-                retorno = cidDAO.salvar(cid);
-            }
-
-            request.setAttribute("paginaOrigem", "cadastroCidade.jsp");
-
-            if (retorno) {
-                redirecionarPagina("cadastroCidade.jsp?m=1", request, response);
-            } else {
-                redirecionarPagina("cadastroCidade.jsp?m=" + idRetorno, request, response);
-            }
-
-        } else {
-
-            /*-------------------
-        Verifica se a ação é cadastrr um projeto
-        -------------------
-             */
-            if (parametro.equals("cadProjeto")) {
-                Projeto proj = new Projeto();
-                int id;
-                if (request.getParameter("id").equals("")) {
-                    id = 0;
-                } else {
-                    id = Integer.parseInt(String.valueOf(request.getParameter("id")));
-                }
-                proj.setId(id);
-                proj.setDescricao(request.getParameter("descricao"));
-                proj.setSituacao('A');
-
-                boolean retorno = true;
-
-                if (proj.getDescricao().length() < 2) {
-                    retorno = false;
-                    idRetorno = 2;
-                }
-
-                ProjetoDAO projDAO = new ProjetoDAO();
-                ArrayList<Projeto> projetos = projDAO.listar(proj);
-                for (int i = 0; i < projetos.size(); i++) {
-                    if (projetos.get(i).getDescricao().equalsIgnoreCase(proj.getDescricao())) {
-                        retorno = false;
-                        idRetorno = 3;
-                    }
-                }
-
-                if (retorno) {
-                    retorno = projDAO.salvar(proj);
-                }
-
-                request.setAttribute("paginaOrigem", "cadastroProjeto.jsp");
-
-                if (retorno) {
-                    redirecionarPagina("cadastroProjeto.jsp?m=1", request, response);
-                } else {
-                    redirecionarPagina("cadastroProjeto.jsp?m=" + idRetorno, request, response);
-                }
-
-            } else {
-
-                if (parametro.equals("cadMotivo")) {
-                    Motivo motiv = new Motivo();
-                    int id;
-                    if (request.getParameter("id").equals("")) {
-                        id = 0;
-                    } else {
-                        id = Integer.parseInt(String.valueOf(request.getParameter("id")));
-                    }
-                    motiv.setId(id);
-                    motiv.setDescricao(request.getParameter("descricao"));
-                    motiv.setSituacao('A');
-
-                    boolean retorno = true;
-
-                    if (motiv.getDescricao().length() < 2) {
-                        retorno = false;
-                        idRetorno = 2;
-                    }
-
-                    MotivoDAO motivDAO = new MotivoDAO();
-                    ArrayList<Motivo> motivos = motivDAO.listar(motiv);
-                    for (int i = 0; i < motivos.size(); i++) {
-                        if (motivos.get(i).getDescricao().equalsIgnoreCase(motiv.getDescricao())) {
-                            retorno = false;
-                            idRetorno = 3;
-                        }
-                    }
-
-                    if (retorno) {
-                        retorno = motivDAO.salvar(motiv);
-                    }
-
-                    request.setAttribute("paginaOrigem", "cadastroProjeto.jsp");
-
-                    if (retorno) {
-                        redirecionarPagina("cadastroMotivo.jsp?m=1", request, response);
-                    } else {
-                        redirecionarPagina("cadastroMotivo.jsp?m=" + idRetorno, request, response);
-                    }
-
-                } else {
-                    if (parametro.equals("cadModulo")) {
-                        String id = request.getParameter("projeto");
-                        System.out.println(".i.d" + id);
-                        Modulo modulo = new Modulo();
-                        int idModulo;
-                        if (request.getParameter("id").equals("")) {
-                            idModulo = 0;
-                        } else {
-                            idModulo = Integer.parseInt(String.valueOf(request.getParameter("id")));
-                        }
-                        modulo.setId(idModulo);
-                        modulo.setDescricao(request.getParameter("descricao"));
-                        modulo.setSituacao('A');
-                        Projeto projeto = new Projeto();
-                        projeto.setId(Integer.parseInt(id));
-                        modulo.setProjeto(projeto);
-
-                        boolean retorno = true;
-
-                        if (modulo.getDescricao().length() < 2) {
-                            retorno = false;
-                            idRetorno = 2;
-                        }
-
-                        ModuloDAO moduloDAO = new ModuloDAO();
-                        ArrayList<Modulo> modulos = moduloDAO.listar(modulo);
-                        for (int i = 0; i < modulos.size(); i++) {
-                            if (modulos.get(i).getDescricao().equalsIgnoreCase(modulo.getDescricao()) && modulos.get(i).getId() != modulo.getId() ) {
-                                retorno = false;
-                                idRetorno = 3;
-                            }
-                        }
-
-                        if (retorno) {
-                            retorno = moduloDAO.salvar(modulo);
-                        }
-
-                        request.setAttribute("paginaOrigem", "cadastroModulo.jsp");
-
-                        if (retorno) {
-                            redirecionarPagina("cadastroModulo.jsp?m=1", request, response);
-                        } else {
-                            redirecionarPagina("cadastroModulo.jsp?m=" + idRetorno, request, response);
-                        }
-
-                    }
-
-                }
-            }
-
-        }
     }
 
     /**

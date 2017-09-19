@@ -1,7 +1,6 @@
 <%@page import="entidade.Cidade"%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+
 <!--<html>-->
 
 
@@ -17,6 +16,7 @@
     if (cid == null) {
         cid = new Cidade();
         cid.setSituacao('A');
+        cid.setDescricao("");
     }
 %>
 
@@ -78,7 +78,7 @@
                             <%
                             } else if (request.getParameter("m").equals("10")) {
                             %>
-                            Cidade excluÃ­da com sucesso!
+                            Cidade excluída com sucesso!
                             <%
                                 }
                             %>
@@ -96,13 +96,13 @@
                             <%if (request.getParameter("m").equals("2")) {
                             %>
                             <h5>Erro ao salvar cidade!</h5><br>
-                            <h5>Nome precisa ter de 3 atÃ© 150 caracteres.</h5>   
+                            <h5>Nome precisa ter de 3 até 150 caracteres.</h5>   
                             <% } else if (request.getParameter("m").equals("3")) {
 
                             %>
 
                             Erro ao salvar cidade!<br>  
-                            Cidade jÃ¡ cadastrada.
+                            Cidade já cadastrada.
 
                             <%                                }
 

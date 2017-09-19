@@ -1,6 +1,6 @@
 <%@page import="entidade.Projeto"%>
 <%@page import="entidade.Cidade"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <!--<html>-->
 
@@ -79,7 +79,7 @@
                             <%
                             } else if (request.getParameter("m").equals("10")) {
                             %>
-                            Projeto exclu√≠do com sucesso!
+                            Projeto excluÌdo com sucesso!
                             <%
                                 }
                             %>
@@ -97,13 +97,13 @@
                             <%if (request.getParameter("m").equals("2")) {
                             %>
                             <h5>Erro ao salvar projeto!</h5><br>
-                            <h5>Nome precisa ter de 3 at√© 150 caracteres.</h5>   
+                            <h5>Nome precisa ter de 3 atÈ 150 caracteres.</h5>   
                             <% } else if (request.getParameter("m").equals("3")) {
 
                             %>
 
                             Erro ao salvar projeto!<br>  
-                            Projeto j√° cadastrada.
+                            Projeto j· cadastrada.
 
                             <%                                }
 

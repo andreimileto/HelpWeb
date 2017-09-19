@@ -7,7 +7,7 @@
 
     <section class="content-header">
 
-        <div class="box">
+        <div class="box box-info">
             <div class="box-header">
                 <h3 class="box-title">Lista de projetos</h3>
             </div>

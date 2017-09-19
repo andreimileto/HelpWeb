@@ -29,8 +29,8 @@ public class FaseDAO extends DAO{
             Session session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             String sql = "from Fase  "                    
-                    + "where upper(descricao)  like '" + fase.getDescricao().toUpperCase() + "%' "
-                    + "and situacao ='A'"
+                    + "where  "
+                    + "situacao ='A'"
                     + " order by descricao";
             String sel = sql;
             System.out.println(sel);
@@ -50,5 +50,43 @@ public class FaseDAO extends DAO{
 //        }
         return lista;
     }
+     
+     
+     
+       public ArrayList<Fase> consultarId(int id) {
+        //this.projeto = projeto;
+        List resultado = null;
+
+        ArrayList<Fase> listas = new ArrayList<>();
+        try {
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+            String sql = "";
+
+            sql = "from Fase  "
+                    + "where "
+                    + " id =" + id;
+
+            String sel = sql;
+            System.out.println(sel);
+            org.hibernate.Query q = session.createQuery(sql);
+
+            resultado = q.list();
+
+            for (Object o : resultado) {    
+                Fase fas = ((Fase) ((Object) o));
+                listas.add(fas);
+            }
+
+        } catch (HibernateException he) {
+            he.printStackTrace();
+        }// finally {
+//            session.close();
+//        }
+        return listas;
+
+
+    }
+     
     
 }

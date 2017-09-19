@@ -1,6 +1,6 @@
 <%@page import="entidade.Motivo"%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <!--<html>-->
 
@@ -79,7 +79,7 @@
                             <%
                             } else if (request.getParameter("m").equals("10")) {
                             %>
-                            Motivo exclu√≠do com sucesso!
+                            Motivo excluÌdo com sucesso!
                             <%
                                 }
                             %>
@@ -97,13 +97,13 @@
                             <%if (request.getParameter("m").equals("2")) {
                             %>
                             <h5>Erro ao salvar motivo!</h5>
-                            <h5>Nome precisa ter de 3 at√© 150 caracteres.</h5>   
+                            <h5>Nome precisa ter de 3 atÈ 150 caracteres.</h5>   
                             <% } else if (request.getParameter("m").equals("3")) {
 
                             %>
 
                             Erro ao salvar motivo!<br>  
-                            Motivo j√° cadastrada.
+                            Motivo j· cadastrada.
 
                             <%                                }
 

@@ -46,7 +46,6 @@ Contributor(s):
     <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/helpweb</property>
     <property name="hibernate.connection.username">postgres</property>
     <property name="hibernate.connection.password">postgres</property>
-    <mapping resource="apoio/hibernate.hbm.xml"/>
     <mapping resource="entidade/Cidade.hbm.xml"/>
     <mapping resource="entidade/Versao.hbm.xml"/>
     <mapping resource="entidade/Cliente.hbm.xml"/>

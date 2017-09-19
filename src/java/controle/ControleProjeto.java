@@ -7,6 +7,7 @@ package controle;
 
 import DAO.FaseDAO;
 import DAO.MotivoDAO;
+import DAO.PrioridadeDAO;
 import DAO.ProjetoDAO;
 import entidade.Fase;
 import entidade.Motivo;
@@ -21,29 +22,32 @@ public class ControleProjeto {
 
     Projeto projeto;
 
-    public String salvar(Projeto projeto) {
+    public int salvar(Projeto projeto) {
         this.projeto = projeto;
 
-        if (projeto.getDescricao().length() < 3) {
-            return "Erro ao salvar Projeto\nÉ preciso que o nome tenha mais que dois caracteres na descrição";
-        }
-
         ProjetoDAO projetoDAO = new ProjetoDAO();
-        ArrayList<Projeto> projetos = new ArrayList<>();
-        projetos = listar(projeto);
+        if (projeto.getSituacao() == 'A') {
 
-        //verifica se existe algum cadastro com o mesmo nome que seja um ID diferente do que está alterando.
-        for (int i = 0; i < projetos.size(); i++) {
-            if (this.projeto.getDescricao().equalsIgnoreCase(projetos.get(i).getDescricao()) && projeto.getId() != projetos.get(i).getId()) {
-                return "Erro ao salvar Projeto\nJá existe um cadastro com esse nome!";
+            if (projeto.getDescricao().length() < 3 || projeto.getDescricao().length() > 45) {
+                return 2;
+            }
+
+            ArrayList<Projeto> projetos = new ArrayList<>();
+            projetos = listar(projeto);
+
+            //verifica se existe algum cadastro com o mesmo nome que seja um ID diferente do que está alterando.
+            for (int i = 0; i < projetos.size(); i++) {
+                if (this.projeto.getDescricao().equalsIgnoreCase(projetos.get(i).getDescricao()) && projeto.getId() != projetos.get(i).getId()) {
+                    return 3;
+                }
             }
         }
 
         //caso as duas validações acima não interfira no cadastro, será efetuado o cadasro
         if (projetoDAO.salvar(projeto)) {
-            return "ok";
+            return 1;
         } else {
-            return "Erro ao salvar Projeto\nEntre em contato com o suporte";
+            return 4;
         }
 
     }
@@ -54,4 +58,12 @@ public class ControleProjeto {
         return projetoDAO.listar(projeto);
 
     }
+
+    public ArrayList<Projeto> consultarId(int id) {
+
+        ProjetoDAO projetoDAO = new ProjetoDAO();
+        return projetoDAO.consultarId(id);
+
+    }
+
 }

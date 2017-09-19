@@ -53,12 +53,7 @@
 
                 <br>
                 <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
+
                 <!-- Main content -->
                 <section  class="box-header">
                     <div class="row">

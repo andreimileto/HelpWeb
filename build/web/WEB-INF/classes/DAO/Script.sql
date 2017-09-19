@@ -115,8 +115,7 @@ CREATE TABLE IF NOT EXISTS modulo (
   descricao VARCHAR(45) NOT NULL,
   situacao CHAR(1) NOT NULL,
   PRIMARY KEY (id),
- -- INDEX fk_modulo_projeto1_idx (id_projeto),
-  CONSTRAINT fk_modulo_projeto1
+  CONSTRAINT fk_modulo_projeto
     FOREIGN KEY (id_projeto)
     REFERENCES projeto (id)
     ON DELETE NO ACTION
@@ -246,3 +245,4 @@ CREATE TABLE IF NOT EXISTS tarefa_usuario (
 
 
 
+insert into usuario values(default,'Andrei','andreimileto@gmail.com','65eca8a8310be44510c71765db3e0e98d9a3ac555e480041383c4592390b8118bd4c2556deb77846ae327836033a7257b8ea5cc51425554c633de40f54b94d2d','A');
