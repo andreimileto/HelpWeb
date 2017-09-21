@@ -40,7 +40,9 @@ public class ControleVersao {
 
             //verifica se existe algum cadastro com o mesmo nome que seja um ID diferente do que está alterando.
             for (int i = 0; i < versoes.size(); i++) {
-                if (this.versao.getDescricao().equalsIgnoreCase(versoes.get(i).getDescricao()) && versao.getId() != versoes.get(i).getId()) {
+                if (this.versao.getDescricao().equalsIgnoreCase(versoes.get(i).getDescricao()) 
+                        && versao.getId() != versoes.get(i).getId()
+                        && versao.getProjeto().getId() == versoes.get(i).getId()) {
                     return 3;
                 }
             }

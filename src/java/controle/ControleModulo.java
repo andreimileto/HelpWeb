@@ -38,7 +38,9 @@ public class ControleModulo {
 
             //verifica se existe algum cadastro com o mesmo nome que seja um ID diferente do que está alterando.
             for (int i = 0; i < modulos.size(); i++) {
-                if (this.modulo.getDescricao().equalsIgnoreCase(modulos.get(i).getDescricao()) && modulo.getId() != modulos.get(i).getId()) {
+                if (this.modulo.getDescricao().equalsIgnoreCase(modulos.get(i).getDescricao()) 
+                        && modulo.getId() != modulos.get(i).getId() 
+                        && modulo.getProjeto().getId() == modulos.get(i).getProjeto().getId()) {
                     return 3;
                 }
             }

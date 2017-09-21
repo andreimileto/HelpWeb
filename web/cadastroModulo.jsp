@@ -62,7 +62,7 @@
 
 
                             <div class="form-group">
-                                <label for="nome" class="col-sm-2 control-label">Nome</label>
+                                <label for="nome" class="col-sm-2 control-label">Nome*</label>
 
                                 <div class="col-sm-6">
                                     <input type="text" class="form-control" name="descricao" value="<%= modulo.getDescricao()%>">
@@ -70,7 +70,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="projeto" class="col-sm-2 control-label">Projeto</label>
+                                <label for="projeto" class="col-sm-2 control-label">Projeto*</label>
 
                                 <select class="form-control select2" style="width: 49%;" name="projeto">
 
@@ -134,7 +134,7 @@
                             <%if (request.getParameter("m").equals("2")) {
                             %>
                             <h5>Erro ao salvar módulo!</h5>
-                            <h5>Nome precisa ter de 3 até 150 caracteres.</h5>   
+                            <h5>Nome precisa ter de 3 até 45 caracteres.</h5>   
                             <% } else if (request.getParameter("m").equals("3")) {
 
                             %>

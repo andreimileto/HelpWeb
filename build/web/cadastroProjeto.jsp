@@ -54,7 +54,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="nome" class="col-sm-2 control-label">Nome</label>
+                                <label for="nome" class="col-sm-2 control-label">Nome*</label>
 
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" name="descricao" value="<%= proj.getDescricao()%>">
@@ -96,14 +96,14 @@
                             <h4><i class="icon fa fa-ban"></i> Erro!</h4>
                             <%if (request.getParameter("m").equals("2")) {
                             %>
-                            <h5>Erro ao salvar projeto!</h5><br>
-                            <h5>Nome precisa ter de 3 até 150 caracteres.</h5>   
+                            <h5>Erro ao salvar projeto!</h5>
+                            <h5>Nome precisa ter de 3 até 45 caracteres.</h5>   
                             <% } else if (request.getParameter("m").equals("3")) {
 
                             %>
 
                             Erro ao salvar projeto!<br>  
-                            Projeto já cadastrada.
+                            Projeto já cadastrado.
 
                             <%                                }
 
