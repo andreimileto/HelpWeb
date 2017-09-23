@@ -3,13 +3,24 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/web/cadastroModulo.jsp</file>
+            <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/web/cadastroVersao.jsp</file>
+            <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/web/cadastroPrioridade.jsp</file>
+            <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/web/cadastroProjeto.jsp</file>
+            <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/web/cadastroCidade.jsp</file>
+            <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/src/java/DAO/CidadeDAO.java</file>
+            <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/web/listaProjetos.jsp</file>
+            <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/web/listaCidades.jsp</file>
             <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/src/java/controle/ControleVersao.java</file>
+            <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/src/java/apoio/Formatacao.java</file>
             <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/web/cadastroFase.jsp</file>
             <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/web/index.jsp</file>
             <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/src/java/DAO/ModuloDAO.java</file>
             <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/src/java/DAO/ProjetoDAO.java</file>
+            <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/src/java/hibernate.cfg.xml</file>
             <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/src/java/controle/ControleModulo.java</file>
-            <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/src/java/DAO/CidadeDAO.java</file>
+            <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/src/java/servlet/Filtro.java</file>
+            <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/web/cadastroMotivo.jsp</file>
             <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/web/topo.jsp</file>
         </group>
     </open-files>

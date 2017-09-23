@@ -96,7 +96,7 @@
                             <%if (request.getParameter("m").equals("2")) {
                             %>
                             <h5>Erro ao salvar cidade!</h5><br>
-                            <h5>Nome precisa ter de 3 até 150 caracteres.</h5>   
+                            <h5>Nome precisa ter de 3 até 45 caracteres.</h5>   
                             <% } else if (request.getParameter("m").equals("3")) {
 
                             %>
