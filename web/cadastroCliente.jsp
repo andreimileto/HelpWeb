@@ -66,20 +66,20 @@
 
 
                                 </div>
-                                    
-                                <label for="tipo" class="col-sm-1 control-label">Tipo*</label>
 
-                                <select class="form-control select2" style="width: 35%;" name="tipo">
+                                    <label for="tipo" class="col-sm-1 control-label" id="tipo" >Tipo*</label>
+
+                                <select class="form-control select2" style="width: 35%;" name="tipo" id="tipo" onchange="verificarTipoCadastro()">
                                     <option value="0" selected>Selecione </option>
 
                                     <option value="f">Pessoa Física</option>
                                     <option value="j">Pessoa Jurídica</option>
 
                                 </select>
-                           
+
 
                             </div>
-                            
+
 
                             <div class="form-group">
                                 <label for="nome" class="col-sm-2 control-label">Nome*</label>
@@ -94,7 +94,7 @@
 
                                 <div class="col-sm-5">
 
-                                    <input type="text" name="cpf/cnpj" class="form-control" data-inputmask='"mask": "999.999.999/9999-99"' data-mask>
+                                    <input  type="text" name="cpfcnpj" class="form-control" data-inputmask='"mask": "999.999.999/9999-99"' data-mask id="cpfcnpj" value="cpfcnpj">
 <!--                                    <input type="text" class="form-control" name="CPF/CNPJ" value="<%=cliente.getCpfCnpj()%>">-->
 
 
@@ -224,6 +224,49 @@
     </section>
 
 
+    <script>
+//        function verificarTipoCadastro() {
+//            var x = document.getElementById("tipo").value;
+//            if (x == 0) {
+//                document.getElementById("cpfcnpj").innerHTML = ""
+//            }
+//            if (x == 1) {
+//                document.getElementById("cpfcnpj").innerHTML = "Você não é um belo"
+//                mask = "99.999.999/9999-99";
+//            }
+//            if (x == 2) {
+//                document.getElementById("cpfcnpj").innerHTML = "Você é um belo"
+//                mask = "999.999.999-99";
+//            }
+//            $("input[name=cpf/cnpj]").mask(mask);
+//        }
+
+
+
+
+
+       function verificarTipoCadastro() {
+            //$("#tipo").change(function () { //Quando houver uma mudança no select
+                var opt = $("#tipo option:selected").val(); //Recupera o valor do option selecionado
+                var mask = "";
+                if (opt == 1) {
+                    mask = "99.999.999/9999-99";
+                    $("input[name=cpfcnpj]").data-Inputmask("999.999.999-99");
+                } else if (opt == 2) {
+                    mask = "999.999.999-99";
+                    $("input[name=cpfcnpj]").data-Inputmask("999.999.999-99");
+//                } else if (opt == 3) {
+//                    mask = "(99) 9999-9999";
+//                }
+                }
+                $("input[name=cpfcnpj]").data-Inputmask(mask);
+            });
+        });
+
+
+    </script>
+
+
     <%//@include file = "listaModulos.jsp"%>
 
 
@@ -253,17 +296,17 @@
 <script src="dist/js/adminlte.min.js"></script>
 <script src="dist/js/demo.js"></script>
 <script>
-    $(function () {
-        $('#example1').DataTable()
-        $('#example2').DataTable({
-            'paging': true,
-            'lengthChange': false,
-            'searching': false,
-            'ordering': true,
-            'info': true,
-            'autoWidth': false
+        $(function () {
+            $('#example1').DataTable()
+            $('#example2').DataTable({
+                'paging': true,
+                'lengthChange': false,
+                'searching': false,
+                'ordering': true,
+                'info': true,
+                'autoWidth': false
+            })
         })
-    })
 </script>    
 
 
