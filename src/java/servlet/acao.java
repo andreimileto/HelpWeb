@@ -6,6 +6,7 @@
 package servlet;
 
 import DAO.CidadeDAO;
+import DAO.ClienteDAO;
 import DAO.FaseDAO;
 import DAO.ModuloDAO;
 import DAO.MotivoDAO;
@@ -15,6 +16,7 @@ import DAO.UsuarioDAO;
 import DAO.VersaoDAO;
 import apoio.Formatacao;
 import controle.ControleCidade;
+import controle.ControleCliente;
 import controle.ControleFase;
 import controle.ControleModulo;
 import controle.ControleMotivo;
@@ -22,6 +24,7 @@ import controle.ControlePrioridade;
 import controle.ControleProjeto;
 import controle.ControleVersao;
 import entidade.Cidade;
+import entidade.Cliente;
 import entidade.Fase;
 import entidade.Modulo;
 import entidade.Motivo;
@@ -165,6 +168,15 @@ public class acao extends HttpServlet {
             request.setAttribute("objfas", fase);
 
             encaminharPagina("cadastroFase.jsp", request, response);
+        } else if (parametro.equals("edCliente")) {
+            int id = Integer.parseInt(String.valueOf(request.getParameter("id")));
+
+            ArrayList<Cliente> clientes = new ClienteDAO().consultarId(id);
+            Cliente cliente = new Cliente();
+            cliente = clientes.get(0);
+            request.setAttribute("objcli", cliente);
+
+            encaminharPagina("cadastroCliente.jsp", request, response);
         } else if (parametro.equals("exCidade")) {
 
             int id = Integer.parseInt(String.valueOf(request.getParameter("id")));
@@ -246,77 +258,104 @@ public class acao extends HttpServlet {
                 redirecionarPagina("cadastroMotivo.jsp?m=11", request, response);
             }
 
-        } else {
-            if (parametro.equals("exModulo")) {
+        } else if (parametro.equals("exModulo")) {
 
-                int id = Integer.parseInt(String.valueOf(request.getParameter("id")));
-                ModuloDAO moduloDAO = new ModuloDAO();
+            int id = Integer.parseInt(String.valueOf(request.getParameter("id")));
+            ModuloDAO moduloDAO = new ModuloDAO();
 
-                Modulo mod = new Modulo();
-                ArrayList<Modulo> modulos = moduloDAO.consultarId(id);
-                mod.setId(id);
-                mod.setDescricao(modulos.get(0).getDescricao());
-                Projeto projeto = new Projeto();
-                projeto.setId(modulos.get(0).getProjeto().getId());
-                mod.setProjeto(projeto);
-                mod.setSituacao('I');
+            Modulo mod = new Modulo();
+            ArrayList<Modulo> modulos = moduloDAO.consultarId(id);
+            mod.setId(id);
+            mod.setDescricao(modulos.get(0).getDescricao());
+            Projeto projeto = new Projeto();
+            projeto.setId(modulos.get(0).getProjeto().getId());
+            mod.setProjeto(projeto);
+            mod.setSituacao('I');
 
-                int retorno = new ControleModulo().salvar(mod);
+            int retorno = new ControleModulo().salvar(mod);
 
-                request.setAttribute("paginaOrigem", "cadastroModulo.jsp");
+            request.setAttribute("paginaOrigem", "cadastroModulo.jsp");
 
-                if (retorno == 1) {
-                    encaminharPagina("cadastroModulo.jsp?m=10", request, response);
-                } else {
-                    encaminharPagina("cadastroModulo.jsp?m=11", request, response);
-                }
-
-            } else if (parametro.equals("exVersao")) {
-
-                int id = Integer.parseInt(String.valueOf(request.getParameter("id")));
-                VersaoDAO versaoDAO = new VersaoDAO();
-
-                Versao ver = new Versao();
-                ArrayList<Versao> versoes = versaoDAO.consultarId(id);
-                ver.setId(id);
-                ver.setDescricao(versoes.get(0).getDescricao());
-                Projeto projeto = new Projeto();
-                projeto.setId(versoes.get(0).getProjeto().getId());
-                ver.setProjeto(projeto);
-                ver.setSituacao('I');
-
-                int retorno = new ControleVersao().salvar(ver);
-
-                request.setAttribute("paginaOrigem", "cadastroVersao.jsp");
-
-                if (retorno == 1) {
-                    encaminharPagina("cadastroVersao.jsp?m=10", request, response);
-                } else {
-                    encaminharPagina("cadastroVersao.jsp?m=11", request, response);
-                }
-
-            } else if (parametro.equals("exFase")) {
-
-                int id = Integer.parseInt(String.valueOf(request.getParameter("id")));
-                Fase fas = new Fase();
-                fas.setId(id);
-                ControleFase controleFase = new ControleFase();
-                ArrayList<Fase> fases = controleFase.consultarId(fas.getId());
-                fas.setDescricao(fases.get(0).getDescricao());
-                fas.setSituacao('I');
-                int retorno;
-
-                retorno = controleFase.salvar(fas);
-
-                request.setAttribute("paginaOrigem", "cadastroFase.jsp");
-
-                if (retorno == 1) {
-                    encaminharPagina("cadastroFase.jsp?m=10", request, response);
-                } else {
-                    encaminharPagina("cadastroFase.jsp?m=11", request, response);
-                }
-
+            if (retorno == 1) {
+                encaminharPagina("cadastroModulo.jsp?m=10", request, response);
+            } else {
+                encaminharPagina("cadastroModulo.jsp?m=11", request, response);
             }
+
+        } else if (parametro.equals("exVersao")) {
+
+            int id = Integer.parseInt(String.valueOf(request.getParameter("id")));
+            VersaoDAO versaoDAO = new VersaoDAO();
+
+            Versao ver = new Versao();
+            ArrayList<Versao> versoes = versaoDAO.consultarId(id);
+            ver.setId(id);
+            ver.setDescricao(versoes.get(0).getDescricao());
+            Projeto projeto = new Projeto();
+            projeto.setId(versoes.get(0).getProjeto().getId());
+            ver.setProjeto(projeto);
+            ver.setSituacao('I');
+
+            int retorno = new ControleVersao().salvar(ver);
+
+            request.setAttribute("paginaOrigem", "cadastroVersao.jsp");
+
+            if (retorno == 1) {
+                encaminharPagina("cadastroVersao.jsp?m=10", request, response);
+            } else {
+                encaminharPagina("cadastroVersao.jsp?m=11", request, response);
+            }
+
+        } else if (parametro.equals("exFase")) {
+
+            int id = Integer.parseInt(String.valueOf(request.getParameter("id")));
+            Fase fas = new Fase();
+            fas.setId(id);
+            ControleFase controleFase = new ControleFase();
+            ArrayList<Fase> fases = controleFase.consultarId(fas.getId());
+            fas.setDescricao(fases.get(0).getDescricao());
+            fas.setSituacao('I');
+            int retorno;
+
+            retorno = controleFase.salvar(fas);
+
+            request.setAttribute("paginaOrigem", "cadastroFase.jsp");
+
+            if (retorno == 1) {
+                encaminharPagina("cadastroFase.jsp?m=10", request, response);
+            } else {
+                encaminharPagina("cadastroFase.jsp?m=11", request, response);
+            }
+
+        } else if (parametro.equals("exCliente")) {
+
+            int id = Integer.parseInt(String.valueOf(request.getParameter("id")));
+            Cliente cli = new Cliente();
+            cli.setId(id);
+            ControleCliente controleCliente = new ControleCliente();
+            ArrayList<Cliente> clientes = controleCliente.consultarId(cli.getId());
+            Cidade cid = new Cidade();
+            cid.setId(clientes.get(0).getCidade().getId());
+            cli.setRazaoSocial(clientes.get(0).getRazaoSocial());
+            cli.setCpfCnpj(clientes.get(0).getCpfCnpj());
+            // cli = clientes.get(0);
+            cli.setEndereco(clientes.get(0).getEndereco());
+            cli.setTelefone(clientes.get(0).getTelefone());
+            cli.setTipoCadastro(clientes.get(0).getTipoCadastro());
+            cli.setSituacao('I');
+            cli.setCidade(cid);
+            int retorno;
+
+            retorno = controleCliente.salvar(cli);
+
+            request.setAttribute("paginaOrigem", "cadastroCliente.jsp");
+
+            if (retorno == 1) {
+                encaminharPagina("cadastroCliente.jsp?m=10", request, response);
+            } else {
+                encaminharPagina("cadastroCliente.jsp?m=11", request, response);
+            }
+
         }
 
     }
@@ -502,6 +541,38 @@ public class acao extends HttpServlet {
             } else {
                 redirecionarPagina("cadastroVersao.jsp?m=" + retorno, request, response);
             }
+        } else if (parametro.equals("cadCliente")) {
+            String idCidade = request.getParameter("cidade");
+            // System.out.println(".i.d" + id);
+            Cliente cliente = new Cliente();
+            Cidade cid = new Cidade();
+            int idCliente;
+            if (request.getParameter("id").equals("")) {
+                idCliente = 0;
+            } else {
+                idCliente = Integer.parseInt(String.valueOf(request.getParameter("id")));
+            }
+            cliente.setId(idCliente);
+            cliente.setRazaoSocial(request.getParameter("nome"));
+            cliente.setTipoCadastro(request.getParameter("tipo").charAt(0));
+            cliente.setTelefone(request.getParameter("telefone"));
+            cliente.setEndereco(request.getParameter("endereco"));
+            cliente.setCpfCnpj(request.getParameter("cpfcnpj").replace(".", "").replace("-", "").replace("/", ""));
+            cid.setId(Integer.parseInt(idCidade));
+            cliente.setCidade(cid);
+            cliente.setSituacao('A');
+
+            ControleCliente controleCliente = new ControleCliente();
+            int retorno = controleCliente.salvar(cliente);
+
+            request.setAttribute("paginaOrigem", "cadastroCliente.jsp");
+
+            if (retorno == 1) {
+                redirecionarPagina("cadastroCliente.jsp?m=1", request, response);
+            } else {
+                redirecionarPagina("cadastroCliente.jsp?m=" + retorno, request, response);
+            }
+
         }
 
         if (parametro.equals("login")) {

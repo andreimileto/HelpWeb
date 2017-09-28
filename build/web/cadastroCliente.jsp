@@ -23,6 +23,7 @@
         cliente.setRazaoSocial("");
         cliente.setCpfCnpj("");
         cliente.setEndereco("");
+        cliente.setTelefone("");
 
         Cidade cidade = new Cidade();
 
@@ -38,7 +39,7 @@
         <div class="row">
 
             <!-- right column -->
-            <div class="col-md-8">
+            <div class="col-md-6">
                 <!-- Horizontal Form -->
                 <div class="box box-info">
                     <div class="box-header with-border">
@@ -48,10 +49,10 @@
                     <form name="cadCliente" class="form-horizontal" action="/HelpWeb/acao?parametro=cadCliente" method="post">
                         <div class="box-body">
                             <div class="form-group">
-                                <label for="id" class="col-md-2 control-label" >ID</label>
+                                <label for="id" class="col-sm-2 control-label" >ID</label>
 
 
-                                <div class="col-md-2 control-label">
+                                <div class="col-md-3 control-label">
                                     <%                                                       if (cliente.getId() > 0) {%>
                                     <input type="text" class="col-md-2 form-control" name="id" value="<%= cliente.getId()%>" Use readonly="true" >
 
@@ -66,21 +67,7 @@
 
 
                                 </div>
-
-                                    <label for="tipo" class="col-sm-1 control-label" id="tipo" >Tipo*</label>
-
-                                <select class="form-control select2" style="width: 35%;" name="tipo" id="tipo" onchange="verificarTipoCadastro()">
-                                    <option value="0" selected>Selecione </option>
-
-                                    <option value="f">Pessoa Física</option>
-                                    <option value="j">Pessoa Jurídica</option>
-
-                                </select>
-
-
                             </div>
-
-
                             <div class="form-group">
                                 <label for="nome" class="col-sm-2 control-label">Nome*</label>
 
@@ -90,13 +77,57 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label for="tipo" class="col-lg-2 control-label" id="tipo" >Tipo*</label>
+
+                                <select class="form-control select2" style="width: 57%;" name="tipo" id="tipo"  >
+                                    <%if (cliente.getTipoCadastro() != 'F' && cliente.getTipoCadastro() != 'F') {
+                                    %>
+                                    <option value="0" selected>Selecione </option>
+                                    <%
+                                    } else {
+                                    %>
+                                    <option value="0">Selecione </option>
+                                    <%
+                                        }
+                                    %>
+                                    <%if (cliente.getTipoCadastro() == 'F') {
+                                    %>
+                                    <option value="F" selected>Pessoa Física</option>        
+                                    <%
+                                    } else {
+                                    %>
+                                    <option value="F">Pessoa Física</option>
+
+                                    <%
+                                        }
+                                        if (cliente.getTipoCadastro() == 'J') {
+                                    %>
+                                    <option value="J" selected>Pessoa Jurídica</option>
+                                    <%
+                                    } else {
+                                    %><option value="J">Pessoa Jurídica</option>
+                                    <% }
+                                    %>
+
+
+
+
+                                </select>
+                            </div>
+                            <div class="form-group">
                                 <label for="CPF/CNPJ" class="col-sm-2 control-label">CPF/CNPJ*</label>
 
-                                <div class="col-sm-5">
+                                <div class="col-md-3 col-sm-3">
+                                    <%if (cliente.getTipoCadastro() == 'F') {
+                                    %>
 
-                                    <input  type="text" name="cpfcnpj" class="form-control" data-inputmask='"mask": "999.999.999/9999-99"' data-mask id="cpfcnpj" value="cpfcnpj">
+                                    <input  type="text" name="cpfcnpj" class="form-control" data-inputmask='"mask": "999.999.999-99"' data-mask id="cpfcnpj" value="<%=cliente.getCpfCnpj()%>">        
+                                    <%
+                                    } else {
+                                    %>
+                                    <input  type="text" name="cpfcnpj" class="form-control" data-inputmask='"mask": "99.999.999/9999-99"' data-mask id="cpfcnpj" value="<%=cliente.getCpfCnpj()%>">
 <!--                                    <input type="text" class="form-control" name="CPF/CNPJ" value="<%=cliente.getCpfCnpj()%>">-->
-
+                                    <%}%>
 
                                 </div>
 
@@ -107,20 +138,29 @@
                                 <label for="telefone" class="col-sm-2 control-label">Telefone</label>
 
                                 <div class="col-sm-3">
+                                    <%
+                                        if (cliente.getTelefone() != null || cliente.getTelefone() != "") {
+                                    %>
+                                    <input type="text" class="form-control" name="telefone" value="<%=cliente.getTelefone()%>" data-inputmask="'mask': ['(99) 9999-9999[9]']" data-mask>        
+                                    <%
+                                    } else {
+                                    %>
+                                    <input type="text" class="form-control"  data-inputmask="'mask': ['(99) 9999-9999[9]']" data-mask>        
 
-                                    <input type="text" class="form-control" data-inputmask="'mask': ['(99) 9999-9999[9]']" data-mask>
-<!--                                    <input type="text" class="form-control" name="CPF/CNPJ" value="<%=cliente.getTelefone()%>">-->
-
+                                    <%    }
+                                    %>
 
                                 </div>
+
                             </div>
+
+
                             <div class="form-group">
                                 <label for="cidade" class="col-sm-2 control-label">Cidade*</label>
 
-                                <select class="form-control select2" style="width: 49%;" name="cidade">
+                                <select class="form-control select2" style="width: 57%;" name="cidade">
                                     <option value="0" selected>Selecione </option>
                                     <%
-
                                         Cidade cid = new Cidade();
                                         cid.setDescricao("");
                                         cid.setSituacao('A');
@@ -142,6 +182,7 @@
                                     %>
                                 </select>
                             </div>
+
 
 
                             <div class="form-group">
@@ -183,25 +224,30 @@
                         %>
 
                         <%
-                            if (request.getParameterMap().containsKey("m") && (request.getParameter("m").equals("2") || request.getParameter("m").equals("3"))) {
+                            if (request.getParameterMap().containsKey("m") && (request.getParameter("m").equals("2") || request.getParameter("m").equals("3")
+                                    || request.getParameter("m").equals("4") || request.getParameter("m").equals("5") || request.getParameter("m").equals("6"))) {
                         %>
                         <div class="alert alert-danger">
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            <h4><i class="icon fa fa-ban"></i> Erro!</h4>
+                            <h4><i class="icon fa fa-ban"></i> Erro ao salvar cliente!</h4>
                             <%if (request.getParameter("m").equals("2")) {
                             %>
-                            <h5>Erro ao salvar cliente!</h5>
                             <h5>Nome precisa ter de 3 até 150 caracteres.</h5>   
                             <% } else if (request.getParameter("m").equals("3")) {
+                            %>                           
+                            É preciso selecionar um tipo.
 
+                            <%} else if (request.getParameter("m").equals("4")) {
+                            %> 
+                            CPF/CNPJ inválido
+                            <%
+                            } else if (request.getParameter("m").equals("5")) {
+                            %> 
+                            CPF/CNPJ já utilizado em outro cadastro.
+                            <%
+                                }
                             %>
 
-                            Erro ao salvar cliente!<br>  
-                            Cliente já cadastrado.
-
-                            <%                                }
-
-                            %>
 
                         </div>
                         <%                                        }
@@ -223,58 +269,9 @@
         <!-- /.row -->
     </section>
 
+    <%@include file = "listaClientes.jsp"%>
 
-    <script>
-//        function verificarTipoCadastro() {
-//            var x = document.getElementById("tipo").value;
-//            if (x == 0) {
-//                document.getElementById("cpfcnpj").innerHTML = ""
-//            }
-//            if (x == 1) {
-//                document.getElementById("cpfcnpj").innerHTML = "Você não é um belo"
-//                mask = "99.999.999/9999-99";
-//            }
-//            if (x == 2) {
-//                document.getElementById("cpfcnpj").innerHTML = "Você é um belo"
-//                mask = "999.999.999-99";
-//            }
-//            $("input[name=cpf/cnpj]").mask(mask);
-//        }
-
-
-
-
-
-       function verificarTipoCadastro() {
-            //$("#tipo").change(function () { //Quando houver uma mudança no select
-                var opt = $("#tipo option:selected").val(); //Recupera o valor do option selecionado
-                var mask = "";
-                if (opt == 1) {
-                    mask = "99.999.999/9999-99";
-                    $("input[name=cpfcnpj]").data-Inputmask("999.999.999-99");
-                } else if (opt == 2) {
-                    mask = "999.999.999-99";
-                    $("input[name=cpfcnpj]").data-Inputmask("999.999.999-99");
-//                } else if (opt == 3) {
-//                    mask = "(99) 9999-9999";
-//                }
-                }
-                $("input[name=cpfcnpj]").data-Inputmask(mask);
-            });
-        });
-
-
-    </script>
-
-
-    <%//@include file = "listaModulos.jsp"%>
-
-
-    <!-- /.content -->
 </div>
-
-
-
 <%@include file = "inferior.jsp"%>
 
 <script src="bower_components/jquery/dist/jquery.min.js"></script>
@@ -295,18 +292,19 @@
 <script src="bower_components/fastclick/lib/fastclick.js"></script>
 <script src="dist/js/adminlte.min.js"></script>
 <script src="dist/js/demo.js"></script>
+
 <script>
-        $(function () {
-            $('#example1').DataTable()
-            $('#example2').DataTable({
-                'paging': true,
-                'lengthChange': false,
-                'searching': false,
-                'ordering': true,
-                'info': true,
-                'autoWidth': false
-            })
+    $(function () {
+        $('#example1').DataTable()
+        $('#example2').DataTable({
+            'paging': true,
+            'lengthChange': false,
+            'searching': false,
+            'ordering': true,
+            'info': true,
+            'autoWidth': false
         })
+    })
 </script>    
 
 
@@ -381,4 +379,47 @@
     })
 </script>
 
+    <script>
+//        function verificarTipoCadastro() {
+//            var x = document.getElementById("tipo").value;
+//            if (x == 0) {
+//                document.getElementById("cpfcnpj").innerHTML = ""
+//            }
+//            if (x == 1) {
+//                document.getElementById("cpfcnpj").innerHTML = "Você não é um belo"
+//                mask = "99.999.999/9999-99";
+//            }
+//            if (x == 2) {
+//                document.getElementById("cpfcnpj").innerHTML = "Você é um belo"
+//                mask = "999.999.999-99";
+//            }
+//            $("input[name=cpf/cnpj]").mask(mask);
+//        }
 
+
+
+
+
+        function verificarTipoCadastro() {
+
+        //$("#tipo").change(function () { //Quando houver uma mudança no select
+        var x = document.getElementById("tipo").value;
+//        var opt = $("#tipo option:selected").val(); //Recupera o valor do option selecionado
+                var mask = "";
+                if (x=='J') {
+        mask = "99.999.999/9999-99";
+                $("input[name=cpfcnpj]").data - Inputmask("999.999.999-99");
+        } else if (x =='J') {
+        mask = "999.999.999-99";
+                $("input[name=cpfcnpj]").data - Inputmask("999.999.999-99");
+//                } else if (x =='0') {
+//                    
+//                }
+        } else {
+        mask = "999.999.999-99";
+                $("input[name=cpfcnpj]").data - Inputmask(mask);
+        }
+        );
+        }
+        );
+    </script>

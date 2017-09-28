@@ -24,7 +24,7 @@ public abstract class DAO {
 
             Transaction t = session.beginTransaction();
 
-            session.saveOrUpdate(o);
+            session.merge(o);
 
             t.commit();
 
