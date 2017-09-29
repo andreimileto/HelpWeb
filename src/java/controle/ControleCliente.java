@@ -22,21 +22,19 @@ public class ControleCliente {
     public int salvar(Cliente cliente) {
         this.cliente = cliente;
 
-        
-        if (cliente.getSituacao()=='A') {
-            
-        
-        if (cliente.getRazaoSocial().length() < 3 || cliente.getRazaoSocial().length() > 150) {
-            return 2;
-        }
-        if (cliente.getTipoCadastro()=='0') {
-            return 3;
-        }
-        if (!Validacao.validarCPFCNPJ(cliente.getCpfCnpj())) {
-            return 4;
-        }
-        
-         ArrayList<Cliente> clientes = new ArrayList<>();
+        if (cliente.getSituacao() == 'A') {
+
+            if (cliente.getRazaoSocial().length() < 3 || cliente.getRazaoSocial().length() > 150) {
+                return 2;
+            }
+            if (cliente.getTipoCadastro() == '0') {
+                return 3;
+            }
+            if (!Validacao.validarCPFCNPJ(cliente.getCpfCnpj())) {
+                return 4;
+            }
+
+            ArrayList<Cliente> clientes = new ArrayList<>();
 
             clientes = listar(cliente);
 
@@ -46,7 +44,7 @@ public class ControleCliente {
                     return 5;
                 }
             }
-            
+
         }
         if (clienteDAO.salvar(cliente)) {
             return 1;
@@ -55,21 +53,17 @@ public class ControleCliente {
         }
 
     }
-    
-    
-      public ArrayList<Cliente> listar(Cliente cliente) {
+
+    public ArrayList<Cliente> listar(Cliente cliente) {
         this.cliente = cliente;
-        
+
         return clienteDAO.listar(this.cliente);
     }
 
     public ArrayList<Cliente> consultarId(int id) {
 
-        
         return clienteDAO.consultarId(id);
 
     }
-    
-    
-    
+
 }

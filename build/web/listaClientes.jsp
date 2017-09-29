@@ -42,10 +42,8 @@
                             <td><a href="/HelpWeb/acao?parametro=edCliente&id=<%=clientes.get(i).getId()%>"><span class="label label-primary pull-left-container">Editar</span></a>
                                 <a href="/HelpWeb/acao?parametro=exCliente&id=<%=clientes.get(i).getId()%>"><span class="label label-danger pull-right-container">Excluir</span></a>
                             </td>
-
                         </tr>
                         <%
-
                             }
                         %>
                     </tbody>
