@@ -31,7 +31,7 @@ public class UsuarioDAO extends DAO {
             session.beginTransaction();
             String sql = "from Usuario  "
                    // + "where ( upper(nome)  like '" + usuario.getNome().toUpperCase() + "%' "
-                    + "where upper(login)  like '" +usuario.getLogin().toUpperCase()+"%' "
+                    + "where upper(login)  like '%" +usuario.getLogin().toUpperCase()+"%' "
                     + "and situacao ='A'"
                     + " order by login";
             String sel = sql;

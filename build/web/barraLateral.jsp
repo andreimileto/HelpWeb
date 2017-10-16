@@ -68,6 +68,19 @@
                     <li><a href="cadastroFase.jsp"><i class="fa fa-cubes"></i> Cadastro de Fase</a></li>
                 </ul>
             </li>
+            
+            <li class="treeview">
+                <a href="">
+                    <i class="fa fa-cogs"> </i>
+                    <span>Tarefa</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="cadastroTarefa.jsp"><i class="fa fa-vimeo"></i> Cadastro de Versão</a></li>
+                </ul>
+            </li>
 
             <li>
                 <a href="pages/widgets.html">
