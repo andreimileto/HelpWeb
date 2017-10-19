@@ -98,6 +98,7 @@
 
                                     <%
                                         Usuario autor = new Usuario();
+                                        autor.setId(Integer.parseInt(session.getAttribute("user").toString()));
                                         autor.setNome("");
                                         autor.setLogin("");
                                         autor.setSituacao('A');
