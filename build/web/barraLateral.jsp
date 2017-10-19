@@ -78,7 +78,7 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="cadastroTarefa.jsp"><i class="fa fa-vimeo"></i> Cadastro de Versão</a></li>
+                    <li><a href="cadastroTarefa.jsp"><i class="fa fa-vimeo"></i> Cadastro de Tarefa</a></li>
                 </ul>
             </li>
 
