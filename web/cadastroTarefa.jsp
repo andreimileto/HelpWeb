@@ -1,4 +1,12 @@
 
+<%@page import="DAO.FaseDAO"%>
+<%@page import="entidade.Fase"%>
+<%@page import="DAO.PrioridadeDAO"%>
+<%@page import="entidade.Prioridade"%>
+<%@page import="DAO.MotivoDAO"%>
+<%@page import="entidade.Motivo"%>
+<%@page import="DAO.ProjetoDAO"%>
+<%@page import="entidade.Projeto"%>
 <%@page import="DAO.UsuarioDAO"%>
 <%@page import="entidade.Usuario"%>
 <%@page import="DAO.ClienteDAO"%>
@@ -39,7 +47,7 @@
         <div class="row">
 
             <!-- right column -->
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <!-- Horizontal Form -->
                 <div class="box box-info">
                     <div class="box-header with-border">
@@ -49,9 +57,9 @@
                     <form name="cadTarefa" class="form-horizontal" action="/HelpWeb/acao?parametro=cadTarefa" method="post">
                         <div class="box-body">
                             <div class="form-group">
-                                <label for="id" class="col-sm-2 control-label" >ID</label>
+                                <label for="id" class="col-sm-1 control-label" >ID</label>
 
-                                <div class="col-sm-2">
+                                <div class="col-sm-1">
                                     <%                                                       if (tar.getId() > 0) {%>
                                     <input type="text" class="form-control" name="id" value="<%= tar.getId()%>" Use readonly="true" >
                                     <%} else {
@@ -61,12 +69,11 @@
                                     <%
                                         }
                                     %>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="cliente" class="col-sm-2 control-label">Cliente</label>
 
-                                <select class="form-control select2" style="width: 49%;" name="cliente">
+                                </div>
+                                <label for="cliente" class="col-sm-0 control-label">Cliente</label>
+
+                                <select class="form-control select2" style="width: 20%;" name="cliente">
 
                                     <%
                                         Cliente cliente = new Cliente();
@@ -83,79 +90,245 @@
                                     <%
                                     } else {
                                     %>
-                                    <option value="<%=clientes.get(i).getId()%>"><%=clientes.get(i).getRazaoSocial() %></option>
+                                    <option value="<%=clientes.get(i).getId()%>"><%=clientes.get(i).getRazaoSocial()%></option>
                                     <%
                                             }
                                         }
                                     %>
                                 </select>
                             </div>
-                                
-                                <div class="form-group">
-                                <label for="autor" class="col-sm-2 control-label">Autor</label>
 
-                                <select class="form-control select2" style="width: 49%;" name="autor">
+                            <div class="row">
+                                <div class="col-xs-6 col-sm-3 col-md-8 col-lg-2" style="background-color: yellow;">
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-xs-3 col-sm-5">
+                                                <label style="float: right;" for="autor" class="col-sm-1 control-label">Autor</label>
+                                            </div>
+
+                                            <div class="col-xs-7">
+                                                <select  disabled="true" class="form-control select2" style="width: 100%;" name="autor" >
+
+                                                    <%
+                                                        Usuario autor = new Usuario();
+                                                        if (tar.getId() == 0) {
+                                                            autor.setId(Integer.parseInt(session.getAttribute("usuarioLogado").toString()));
+                                                        }
+
+                                                        // System.out.println(autor.getId()+"....id");
+                                                        autor.setNome("");
+                                                        autor.setLogin("");
+                                                        autor.setSituacao('A');
+                                                        tar.setUsuarioByIdUsuarioAutor(autor);
+
+                                                        UsuarioDAO usuarioDAO = new UsuarioDAO();
+                                                        ArrayList<Usuario> usuarios = usuarioDAO.listar(autor);
+
+                                                        for (int i = 0; i < usuarios.size(); i++) {
+                                                            //System.out.println(usuarios.size()+".. tamanho");
+                                                            if (tar.getUsuarioByIdUsuarioAutor().getId() == usuarios.get(i).getId()) {
+                                                    %>
+                                                    <option  value="<%=usuarios.get(i).getId()%>"  selected ><%=usuarios.get(i).getNome()%>  </option>
+
+                                                    <%
+                                                    } else {
+                                                    %>
+                                                    <option  value="<%=usuarios.get(i).getId()%>" ><%=usuarios.get(i).getNome()%></option>
+                                                    <%
+                                                            }
+                                                        }
+                                                    %>
+                                                </select>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="col-sm-3" style="background-color: aqua;">
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-xs-3">
+                                                <label for="responsavel" class="col-sm-1 control-label">Responsavel</label>
+
+                                            </div>
+                                            <div class="col-xs-9">
+                                                <select class="form-control select2" style="width: 100%;" name="responsavel">
+
+                                                    <%
+                                                        Usuario responsavel = new Usuario();
+                                                        responsavel.setNome("");
+                                                        responsavel.setLogin("");
+                                                        responsavel.setSituacao('A');
+                                                        tar.setUsuarioByIdUsuarioResponsavel(responsavel);
+
+                                                        UsuarioDAO responsavelDAO = new UsuarioDAO();
+                                                        ArrayList<Usuario> responsaveis = usuarioDAO.listar(responsavel);
+
+                                                        for (int i = 0; i < responsaveis.size(); i++) {
+                                                            System.out.println(responsaveis.size() + ".. tamanho");
+                                                            if (tar.getUsuarioByIdUsuarioResponsavel().getId() == responsaveis.get(i).getId()) {
+                                                    %>
+                                                    <option value="<%=responsaveis.get(i).getId()%>" selected><%=responsaveis.get(i).getNome()%> </option>
+
+                                                    <%
+                                                    } else {
+                                                    %>
+                                                    <option value="<%=responsaveis.get(i).getId()%>"><%=responsaveis.get(i).getNome()%></option>
+                                                    <%
+                                                            }
+                                                        }
+                                                    %>
+                                                </select>
+
+                                            </div>
+
+
+                                        </div>
+
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+
+
+
+
+
+                            <div class="form-group">
+                                <label for="projeto" class="col-sm-1 control-label">Projeto</label>
+
+                                <select class="form-control select2" style="width: 20%;" name="projeto">
 
                                     <%
-                                        Usuario autor = new Usuario();
-                                        autor.setId(Integer.parseInt(session.getAttribute("user").toString()));
-                                        autor.setNome("");
-                                        autor.setLogin("");
-                                        autor.setSituacao('A');
-                                        tar.setUsuarioByIdUsuarioAutor(autor);
-                                        
-                                        UsuarioDAO usuarioDAO = new UsuarioDAO();
-                                        ArrayList<Usuario> usuarios = usuarioDAO.listar(autor);
+                                        Projeto projeto = new Projeto();
+                                        projeto.setDescricao("");
+                                        projeto.setSituacao('A');
+                                        tar.setProjeto(projeto);
 
-                                        for (int i = 0; i < usuarios.size(); i++) {
-                                            //System.out.println(usuarios.size()+".. tamanho");
-                                            if (tar.getUsuarioByIdUsuarioAutor().getId() == usuarios.get(i).getId()) {
+                                        ProjetoDAO projetoDAO = new ProjetoDAO();
+                                        ArrayList<Projeto> projetos = projetoDAO.listar(projeto);
+
+                                        for (int i = 0; i < projetos.size(); i++) {
+                                            // System.out.println(projetos.size()+".. tamanho");
+                                            if (tar.getProjeto().getId() == projetos.get(i).getId()) {
                                     %>
-                                    <option value="<%=usuarios.get(i).getId()%>" selected><%=usuarios.get(i).getNome()%> </option>
+                                    <option value="<%=projetos.get(i).getId()%>" selected><%=projetos.get(i).getDescricao()%> </option>
 
                                     <%
                                     } else {
                                     %>
-                                    <option value="<%=usuarios.get(i).getId()%>"><%=usuarios.get(i).getNome() %></option>
+                                    <option value="<%=projetos.get(i).getId()%>"><%=projetos.get(i).getDescricao()%></option>
                                     <%
                                             }
                                         }
                                     %>
                                 </select>
-                            </div>
-                                
-                                <div class="form-group">
-                                <label for="responsavel" class="col-sm-2 control-label">Responsavel</label>
 
-                                <select class="form-control select2" style="width: 49%;" name="responsavel">
+
+
+                            </div>
+
+                            <div class="form-group">
+                                <label for="motivo" class="col-sm-1 control-label">Motivo</label>
+
+                                <select class="form-control select2" style="width: 20%;" name="motivo">
 
                                     <%
-                                        Usuario responsavel = new Usuario();
-                                        responsavel.setNome("");
-                                        responsavel.setLogin("");
-                                        responsavel.setSituacao('A');
-                                        tar.setUsuarioByIdUsuarioResponsavel(responsavel);
-                                        
-                                        UsuarioDAO responsavelDAO = new UsuarioDAO();
-                                        ArrayList<Usuario> responsaveis = usuarioDAO.listar(responsavel);
+                                        Motivo motivo = new Motivo();
+                                        motivo.setDescricao("");
+                                        motivo.setSituacao('A');
+                                        tar.setMotivo(motivo);
 
-                                        for (int i = 0; i < responsaveis.size(); i++) {
-                                            System.out.println(responsaveis.size()+".. tamanho");
-                                            if (tar.getUsuarioByIdUsuarioResponsavel().getId() == responsaveis.get(i).getId()) {
+                                        MotivoDAO motivoDAO = new MotivoDAO();
+                                        ArrayList<Motivo> motivos = motivoDAO.listar(motivo);
+
+                                        for (int i = 0; i < motivos.size(); i++) {
+                                            // System.out.println(projetos.size()+".. tamanho");
+                                            if (tar.getMotivo().getId() == motivos.get(i).getId()) {
                                     %>
-                                    <option value="<%=responsaveis.get(i).getId()%>" selected><%=responsaveis.get(i).getNome()%> </option>
+                                    <option value="<%=motivos.get(i).getId()%>" selected><%=motivos.get(i).getDescricao()%> </option>
 
                                     <%
                                     } else {
                                     %>
-                                    <option value="<%=responsaveis.get(i).getId()%>"><%=responsaveis.get(i).getNome() %></option>
+                                    <option value="<%=motivos.get(i).getId()%>"><%=motivos.get(i).getDescricao()%></option>
+                                    <%
+                                            }
+                                        }
+                                    %>
+                                </select>
+                            </div>    
+
+
+                            <div class="form-group">
+                                <label for="prioridade" class="col-sm-1 control-label">Prioridade</label>
+
+                                <select class="form-control select2" style="width: 20%;" name="prioridade">
+
+                                    <%
+                                        Prioridade prioridade = new Prioridade();
+                                        prioridade.setDescricao("");
+                                        prioridade.setSituacao('A');
+                                        tar.setPrioridade(prioridade);
+
+                                        PrioridadeDAO prioridadeDAO = new PrioridadeDAO();
+                                        ArrayList<Prioridade> prioridades = prioridadeDAO.listar(prioridade);
+
+                                        for (int i = 0; i < prioridades.size(); i++) {
+                                            // System.out.println(projetos.size()+".. tamanho");
+                                            if (tar.getPrioridade().getId() == prioridades.get(i).getId()) {
+                                    %>
+                                    <option value="<%=prioridades.get(i).getId()%>" selected><%=prioridades.get(i).getDescricao()%> </option>
+
+                                    <%
+                                    } else {
+                                    %>
+                                    <option value="<%=prioridades.get(i).getId()%>"><%=prioridades.get(i).getDescricao()%></option>
+                                    <%
+                                            }
+                                        }
+                                    %>
+                                </select>
+                            </div>  
+
+                            <div class="form-group">
+                                <label for="fase" class="col-sm-1 control-label">Fase</label>
+
+                                <select class="form-control select2" style="width: 20%;" name="fase">
+
+                                    <%
+                                        Fase fase = new Fase();
+                                        fase.setDescricao("");
+                                        fase.setSituacao('A');
+                                        tar.setFase(fase);
+
+                                        FaseDAO faseDAO = new FaseDAO();
+                                        ArrayList<Fase> fases = faseDAO.listar(fase);
+
+                                        for (int i = 0; i < fases.size(); i++) {
+                                            // System.out.println(projetos.size()+".. tamanho");
+                                            if (tar.getFase().getId() == fases.get(i).getId()) {
+                                    %>
+                                    <option value="<%=fases.get(i).getId()%>" selected><%=fases.get(i).getDescricao()%> </option>
+
+                                    <%
+                                    } else {
+                                    %>
+                                    <option value="<%=fases.get(i).getId()%>"><%=fases.get(i).getDescricao()%></option>
                                     <%
                                             }
                                         }
                                     %>
                                 </select>
                             </div>
-                                
+
+
+
                             <div class="form-group">
                                 <div class="col-sm-offset-2 col-sm-10">
 

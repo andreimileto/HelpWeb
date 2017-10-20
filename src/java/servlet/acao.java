@@ -597,7 +597,8 @@ public class acao extends HttpServlet {
             if (retorno) {
                 if (user != null) {
                     HttpSession sessao = request.getSession();
-                    sessao.setAttribute("usuarioLogado", user.getId());
+                    //System.out.println("id..."+usuarios.get(0).getId());
+                    sessao.setAttribute("usuarioLogado", usuarios.get(0).getId());
 
                 }
                 response.sendRedirect("inicio.jsp");

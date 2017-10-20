@@ -30,6 +30,7 @@ public class Formatacao {
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
+        System.out.println(generatedPassword);
         return generatedPassword;
     }
 

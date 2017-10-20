@@ -124,6 +124,7 @@ public class Filtro extends HttpServlet implements Filter {
         excessoes.add("/HelpWeb/bower_components/fastclick/lib/fastclick.js");
         excessoes.add("/HelpWeb/dist/js/adminlte.min.js");
         excessoes.add("/HelpWeb/dist/js/demo.js");
+        
 //         excessoes.add("/HelpWeb/");
 //         excessoes.add("/HelpWeb/");
 //         excessoes.add("/HelpWeb/");
