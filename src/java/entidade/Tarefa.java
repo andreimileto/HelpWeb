@@ -41,7 +41,7 @@ public class Tarefa  implements java.io.Serializable {
      private String descricao;
      private Date datahoraCriacao;
      private Date datahoraPrevisao;
-     private Date datahoraConclusao;
+     
      private char situacao;
      private Set movimentoTarefas = new HashSet(0);
      private Set tarefaUsuarios = new HashSet(0);
@@ -67,7 +67,7 @@ public class Tarefa  implements java.io.Serializable {
         this.datahoraPrevisao = datahoraPrevisao;
         this.situacao = situacao;
     }
-    public Tarefa(int id, Cliente cliente, Fase fase, Modulo modulo, Motivo motivo, Prioridade prioridade, Projeto projeto, Usuario usuarioByIdUsuarioResponsavel, Usuario usuarioByIdUsuarioAutor, Versao versaoByIdVersaoCorrecao, Versao versaoByIdVersaoBug, String titulo, String descricao, Date datahoraCriacao, Date datahoraPrevisao, Date datahoraConclusao, char situacao, Set movimentoTarefas, Set tarefaUsuarios) {
+    public Tarefa(int id, Cliente cliente, Fase fase, Modulo modulo, Motivo motivo, Prioridade prioridade, Projeto projeto, Usuario usuarioByIdUsuarioResponsavel, Usuario usuarioByIdUsuarioAutor, Versao versaoByIdVersaoCorrecao, Versao versaoByIdVersaoBug, String titulo, String descricao, Date datahoraCriacao, Date datahoraPrevisao,  char situacao, Set movimentoTarefas, Set tarefaUsuarios) {
        this.id = id;
        this.cliente = cliente;
        this.fase = fase;
@@ -83,7 +83,7 @@ public class Tarefa  implements java.io.Serializable {
        this.descricao = descricao;
        this.datahoraCriacao = datahoraCriacao;
        this.datahoraPrevisao = datahoraPrevisao;
-       this.datahoraConclusao = datahoraConclusao;
+       
        this.situacao = situacao;
        this.movimentoTarefas = movimentoTarefas;
        this.tarefaUsuarios = tarefaUsuarios;
@@ -241,15 +241,7 @@ public class Tarefa  implements java.io.Serializable {
         this.datahoraPrevisao = datahoraPrevisao;
     }
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="datahora_conclusao", length=29)
-    public Date getDatahoraConclusao() {
-        return this.datahoraConclusao;
-    }
-    
-    public void setDatahoraConclusao(Date datahoraConclusao) {
-        this.datahoraConclusao = datahoraConclusao;
-    }
+
 
     
     @Column(name="situacao", nullable=false, length=1)

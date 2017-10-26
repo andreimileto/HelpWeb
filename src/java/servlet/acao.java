@@ -22,6 +22,7 @@ import controle.ControleModulo;
 import controle.ControleMotivo;
 import controle.ControlePrioridade;
 import controle.ControleProjeto;
+import controle.ControleTarefa;
 import controle.ControleVersao;
 import entidade.Cidade;
 import entidade.Cliente;
@@ -30,11 +31,13 @@ import entidade.Modulo;
 import entidade.Motivo;
 import entidade.Prioridade;
 import entidade.Projeto;
+import entidade.Tarefa;
 import entidade.Usuario;
 import entidade.Versao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -59,6 +62,13 @@ public class acao extends HttpServlet {
      */
     int idRetorno;
 
+    /**
+     *
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -571,6 +581,85 @@ public class acao extends HttpServlet {
                 redirecionarPagina("cadastroCliente.jsp?m=1", request, response);
             } else {
                 redirecionarPagina("cadastroCliente.jsp?m=" + retorno, request, response);
+            }
+
+        } 
+        else if (parametro.equals("cadTarefa")) {
+ 
+            String idCliente = request.getParameter("cliente");
+            String idProjeto = request.getParameter("projeto");
+            String idPrioridade = request.getParameter("prioridade");
+            String idMotivo = request.getParameter("motivo");
+            String idModulo = request.getParameter("modulo");
+            String idFase = request.getParameter("fase");
+            String idVersaoBug = request.getParameter("versao");
+            String idVersaoCorrecao = request.getParameter("versaoCorrecao");
+            String idAutor = request.getParameter("autor");
+            String idResponsavel = request.getParameter("responsavel");
+
+            Tarefa tarefa = new Tarefa();
+
+              Cliente cliente = new Cliente();  
+              Fase fase = new Fase();
+              Modulo modulo = new Modulo();
+              Motivo motivo = new Motivo();
+              Prioridade prioridade = new Prioridade();
+              Projeto projeto = new Projeto();
+              Versao versaoBug = new Versao();
+              Versao versaoCorrecao = new Versao();
+              Usuario autor = new Usuario();
+              Usuario responsavel = new Usuario();
+
+            int idTarefa;
+            if (request.getParameter("id").equals("")) {
+                idTarefa = 0;
+            }else{
+                idTarefa = Integer.parseInt(String.valueOf(request.getParameter("id")));
+            }
+            
+
+            tarefa.setId(idTarefa);
+            cliente.setId(Integer.parseInt(idCliente));
+            tarefa.setCliente(cliente);
+            tarefa.setDescricao(request.getParameter("descricao"));
+            fase.setId(Integer.parseInt(idFase));
+            tarefa.setFase(fase);
+            modulo.setId(Integer.parseInt(idModulo));
+            tarefa.setModulo(modulo);
+            motivo.setId(Integer.parseInt(idMotivo));
+            tarefa.setMotivo(motivo);
+            prioridade.setId(Integer.parseInt(idPrioridade));
+            tarefa.setPrioridade(prioridade);
+            projeto.setId(Integer.parseInt(idProjeto));
+            tarefa.setProjeto(projeto);
+            tarefa.setSituacao('A');
+            tarefa.setTitulo(request.getParameter("titulo"));
+            tarefa.setDatahoraCriacao(new Date());
+            //tarefa.setDatahoraCriacao((request.getParameter("datahoraCriacao")));
+            
+            //tarefa.setDatahoraPrevisao((request.getParameter("dataPrevisao")));
+            tarefa.setDatahoraPrevisao(new Date());
+           // tarefa.setDatahoraCriacao(request.getParameter("datahoraCriacao"));
+            versaoBug.setId(Integer.parseInt(idVersaoBug));
+            tarefa.setVersaoByIdVersaoBug(versaoBug);
+            versaoCorrecao.setId(Integer.parseInt(idVersaoCorrecao));
+            tarefa.setVersaoByIdVersaoCorrecao(versaoCorrecao);
+            responsavel.setId(Integer.parseInt(idResponsavel));
+            tarefa.setUsuarioByIdUsuarioResponsavel(responsavel);
+            autor.setId(Integer.parseInt(idAutor));
+            tarefa.setUsuarioByIdUsuarioAutor(autor);
+            
+          
+
+            ControleTarefa controleTarefa = new ControleTarefa();
+            int retorno = controleTarefa.salvar(tarefa);
+
+            request.setAttribute("paginaOrigem", "cadastroTarefa.jsp");
+
+            if (retorno == 1) {
+                redirecionarPagina("cadastroTarefa.jsp?m=1", request, response);
+            } else {
+                redirecionarPagina("cadastroTarefa.jsp?m=" + retorno, request, response);
             }
 
         }

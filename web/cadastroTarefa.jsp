@@ -35,7 +35,8 @@
     if (tar == null) {
 
         tar = new Tarefa();
-
+        tar.setTitulo("");
+        tar.setDescricao("");
         tar.setSituacao('A');
         Cidade cidade = new Cidade();
         Cliente cliente = new Cliente();
@@ -61,6 +62,7 @@
                     </div>
 
                     <form name="cadTarefa" class="form-horizontal" action="/HelpWeb/acao?parametro=cadTarefa" method="post">
+                    
                         <div class="box-body">
                             <div class="form-group">
                                 <label for="id" class="col-sm-1 control-label" >ID</label>
@@ -113,15 +115,15 @@
                                             </div>
 
                                             <div class="col-xs-8">
-                                                <select  disabled="true" class="form-control select2" style="width: 100%;" name="autor" >
-
+                                                <select    class="form-control select2" style="width: 100%;" name="autor"  >
+                                                        <!--disabled = "true"-->
                                                     <%
                                                         Usuario autor = new Usuario();
                                                         if (tar.getId() == 0) {
                                                             autor.setId(Integer.parseInt(session.getAttribute("usuarioLogado").toString()));
                                                         }
 
-                                                        // System.out.println(autor.getId()+"....id");
+                                                         System.out.println(autor.getId()+"....id");
                                                         autor.setNome("");
                                                         autor.setLogin("");
                                                         autor.setSituacao('A');
@@ -421,17 +423,17 @@
 
 
                                                 %>
-                                                <input type="text" class="form-control" name="datahoraCriacao" data-inputmask='"mask": "99/99/9999 99:99:99"' data-mask value="<%=tar.getDatahoraCriacao()%>" Use readonly="true" >
+                                                <input type="date" class="form-control" name="datahoraCriacao"  value="<%=tar.getDatahoraCriacao()%>" Use readonly="true" >
                                                 <%
                                                 } else {
                                                 %>
-                                                <input type="text" class="form-control" name="datahoraCriacao" data-inputmask='"mask": "99/99/9999 99:99:99"' value="" Use readonly="true" >
+                                                <input type="date" class="form-control" name="datahoraCriacao"  value="" Use readonly="true" >
 
                                                 <%
                                                     }
                                                 } catch (Exception e) {
                                                 %>
-                                                <input type="text" name="datahoraCriacao" class="form-control" value="" Use readonly="true" >
+                                                <input type="date" name="datahoraCriacao" class="form-control" value="" Use readonly="true" >
 
                                                 <%
                                                     }
@@ -449,12 +451,12 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-xs-2" style="background: yellow;">
+                                <div class="col-xs-4" style="background: yellow;">
                                     <div class="form-group">
-                                        <label for="datahoraCriacao" class="col-sm-6 control-label" >Previsão</label>
+                                        <label for="dataPrevisao" class="col-sm-6 control-label" >Previsão</label>
                                         <div class="row">
-                                            <div class="col-sm-5">
-                                                <input type="text" class="form-control" name="datahoraCriacao" data-inputmask='"mask": "99/99/9999"' data-mask value="<%=tar.getDatahoraPrevisao()%>">
+                                            <div class="col-sm-5">                                                                                                      <!--data-inputmask='"mask": "99/99/9999"' data-mask -->
+                                                                                                            <input type="date" class="form-control" name="dataPrevisao"  value="<%=tar.getDatahoraPrevisao()%>">
                                             </div>
                                         </div>
                                     </div>
@@ -540,6 +542,40 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-xs-6" >
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <label for="nome" class="col-xs-2 control-label">Título</label>
+
+                                            <div class="col-xs-10">
+                                                <input type="text" class="form-control" name="titulo" value="<%= tar.getTitulo()%>">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12" >
+                                <div class="form-group">
+
+                                    <h4>
+                                        Descrição
+
+                                    </h4>
+
+                                    <section class="content col-xs-12">
+
+                                        <div class="col-xs-12">
+  
+                                                <textarea id="editor1" name="descricao" value="<%=tar.getDescricao()%>" rows="5" cols="5">
+                                                </textarea>
+                                        </div>
+
+                                    </section>
+                                </div>
+                            </div>
+
 
 
 
@@ -616,6 +652,7 @@
 
     <%@include file = "listaCidades.jsp"%>
     <!-- /.content -->
+
 </div>
 <%@include file = "inferior.jsp"%>
 
@@ -637,6 +674,23 @@
 <script src="bower_components/fastclick/lib/fastclick.js"></script>
 <script src="dist/js/adminlte.min.js"></script>
 <script src="dist/js/demo.js"></script>
+
+
+
+<!--<script src="../../bower_components/jquery/dist/jquery.min.js"></script>-->
+<!-- Bootstrap 3.3.7 -->
+<!--<script src="../../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>-->
+<!-- FastClick -->
+<!--<script src="../../bower_components/fastclick/lib/fastclick.js"></script>-->
+<!-- AdminLTE App -->
+<!--<script src="../../dist/js/adminlte.min.js"></script>-->
+<!-- AdminLTE for demo purposes -->
+<!--<script src="../../dist/js/demo.js"></script>-->
+<!-- CK Editor -->
+<script src="bower_components/ckeditor/ckeditor.js"></script>
+<!-- Bootstrap WYSIHTML5 -->
+<script src="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
+
 <!-- page script -->
 <script>
     $(function () {
@@ -720,4 +774,12 @@
         })
     })
 </script>
-
+<script>
+    $(function () {
+        // Replace the <textarea id="editor1"> with a CKEditor
+        // instance, using default configuration.
+        CKEDITOR.replace('editor1')
+        //bootstrap WYSIHTML5 - text editor
+        $('.textarea').wysihtml5()
+    })
+</script>

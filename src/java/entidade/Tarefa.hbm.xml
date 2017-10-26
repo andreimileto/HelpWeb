@@ -50,9 +50,7 @@
         <property name="datahoraPrevisao" type="timestamp">
             <column name="datahora_previsao" length="29" not-null="true" />
         </property>
-        <property name="datahoraConclusao" type="timestamp">
-            <column name="datahora_conclusao" length="29" />
-        </property>
+       
         <property name="situacao" type="char">
             <column name="situacao" length="1" not-null="true" />
         </property>
