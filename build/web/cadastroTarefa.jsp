@@ -36,7 +36,7 @@
 
         tar = new Tarefa();
         tar.setTitulo("");
-        tar.setDescricao("");
+        tar.setDescricao("<h1><em><strong>sdg sdf gfd</strong></em></h1>");
         tar.setSituacao('A');
         Cidade cidade = new Cidade();
         Cliente cliente = new Cliente();
@@ -62,7 +62,7 @@
                     </div>
 
                     <form name="cadTarefa" class="form-horizontal" action="/HelpWeb/acao?parametro=cadTarefa" method="post">
-                    
+
                         <div class="box-body">
                             <div class="form-group">
                                 <label for="id" class="col-sm-1 control-label" >ID</label>
@@ -111,19 +111,19 @@
                                     <div class="form-group">
                                         <div class="row">
                                             <div class="col-xs-3 col-md-4 col-sm-4">
-                                                <label style="float: right;" for="autor" class="col-sm-4 control-label">Autor</label>
+                                                <label style="float: right;" for="autor" class="col-sm-4 control-label"  >Autor</label>
                                             </div>
 
                                             <div class="col-xs-8">
-                                                <select    class="form-control select2" style="width: 100%;" name="autor"  >
-                                                        <!--disabled = "true"-->
+                                                <select readonly="readonly"  class="form-control select2" style="width: 100%;" name="autor"  >
+                                                    <!--disabled = "true"-->
                                                     <%
                                                         Usuario autor = new Usuario();
                                                         if (tar.getId() == 0) {
                                                             autor.setId(Integer.parseInt(session.getAttribute("usuarioLogado").toString()));
                                                         }
 
-                                                         System.out.println(autor.getId()+"....id");
+                                                        System.out.println(autor.getId() + "....id");
                                                         autor.setNome("");
                                                         autor.setLogin("");
                                                         autor.setSituacao('A');
@@ -141,7 +141,7 @@
                                                     <%
                                                     } else {
                                                     %>
-                                                    <option  value="<%=usuarios.get(i).getId()%>" ><%=usuarios.get(i).getNome()%></option>
+                                                    <option  value="<%=usuarios.get(i).getId()%>"><%=usuarios.get(i).getNome()%></option>
                                                     <%
                                                             }
                                                         }
@@ -451,12 +451,12 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-xs-4" style="background: yellow;">
+                                <div class="col-xs-4" >
                                     <div class="form-group">
                                         <label for="dataPrevisao" class="col-sm-6 control-label" >Previsão</label>
                                         <div class="row">
                                             <div class="col-sm-5">                                                                                                      <!--data-inputmask='"mask": "99/99/9999"' data-mask -->
-                                                                                                            <input type="date" class="form-control" name="dataPrevisao"  value="<%=tar.getDatahoraPrevisao()%>">
+                                                <input type="date" class="form-control" name="dataPrevisao"  value="<%=tar.getDatahoraPrevisao()%>">
                                             </div>
                                         </div>
                                     </div>
@@ -567,14 +567,35 @@
                                     <section class="content col-xs-12">
 
                                         <div class="col-xs-12">
-  
-                                                <textarea id="editor1" name="descricao" value="<%=tar.getDescricao()%>" rows="5" cols="5">
+
+                                            <textarea id="editor1" name="descricao"  rows="5" cols="5">
+                                                <%=tar.getDescricao()%></textarea>
+                                        </div>
+
+                                    </section>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-12" >
+                                <div class="form-group">
+
+                                    <h4>
+                                        Nova movimentação
+
+                                    </h4>
+
+                                    <section class="content col-xs-12">
+
+                                        <div class="col-xs-12">
+
+                                            <textarea id="editor2" name="movimentacao"  rows="5" cols="5">
                                                 </textarea>
                                         </div>
 
                                     </section>
                                 </div>
                             </div>
+                        
 
 
 
@@ -650,7 +671,7 @@
         <!-- /.row -->
     </section>
 
-    <%@include file = "listaCidades.jsp"%>
+    <%@include file = "listaMovimentacoes.jsp"%>
     <!-- /.content -->
 
 </div>
@@ -779,7 +800,9 @@
         // Replace the <textarea id="editor1"> with a CKEditor
         // instance, using default configuration.
         CKEDITOR.replace('editor1')
+        CKEDITOR.replace('editor2')
         //bootstrap WYSIHTML5 - text editor
         $('.textarea').wysihtml5()
     })
 </script>
+

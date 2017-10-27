@@ -7,6 +7,7 @@ package DAO;
 
 import apoio.HibernateUtil;
 import entidade.Cliente;
+import entidade.MovimentoTarefa;
 import entidade.Tarefa;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,19 +18,19 @@ import org.hibernate.Session;
  *
  * @author Mileto
  */
-public class TarefaDAO extends DAO{
-    Tarefa tarefa;
-     public ArrayList<Tarefa> listar(Tarefa tarefa) {
-        this.tarefa = tarefa;
+public class MovimentoTarefaDAO extends DAO{
+    MovimentoTarefa movimentoTarefa;
+     public ArrayList<MovimentoTarefa> listar(MovimentoTarefa movimentoTarefa) {
+        this.movimentoTarefa = movimentoTarefa;
         List resultado = null;
 
-        ArrayList<Tarefa> lista = new ArrayList<>();
+        ArrayList<MovimentoTarefa> lista = new ArrayList<>();
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             String sql = "";
             
-                sql = "from Tarefa  "
+                sql = "from MovimentoTarefa  "
                         + "where "
                         + "situacao ='A'";
                         
@@ -41,8 +42,8 @@ public class TarefaDAO extends DAO{
             resultado = q.list();
 
             for (Object o : resultado) {
-                Tarefa tar = ((Tarefa) ((Object) o));
-                lista.add(tar);
+                MovimentoTarefa mov = ((MovimentoTarefa) ((Object) o));
+                lista.add(mov);
             }
 
         } catch (HibernateException he) {
@@ -54,17 +55,17 @@ public class TarefaDAO extends DAO{
     }
     
      
-        public ArrayList<Tarefa> consultarId(int id) {
+        public ArrayList<MovimentoTarefa> consultarId(int id) {
         //this.projeto = projeto;
         List resultado = null;
 
-        ArrayList<Tarefa> listas = new ArrayList<>();
+        ArrayList<MovimentoTarefa> listas = new ArrayList<>();
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             String sql = "";
 
-            sql = "from Tarefa  "
+            sql = "from MovimentoTarefa  "
                     + "where "
                     + " id =" + id;
 
@@ -75,8 +76,8 @@ public class TarefaDAO extends DAO{
             resultado = q.list();
 
             for (Object o : resultado) {
-                Tarefa tarefa = ((Tarefa) ((Object) o));
-                listas.add(tarefa);
+                MovimentoTarefa movimento = ((MovimentoTarefa) ((Object) o));
+                listas.add(movimento);
             }
 
         } catch (HibernateException he) {

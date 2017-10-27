@@ -141,7 +141,7 @@ CREATE TABLE IF NOT EXISTS tarefa (
   titulo VARCHAR(150) NOT NULL,
   descricao text NULL,
   datahora_criacao TIMESTAMP NOT NULL,
-  datahora_previsao TIMESTAMP NOT NULL,
+  datahora_previsao DATE NOT NULL,
   
   situacao CHAR(1) NOT NULL,
   PRIMARY KEY (id),

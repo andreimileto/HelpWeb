@@ -44,16 +44,16 @@ public class ControleTarefa {
 
     }
 
-//    public ArrayList<Cliente> listar(Cliente cliente) {
-//        this.cliente = cliente;
-//
-//        return clienteDAO.listar(this.cliente);
-//    }
+    public ArrayList<Tarefa> listar(Tarefa tarefa) {
+        this.tarefa= tarefa;
 
-//    public ArrayList<Cliente> consultarId(int id) {
-//
-//        return clienteDAO.consultarId(id);
-//
-//    }
+        return tarefaDAO.listar(this.tarefa);
+    }
+
+    public ArrayList<Tarefa> consultarId(int id) {
+
+        return tarefaDAO.consultarId(id);
+
+    }
 
 }

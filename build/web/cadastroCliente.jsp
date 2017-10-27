@@ -76,62 +76,105 @@
 
                                 </div>
                             </div>
+                            <!--
+                    <div class="form-group">
+                        <label for="tipo" class="col-lg-2 control-label" id="tipo" >Tipo*</label>
+
+                        <select class="form-control select2" style="width: 57%;" name="tipo" id="tipo"  >
+                            <%//if (//cliente.getTipoCadastro() != 'F' && cliente.getTipoCadastro() != 'F') {
+                            %>
+                            <option value="0" selected>Selecione </option>
+                            <%
+                                // } else {
+                            %>
+                            <option value="0">Selecione </option>
+                            <%                                        //  }
+                            %>
+                            <%//if (//cliente.getTipoCadastro() == 'F') {
+                            %>
+                            <option value="F" selected>Pessoa Física</option>        
+                            <%                                        // } else {
+                            %>
+                            <option value="F">Pessoa Física</option>
+
+                            <%                                        // }
+                                //  if (//cliente.getTipoCadastro() == 'J') {
+                            %>
+                            <option value="J" selected>Pessoa Jurídica</option>
+                            <%                                        //  } else {
+                            %><option value="J">Pessoa Jurídica</option>
+                            <%// }
+                            %>
+
+
+
+
+                        </select>
+                    </div>
+                            
+                            -->
+                            <!--//                            <div class="form-group">
+                            //                                <label for="CPF/CNPJ" class="col-sm-2 control-label">CPF/CNPJ*</label>
+                            //
+                            //                                <div class="col-md-3 col-sm-3">
+                            //                                    <%//if (cliente.getTipoCadastro() == 'F') {
+//                                    %>
+                            //
+                            //                                    <input  type="text" name="cpfcnpj" class="form-control" data-inputmask='"mask": "999.999.999-99"' data-mask id="grupo_cnpj" value="<%//=cliente.getCpfCnpj()%>">        
+                            //                                    <%
+                                //                                    } else {
+                                //                                    %>
+                            //                                    <input  type="text" name="cpfcnpj" class="form-control" data-inputmask='"mask": "99.999.999/9999-99"' data-mask id="grupo_cpf" value="<%//=cliente.getCpfCnpj()%>">
+                            //<!--                                    <input type="text" class="form-control" name="CPF/CNPJ" value="<//%=cliente.getCpfCnpj()%>">-->
+                            <%//}%>
+
+                            <!--   </div>-->
+
+
+                            <!-- </div>-->
+
+
+
                             <div class="form-group">
-                                <label for="tipo" class="col-lg-2 control-label" id="tipo" >Tipo*</label>
-
-                                <select class="form-control select2" style="width: 57%;" name="tipo" id="tipo"  >
-                                    <%if (cliente.getTipoCadastro() != 'F' && cliente.getTipoCadastro() != 'F') {
-                                    %>
-                                    <option value="0" selected>Selecione </option>
-                                    <%
-                                    } else {
-                                    %>
-                                    <option value="0">Selecione </option>
-                                    <%
+                                <label class="col-sm-1 control-label">Tipo*</label>
+                                <div class="col-sm-3">
+                                    <!-- select -->
+                                    <select class="form-control" id="tipo" name="tipo" required >
+                                        <%
+                                            if (cliente.getId() == 0) {%>
+                                        <option value="0" >Selecione</option>
+                                         <option value="F" >Pessoa física</option>
+                                         <option value="J">Pessoa jurídica</option>
+                                        <%} else if (cliente.getTipoCadastro() == 'F') {
+                                        %>
+                                        <option value="F" <%= cliente.getCpfCnpj().trim().equals("") ? "selected" : ""%>>Pessoa física</option>
+                                        <%} else if (cliente.getTipoCadastro() == 'J') {
+                                        %>
+                                        <option value="J" <%= cliente.getCpfCnpj().trim().equals("") ? "selected" : ""%>>Pessoa jurídica</option>
+                                       <%
                                         }
-                                    %>
-                                    <%if (cliente.getTipoCadastro() == 'F') {
-                                    %>
-                                    <option value="F" selected>Pessoa Física</option>        
-                                    <%
-                                    } else {
-                                    %>
-                                    <option value="F">Pessoa Física</option>
-
-                                    <%
-                                        }
-                                        if (cliente.getTipoCadastro() == 'J') {
-                                    %>
-                                    <option value="J" selected>Pessoa Jurídica</option>
-                                    <%
-                                    } else {
-                                    %><option value="J">Pessoa Jurídica</option>
-                                    <% }
-                                    %>
+                                        %>
+                                      
 
 
 
-
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="CPF/CNPJ" class="col-sm-2 control-label">CPF/CNPJ*</label>
-
-                                <div class="col-md-3 col-sm-3">
-                                    <%if (cliente.getTipoCadastro() == 'F') {
-                                    %>
-
-                                    <input  type="text" name="cpfcnpj" class="form-control" data-inputmask='"mask": "999.999.999-99"' data-mask id="cpfcnpj" value="<%=cliente.getCpfCnpj()%>">        
-                                    <%
-                                    } else {
-                                    %>
-                                    <input  type="text" name="cpfcnpj" class="form-control" data-inputmask='"mask": "99.999.999/9999-99"' data-mask id="cpfcnpj" value="<%=cliente.getCpfCnpj()%>">
-<!--                                    <input type="text" class="form-control" name="CPF/CNPJ" value="<%=cliente.getCpfCnpj()%>">-->
-                                    <%}%>
-
+                                    </select>
+                                    <!-- /.select -->
                                 </div>
 
+                                <div id="grupo_cnpj">
+                                    <label class="col-sm-1 control-label">CNPJ*</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control" name="cnpj" id="cnpj" value="<%= cliente.getCpfCnpj()%>" data-inputmask='"mask": "99.999.999/9999-99"' data-mask>
+                                    </div>
+                                </div>
 
+                                <div id="grupo_cpf">
+                                    <label class="col-sm-1 control-label">CPF*</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control" name="cpf" id="cpf" value="<%= cliente.getCpfCnpj()%>" data-inputmask='"mask": "999.999.999-99"' data-mask>
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="form-group">
@@ -378,8 +421,8 @@
         })
     })
 </script>
-
-    <script>
+<!--
+<script>
 //        function verificarTipoCadastro() {
 //            var x = document.getElementById("tipo").value;
 //            if (x == 0) {
@@ -400,26 +443,60 @@
 
 
 
-        function verificarTipoCadastro() {
+    function verificarTipoCadastro() {
 
-        //$("#tipo").change(function () { //Quando houver uma mudança no select
-        var x = document.getElementById("tipo").value;
+    //$("#tipo").change(function () { //Quando houver uma mudança no select
+    var x = document.getElementById("tipo").value;
 //        var opt = $("#tipo option:selected").val(); //Recupera o valor do option selecionado
-                var mask = "";
-                if (x=='J') {
-        mask = "99.999.999/9999-99";
-                $("input[name=cpfcnpj]").data - Inputmask("999.999.999-99");
-        } else if (x =='J') {
-        mask = "999.999.999-99";
-                $("input[name=cpfcnpj]").data - Inputmask("999.999.999-99");
+            var mask = "";
+            if (x == 'J') {
+    mask = "99.999.999/9999-99";
+            $("input[name=cpfcnpj]").data - Inputmask("999.999.999-99");
+    } else if (x == 'J') {
+    mask = "999.999.999-99";
+            $("input[name=cpfcnpj]").data - Inputmask("999.999.999-99");
 //                } else if (x =='0') {
 //                    
 //                }
+    } else {
+    mask = "999.999.999-99";
+            $("input[name=cpfcnpj]").data - Inputmask(mask);
+    }
+    );
+    }
+    );</script>-->
+
+<script>
+    $(function () {
+        //Initialize Select2 Elements
+        $(".select2").select2();
+        //Money Euro
+        $("[data-mask]").inputmask();
+        //Desabilita e habilita conforme a manutencao
+        $(document).ready(ajustaInterface);
+        $(document).ready(habilitarCampos);
+        //Ajusta o CNPJ/CPF conforme o tipo de pessoa
+        $("#tipo").on("change", ajustaInterface);
+    });
+    function ajustaInterface() {
+        if ($("#tipo").val() === 'F') {
+            $("#grupo_cnpj").hide();
+            $("#grupo_cpf").show();
+            $("#cnpj").prop('required', false);
+            $("#cpf").prop('required', true);
         } else {
-        mask = "999.999.999-99";
-                $("input[name=cpfcnpj]").data - Inputmask(mask);
+            $("#grupo_cnpj").show();
+            $("#grupo_cpf").hide();
+            $("#cnpj").prop('required', true);
+            $("#cpf").prop('required', false);
         }
-        );
+    }
+
+    function habilitarCampos() {
+        if ($("#id").val() == 0) {
+            $("#tipo").prop("disabled", false);
+        } else {
+            $("#tipo").prop("disabled", false);
         }
-        );
-    </script>
+    }
+</script>

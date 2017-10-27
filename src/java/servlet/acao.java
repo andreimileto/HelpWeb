@@ -12,6 +12,7 @@ import DAO.ModuloDAO;
 import DAO.MotivoDAO;
 import DAO.PrioridadeDAO;
 import DAO.ProjetoDAO;
+import DAO.TarefaDAO;
 import DAO.UsuarioDAO;
 import DAO.VersaoDAO;
 import apoio.Formatacao;
@@ -20,6 +21,7 @@ import controle.ControleCliente;
 import controle.ControleFase;
 import controle.ControleModulo;
 import controle.ControleMotivo;
+import controle.ControleMovimentacaoTarefa;
 import controle.ControlePrioridade;
 import controle.ControleProjeto;
 import controle.ControleTarefa;
@@ -29,6 +31,7 @@ import entidade.Cliente;
 import entidade.Fase;
 import entidade.Modulo;
 import entidade.Motivo;
+import entidade.MovimentoTarefa;
 import entidade.Prioridade;
 import entidade.Projeto;
 import entidade.Tarefa;
@@ -36,8 +39,12 @@ import entidade.Usuario;
 import entidade.Versao;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -187,6 +194,16 @@ public class acao extends HttpServlet {
             request.setAttribute("objcli", cliente);
 
             encaminharPagina("cadastroCliente.jsp", request, response);
+        }else if (parametro.equals("edTarefa")) {
+            int id = Integer.parseInt(String.valueOf(request.getParameter("id")));
+
+            ArrayList<Tarefa> tarefas = new TarefaDAO().consultarId(id);
+            Tarefa tarefa = new Tarefa();
+            tarefa = tarefas.get(0);
+            request.setAttribute("objtar", tarefa);
+
+            encaminharPagina("cadastroTarefa.jsp", request, response);
+
         } else if (parametro.equals("exCidade")) {
 
             int id = Integer.parseInt(String.valueOf(request.getParameter("id")));
@@ -364,6 +381,74 @@ public class acao extends HttpServlet {
                 encaminharPagina("cadastroCliente.jsp?m=10", request, response);
             } else {
                 encaminharPagina("cadastroCliente.jsp?m=11", request, response);
+            }
+
+        } else if (parametro.equals("exTarefa")) {
+
+            int id = Integer.parseInt(String.valueOf(request.getParameter("id")));
+            Tarefa tar = new Tarefa();
+            tar.setId(id);
+            ControleTarefa controleTarefa = new ControleTarefa();
+            ArrayList<Tarefa> tarefas = controleTarefa.consultarId(tar.getId());
+            Cidade cid = new Cidade();
+            
+            Cliente cli = new Cliente();
+            cli.setId(tarefas.get(0).getCliente().getId());
+            cli.setCidade(cid);
+            tar.setCliente(cli);
+            Fase fas = new Fase();
+            fas.setId(tarefas.get(0).getFase().getId());
+            Versao versaoBug = new Versao();
+            versaoBug.setId(tarefas.get(0).getVersaoByIdVersaoBug().getId());
+            Versao versaoCorrecao = new Versao();
+            versaoCorrecao.setId(tarefas.get(0).getVersaoByIdVersaoCorrecao().getId());
+            tar.setVersaoByIdVersaoBug(versaoBug);
+            tar.setVersaoByIdVersaoCorrecao(versaoCorrecao);
+            tar.setTitulo(tarefas.get(0).getTitulo());
+            tar.setDescricao(tarefas.get(0).getDescricao());
+            tar.setDatahoraCriacao(tarefas.get(0).getDatahoraCriacao());
+            tar.setDatahoraPrevisao(tarefas.get(0).getDatahoraPrevisao());
+            
+            Modulo modulo = new Modulo();
+            modulo.setId(tarefas.get(0).getModulo().getId());
+            tar.setModulo(modulo);
+            Prioridade prioridade = new Prioridade();
+            prioridade.setId(tarefas.get(0).getPrioridade().getId());
+            tar.setPrioridade(prioridade);
+            Projeto projeto = new Projeto();
+            projeto.setId(tarefas.get(0).getProjeto().getId());
+            tar.setProjeto(projeto);
+            Usuario autor = new Usuario();
+            autor.setId(tarefas.get(0).getUsuarioByIdUsuarioAutor().getId());
+            tar.setUsuarioByIdUsuarioAutor(autor);
+            Usuario responsavel = new Usuario();
+            responsavel.setId(tarefas.get(0).getUsuarioByIdUsuarioResponsavel().getId());
+            tar.setUsuarioByIdUsuarioResponsavel(responsavel);
+            Motivo motivo = new Motivo();
+            motivo.setId(tarefas.get(0).getMotivo().getId());
+            tar.setMotivo(motivo);
+            tar.setFase(fas);
+
+//            cid.setId(tarefas.get(0).getCidade().getId());
+//            cli.setRazaoSocial(clientes.get(0).getRazaoSocial());
+//            cli.setCpfCnpj(clientes.get(0).getCpfCnpj());
+            // cli = clientes.get(0);
+//            cli.setEndereco(clientes.get(0).getEndereco());
+//            cli.setTelefone(clientes.get(0).getTelefone());
+//            cli.setTipoCadastro(clientes.get(0).getTipoCadastro());
+//            cli.setSituacao('I');
+//            cli.setCidade(cid);
+            tar.setSituacao('I');
+            int retorno;
+
+            retorno = controleTarefa.salvar(tar);
+
+            request.setAttribute("paginaOrigem", "cadastroTarefa.jsp");
+
+            if (retorno == 1) {
+                encaminharPagina("cadastroTarefa.jsp?m=10", request, response);
+            } else {
+                encaminharPagina("cadastroTarefa.jsp?m=11", request, response);
             }
 
         }
@@ -567,7 +652,12 @@ public class acao extends HttpServlet {
             cliente.setTipoCadastro(request.getParameter("tipo").charAt(0));
             cliente.setTelefone(request.getParameter("telefone"));
             cliente.setEndereco(request.getParameter("endereco"));
-            cliente.setCpfCnpj(request.getParameter("cpfcnpj").replace(".", "").replace("-", "").replace("/", ""));
+            try {
+                cliente.setCpfCnpj(request.getParameter("cpf").replace(".", "").replace("-", "").replace("/", ""));
+            } catch (Exception e) {
+                cliente.setCpfCnpj(request.getParameter("cnpj").replace(".", "").replace("-", "").replace("/", ""));
+            }
+            
             cid.setId(Integer.parseInt(idCidade));
             cliente.setCidade(cid);
             cliente.setSituacao('A');
@@ -583,9 +673,8 @@ public class acao extends HttpServlet {
                 redirecionarPagina("cadastroCliente.jsp?m=" + retorno, request, response);
             }
 
-        } 
-        else if (parametro.equals("cadTarefa")) {
- 
+        } else if (parametro.equals("cadTarefa")) {
+
             String idCliente = request.getParameter("cliente");
             String idProjeto = request.getParameter("projeto");
             String idPrioridade = request.getParameter("prioridade");
@@ -599,24 +688,23 @@ public class acao extends HttpServlet {
 
             Tarefa tarefa = new Tarefa();
 
-              Cliente cliente = new Cliente();  
-              Fase fase = new Fase();
-              Modulo modulo = new Modulo();
-              Motivo motivo = new Motivo();
-              Prioridade prioridade = new Prioridade();
-              Projeto projeto = new Projeto();
-              Versao versaoBug = new Versao();
-              Versao versaoCorrecao = new Versao();
-              Usuario autor = new Usuario();
-              Usuario responsavel = new Usuario();
+            Cliente cliente = new Cliente();
+            Fase fase = new Fase();
+            Modulo modulo = new Modulo();
+            Motivo motivo = new Motivo();
+            Prioridade prioridade = new Prioridade();
+            Projeto projeto = new Projeto();
+            Versao versaoBug = new Versao();
+            Versao versaoCorrecao = new Versao();
+            Usuario autor = new Usuario();
+            Usuario responsavel = new Usuario();
 
             int idTarefa;
             if (request.getParameter("id").equals("")) {
                 idTarefa = 0;
-            }else{
+            } else {
                 idTarefa = Integer.parseInt(String.valueOf(request.getParameter("id")));
             }
-            
 
             tarefa.setId(idTarefa);
             cliente.setId(Integer.parseInt(idCliente));
@@ -634,12 +722,26 @@ public class acao extends HttpServlet {
             tarefa.setProjeto(projeto);
             tarefa.setSituacao('A');
             tarefa.setTitulo(request.getParameter("titulo"));
-            tarefa.setDatahoraCriacao(new Date());
-            //tarefa.setDatahoraCriacao((request.getParameter("datahoraCriacao")));
+
+            SimpleDateFormat formato = new SimpleDateFormat("yyyy/mm/dd");
+
+            try {
+                Date data = formato.parse(request.getParameter("dataPrevisao").replace("-", "/"));
+                tarefa.setDatahoraPrevisao(data);
+            } catch (ParseException ex) {
+                Logger.getLogger(acao.class.getName()).log(Level.SEVERE, null, ex);
+                // Date date = new Date();
+            }
             
-            //tarefa.setDatahoraPrevisao((request.getParameter("dataPrevisao")));
-            tarefa.setDatahoraPrevisao(new Date());
-           // tarefa.setDatahoraCriacao(request.getParameter("datahoraCriacao"));
+           
+
+            //
+            // tarefa.setDatahoraCriacao((request.getParameter("datahoraCriacao")));
+//            tarefa.setDatahoraPrevisao((request.getParameter("dataPrevisao")));
+            tarefa.setDatahoraCriacao(new Date());
+            //tarefa.setDatahoraPrevisao(new Date());
+            // 
+
             versaoBug.setId(Integer.parseInt(idVersaoBug));
             tarefa.setVersaoByIdVersaoBug(versaoBug);
             versaoCorrecao.setId(Integer.parseInt(idVersaoCorrecao));
@@ -648,11 +750,23 @@ public class acao extends HttpServlet {
             tarefa.setUsuarioByIdUsuarioResponsavel(responsavel);
             autor.setId(Integer.parseInt(idAutor));
             tarefa.setUsuarioByIdUsuarioAutor(autor);
-            
-          
 
             ControleTarefa controleTarefa = new ControleTarefa();
             int retorno = controleTarefa.salvar(tarefa);
+            
+             MovimentoTarefa movimentacaoTarefa = new MovimentoTarefa();
+            try {
+                movimentacaoTarefa.setTarefa(tarefa);
+                movimentacaoTarefa.setSituacao('A');
+                movimentacaoTarefa.setDatahoraMovimento(new Date());
+                movimentacaoTarefa.setDescricao(request.getParameter("movimentacao"));
+                movimentacaoTarefa.setAnexo("teste");
+             
+                ControleMovimentacaoTarefa controleMovimento = new ControleMovimentacaoTarefa();
+                controleMovimento.salvar(movimentacaoTarefa);
+            } catch (Exception e) {
+                System.out.println("Erro ao salvar movimentação "+e);
+            }
 
             request.setAttribute("paginaOrigem", "cadastroTarefa.jsp");
 

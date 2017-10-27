@@ -47,7 +47,7 @@
         <property name="datahoraCriacao" type="timestamp">
             <column name="datahora_criacao" length="29" not-null="true" />
         </property>
-        <property name="datahoraPrevisao" type="timestamp">
+        <property name="datahoraPrevisao" type="date">
             <column name="datahora_previsao" length="29" not-null="true" />
         </property>
        
