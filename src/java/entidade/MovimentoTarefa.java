@@ -29,6 +29,7 @@ public class MovimentoTarefa  implements java.io.Serializable {
      private Date datahoraMovimento;
      private char situacao;
      private String anexo;
+     private Usuario usuario;
 
     public MovimentoTarefa() {
     }
@@ -70,6 +71,16 @@ public class MovimentoTarefa  implements java.io.Serializable {
     
     public void setTarefa(Tarefa tarefa) {
         this.tarefa = tarefa;
+    }
+    
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="id_usuario", nullable=false)
+    public Usuario getUsuario() {
+        return this.usuario;
+    }
+    
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     

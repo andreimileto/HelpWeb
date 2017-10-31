@@ -31,8 +31,8 @@ public class MovimentoTarefaDAO extends DAO{
             String sql = "";
             
                 sql = "from MovimentoTarefa  "
-                        + "where "
-                        + "situacao ='A'";
+                        + " where id_tarefa = "+movimentoTarefa.getTarefa().getId()
+                        + " and situacao ='A'";
                         
             
             String sel = sql;

@@ -205,15 +205,20 @@ CREATE TABLE IF NOT EXISTS tarefa (
 CREATE TABLE IF NOT EXISTS movimento_tarefa (
   id serial,
   id_tarefa INT NOT NULL,
+  id_usuario INT NOT NULL,
   descricao text NOT NULL,
   datahora_movimento TIMESTAMP NOT NULL,
   situacao CHAR(1) NOT NULL,
   anexo VARCHAR(45) NULL,
   PRIMARY KEY (id),
---  INDEX fk_movimento_tarefa_tarefa_idx (id_tarefa),
   CONSTRAINT fk_movimento_tarefa_tarefa
     FOREIGN KEY (id_tarefa)
     REFERENCES tarefa (id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+CONSTRAINT fk_movimento_tarefa_usuario
+    FOREIGN KEY (id_usuario)
+    REFERENCES usuario (id)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ;

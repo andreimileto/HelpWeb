@@ -756,8 +756,15 @@ public class acao extends HttpServlet {
             
              MovimentoTarefa movimentacaoTarefa = new MovimentoTarefa();
             try {
+                Usuario autorMovimento = new Usuario();
+                HttpSession sessao = request.getSession();
+               // sessao.getAttribute("usuarioLogado").toString();
+                 autorMovimento.setId(Integer.parseInt(sessao.getAttribute("usuarioLogado").toString())); 
+                // System.out.println(autorMovimento.getId()+".... ESSE É O ID DO NOVO MOVIMENTO");
                 movimentacaoTarefa.setTarefa(tarefa);
                 movimentacaoTarefa.setSituacao('A');
+                
+                movimentacaoTarefa.setUsuario(autorMovimento);
                 movimentacaoTarefa.setDatahoraMovimento(new Date());
                 movimentacaoTarefa.setDescricao(request.getParameter("movimentacao"));
                 movimentacaoTarefa.setAnexo("teste");

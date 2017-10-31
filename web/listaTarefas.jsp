@@ -87,9 +87,7 @@
 <script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="bower_components/select2/dist/js/select2.full.js"></script>
-<script src="plugins/input-mask/jquery.inputmask.js"></script>
-<script src="plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
-<script src="plugins/input-mask/jquery.inputmask.extensions.js"></script>
+
 <script src="bower_components/moment/min/moment.min.js"></script>
 <script src="bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
 <script src="bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
@@ -101,12 +99,26 @@
 <script src="dist/js/adminlte.min.js"></script>
 <script src="dist/js/demo.js"></script>
 
+<script>
+    $(function () {
+        $('#example1').DataTable()
+        $('#example2').DataTable({
+            'paging': true,
+            'lengthChange': false,
+            'searching': false,
+            'ordering': true,
+            'info': true,
+            'autoWidth': false
+        })
+    })
+</script> 
 
-<!--<aside class="control-sidebar control-sidebar-dark">
+
+<aside class="control-sidebar control-sidebar-dark">
 
 </aside>
 
 <div class="control-sidebar-bg">
 
-</div>-->
+</div>
 

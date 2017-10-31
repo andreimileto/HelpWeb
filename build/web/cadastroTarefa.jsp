@@ -39,9 +39,14 @@
         tar.setDescricao("<h1><em><strong>sdg sdf gfd</strong></em></h1>");
         tar.setSituacao('A');
         Cidade cidade = new Cidade();
+        Usuario autor = new Usuario();
+        Usuario responsavel = new Usuario();
+        
         Cliente cliente = new Cliente();
         cliente.setCidade(cidade);
         tar.setCliente(cliente);
+        tar.setUsuarioByIdUsuarioAutor(autor);
+        tar.setUsuarioByIdUsuarioResponsavel(responsavel);
 
     }
 %>
@@ -127,7 +132,8 @@
                                                         autor.setNome("");
                                                         autor.setLogin("");
                                                         autor.setSituacao('A');
-                                                        tar.setUsuarioByIdUsuarioAutor(autor);
+                                                        //tar.setUsuarioByIdUsuarioAutor(autor);
+                                                        //System.out.println(" id do autor.... "+tar.getUsuarioByIdUsuarioAutor().getId());
 
                                                         UsuarioDAO usuarioDAO = new UsuarioDAO();
                                                         ArrayList<Usuario> usuarios = usuarioDAO.listar(autor);
