@@ -55,4 +55,40 @@ public class UsuarioDAO extends DAO {
         return lista;
     }
 
+    
+     public ArrayList<Usuario> consultarId(int id) {
+        this.usuario= usuario;
+        List resultado = null;
+
+        ArrayList<Usuario> lista = new ArrayList<>();
+        try {
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+            String sql = "";
+
+            sql = "from Usuario "
+                    + "where "
+                    + " id =" + id;
+
+            String sel = sql;
+            System.out.println(sel);
+            org.hibernate.Query q = session.createQuery(sql);
+
+            resultado = q.list();
+
+            for (Object o : resultado) {
+                Usuario user = ((Usuario) ((Object) o));
+                lista.add(user);
+            }
+
+        } catch (HibernateException he) {
+            he.printStackTrace();
+        }// finally {
+//            session.close();
+//        }
+        return lista;
+
+
+    }
+    
 }

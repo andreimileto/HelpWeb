@@ -25,6 +25,7 @@ import controle.ControleMovimentacaoTarefa;
 import controle.ControlePrioridade;
 import controle.ControleProjeto;
 import controle.ControleTarefa;
+import controle.ControleUsuario;
 import controle.ControleVersao;
 import entidade.Cidade;
 import entidade.Cliente;
@@ -128,7 +129,17 @@ public class acao extends HttpServlet {
             request.setAttribute("objcid", cid);
 
             encaminharPagina("cadastroCidade.jsp", request, response);
-        } else if (parametro.equals("edProjeto")) {
+        } else if (parametro.equals("edUsuario")) {
+            int id = Integer.parseInt(String.valueOf(request.getParameter("id")));
+
+            ArrayList<Usuario> usuarios = new UsuarioDAO().consultarId(id);
+            Usuario user = new Usuario();
+            user = usuarios.get(0);
+            request.setAttribute("objuser", user);
+
+            encaminharPagina("cadastroUsuario.jsp", request, response);
+        } 
+        else if (parametro.equals("edProjeto")) {
             int id = Integer.parseInt(String.valueOf(request.getParameter("id")));
 
             ArrayList<Projeto> projetos = new ProjetoDAO().consultarId(id);
@@ -209,6 +220,9 @@ public class acao extends HttpServlet {
             int id = Integer.parseInt(String.valueOf(request.getParameter("id")));
             Cidade cid = new Cidade();
             cid.setId(id);
+            ControleCidade controleCidade = new ControleCidade();
+            ArrayList<Cidade> cidades = controleCidade.consultarId(cid.getId());
+            cid.setDescricao(cidades.get(0).getDescricao());
 
             cid.setSituacao('I');
 
@@ -222,7 +236,33 @@ public class acao extends HttpServlet {
                 encaminharPagina("cadastroCidade.jsp?m=11", request, response);
             }
 
-        } else if (parametro.equals("exProjeto")) {
+        } else if (parametro.equals("exUsuario")) {
+
+            int id = Integer.parseInt(String.valueOf(request.getParameter("id")));
+            Usuario user = new Usuario();
+            user.setId(id);
+            
+           ControleUsuario controleUsuario = new ControleUsuario();
+            ArrayList<Usuario> usuarios = controleUsuario.consultarId(user.getId());
+            user.setLogin(usuarios.get(0).getLogin());
+            user.setNome(usuarios.get(0).getNome());
+            user.setSenha(usuarios.get(0).getSenha());
+            user.setRepetirSenha(usuarios.get(0).getRepetirSenha());
+
+            user.setSituacao('I');
+
+            int retorno = new ControleUsuario().salvar(user);
+
+            request.setAttribute("paginaOrigem", "cadastroUsuario.jsp");
+
+            if (retorno == 1) {
+                encaminharPagina("cadastroUsuario.jsp?m=10", request, response);
+            } else {
+                encaminharPagina("cadastroUsuario.jsp?m=11", request, response);
+            }
+
+        }
+        else if (parametro.equals("exProjeto")) {
 
             int id = Integer.parseInt(String.valueOf(request.getParameter("id")));
             Projeto proj = new Projeto();
@@ -783,7 +823,31 @@ public class acao extends HttpServlet {
                 redirecionarPagina("cadastroTarefa.jsp?m=" + retorno, request, response);
             }
 
-        }
+        }else  if (parametro.equals("cadUsuario")) {
+            Usuario usuario = new Usuario();
+            int id;
+            if (request.getParameter("id").equals("")) {
+                id = 0;
+            } else {
+                id = Integer.parseInt(String.valueOf(request.getParameter("id")));
+            }
+            usuario.setId(id);
+            usuario.setNome(request.getParameter("nome"));
+            usuario.setLogin(request.getParameter("login"));
+            usuario.setSenha(request.getParameter("senha"));
+            usuario.setRepetirSenha(request.getParameter("repetirSenha"));
+            usuario.setSituacao('A');
+            ControleUsuario controleUsuario = new ControleUsuario();
+            int retorno = controleUsuario.salvar(usuario);
+            request.setAttribute("paginaOrigem", "cadastroUsuario.jsp");
+
+            if (retorno == 1) {
+                redirecionarPagina("cadastroUsuario.jsp?m=1", request, response);
+            } else {
+                redirecionarPagina("cadastroUsuario.jsp?m=" + retorno, request, response);
+            }
+
+        } 
 
         if (parametro.equals("login")) {
             Usuario user = new Usuario();

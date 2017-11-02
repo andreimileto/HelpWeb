@@ -7,6 +7,7 @@ CREATE TABLE usuario (
   nome VARCHAR(150) NOT NULL,
   login VARCHAR(100) NOT NULL unique,
   senha VARCHAR(200) NOT NULL,
+repetir_senha VARCHAR(200),
   situacao CHAR(1) NOT NULL,
   PRIMARY KEY (id));
 

@@ -66,6 +66,7 @@
                     <li><a href="cadastroModulo.jsp"><i class="fa fa-cubes"></i> Cadastro de Módulo</a></li>
                     <li><a href="cadastroPrioridade.jsp"><i class="fa fa-cubes"></i> Cadastro de Prioridade</a></li>
                     <li><a href="cadastroFase.jsp"><i class="fa fa-cubes"></i> Cadastro de Fase</a></li>
+                    <li><a href="cadastroUsuario.jsp"><i class="fa fa-cubes"></i> Cadastro de Usuário</a></li>
                 </ul>
             </li>
             

@@ -27,6 +27,7 @@ public class Usuario  implements java.io.Serializable {
      private String nome;
      private String login;
      private String senha;
+     private String repetirSenha;
      private char situacao;
      private Set tarefaUsuarios = new HashSet(0);
      private Set tarefasForIdUsuarioResponsavel = new HashSet(0);
@@ -94,6 +95,14 @@ public class Usuario  implements java.io.Serializable {
     
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+       @Column(name="repetirSenha", nullable=false, length=200)
+    public String getRepetirSenha() {
+        return this.repetirSenha;
+    }
+    
+    public void setRepetirSenha(String repetirSenha) {
+        this.repetirSenha = repetirSenha;
     }
 
     

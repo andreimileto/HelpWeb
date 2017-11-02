@@ -36,7 +36,7 @@
 
         tar = new Tarefa();
         tar.setTitulo("");
-        tar.setDescricao("<h1><em><strong>sdg sdf gfd</strong></em></h1>");
+        tar.setDescricao("");
         tar.setSituacao('A');
         Cidade cidade = new Cidade();
         Usuario autor = new Usuario();
