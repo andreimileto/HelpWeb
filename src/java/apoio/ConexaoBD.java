@@ -21,7 +21,7 @@ public class ConexaoBD {
         try {
             // Carrega informações do arquivo de propriedades
             Properties prop = new Properties();
-            prop.load(new FileInputStream("db.properties"));
+            prop.load(getClass().getResourceAsStream("db.properties"));
             String dbdriver = prop.getProperty("db.driver");
             String dburl = prop.getProperty("db.url");
             String dbuser = prop.getProperty("db.user");

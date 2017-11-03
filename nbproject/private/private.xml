@@ -3,31 +3,19 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/web/listaTarefas.jsp</file>
-            <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/src/java/DAO/MovimentoTarefaDAO.java</file>
-            <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/src/java/controle/ControleMovimentacaoTarefa.java</file>
             <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/web/cadastroCidade.jsp</file>
-            <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/src/java/controle/ControleTarefa.java</file>
+            <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/src/java/DAO/CidadeDAO.java</file>
             <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/web/barraLateral.jsp</file>
-            <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/web/listaCidades.jsp</file>
-            <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/src/java/controle/ControleCliente.java</file>
+            <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/src/java/apoio/ConexaoBD.java</file>
+            <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/web/cadastroUsuario.jsp</file>
+            <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/src/java/controle/ControleUsuario.java</file>
             <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/src/java/DAO/UsuarioDAO.java</file>
-            <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/src/java/entidade/Tarefa.java</file>
-            <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/src/java/entidade/MovimentoTarefa.hbm.xml</file>
-            <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/src/java/servlet/ControlaProjeto.java</file>
-            <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/web/cadastroModulo.jsp</file>
-            <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/web/listaMovimentacoes.jsp</file>
-            <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/src/java/entidade/MovimentoTarefa.java</file>
-            <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/web/listaTarefasoriginal.jsp</file>
-            <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/web/cadastroCliente.jsp</file>
+            <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/src/java/controle/ControleCidade.java</file>
             <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/src/java/DAO/TarefaDAO.java</file>
-            <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/src/java/DAO/Script.sql</file>
-            <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/src/java/entidade/Tarefa.hbm.xml</file>
+            <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/src/java/relatorios/listagem%20de%20tarefas%20simplificada.jrxml</file>
+            <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/web/relTarefas.jsp</file>
             <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/src/java/servlet/Filtro.java</file>
             <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/src/java/servlet/acao.java</file>
-            <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/web/listaModulos.jsp</file>
-            <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/web/cadastroTarefa.jsp</file>
-            <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/HelpWeb/src/java/DAO/DAO.java</file>
         </group>
     </open-files>
 </project-private>

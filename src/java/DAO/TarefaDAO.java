@@ -12,7 +12,13 @@ import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
-
+import apoio.ConexaoBD;
+import java.sql.Connection;
+import java.util.HashMap;
+import java.util.Map;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.JasperRunManager;
 /**
  *
  * @author Mileto
@@ -86,6 +92,24 @@ public class TarefaDAO extends DAO{
 //        }
         return listas;
 
+    }
+        
+          public byte[] gerarRelatorio() {
+        try {
+            
+            Connection conn = new ConexaoBD().getInstance().getConnection();
+             
+            JasperReport relatorio = JasperCompileManager.compileReport(getClass().getResourceAsStream("/relatorios/listagem de tarefas simplificada.jrxml"));
+
+            Map parameters = new HashMap();
+            
+            byte[] bytes = JasperRunManager.runReportToPdf(relatorio, parameters, conn);
+
+            return bytes;
+        } catch (Exception e) {
+            System.out.println("erro ao gerar relatorio: " + e);
+        }
+        return null;
     }
      
      
