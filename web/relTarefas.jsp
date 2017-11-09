@@ -1,3 +1,5 @@
+<%@page import="entidade.Tarefa"%>
+<%@page import="DAO.UsuarioDAO"%>
 <%@page import="DAO.TarefaDAO"%>
 
 <%@page import="apoio.ConexaoBD"%>
@@ -8,15 +10,13 @@
 <%@page import="java.sql.Connection"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-    </head>
-    <body>
+
+        
+   
         <h1>Hello World!</h1>
         <%
-            byte[] bytes = new TarefaDAO().gerarRelatorio();
+            try {
+                    byte[] bytes = new TarefaDAO().gerarRelatorio();
             
             response.setContentType("application/pdf");
             response.setContentLength(bytes.length);
@@ -24,6 +24,8 @@
             outStream.write(bytes, 0, bytes.length);
             outStream.flush();
             outStream.close();
+                } catch (Exception e) {
+                    System.out.println("erro ao gerar relatorio jsp "+e);
+                }
+            
         %>
-    </body>
-</html>

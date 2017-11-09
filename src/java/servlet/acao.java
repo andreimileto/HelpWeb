@@ -48,6 +48,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -509,6 +510,65 @@ public class acao extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         response.setCharacterEncoding("UTF-8");
         String parametro = request.getParameter("parametro");
+        
+        if (parametro.equals("relTarefasResumo")) {
+//            Cidade cid = new Cidade();
+            TarefaDAO tarefaDAO = new TarefaDAO();
+//            int id;
+//            if (request.getParameter("id").equals("")) {
+//                id = 0;
+//            } else {
+//                id = Integer.parseInt(String.valueOf(request.getParameter("id")));
+//            }
+//            cid.setId(id);
+//            cid.setDescricao(request.getParameter("descricao"));
+//            cid.setSituacao('A');
+//            ControleCidade controleCidade = new ControleCidade();
+           
+             SimpleDateFormat formato = new SimpleDateFormat("yyyy/mm/dd");
+             Date dataInicio = new Date();
+             Date dataFim = new Date();
+             
+            try {
+                 dataInicio = formato.parse(request.getParameter("datainclusaoinicio").replace("-", "/"));
+                 dataFim = formato.parse(request.getParameter("datainclusaofinal").replace("-", "/"));
+                 System.out.println("data inicio = "+dataInicio);
+            } catch (ParseException ex) {
+                Logger.getLogger(acao.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("erro "+ex);
+                // Date date = new Date();
+            }
+            
+            
+            
+            //int retorno = controleCidade.salvar(cid);
+           
+            try {
+                    byte[] bytes = tarefaDAO.gerarRelatorioResumoPorPeriodo(dataInicio,dataFim);
+            
+            response.setContentType("application/pdf");
+            response.setContentLength(bytes.length);
+            ServletOutputStream outStream = response.getOutputStream();
+            outStream.write(bytes, 0, bytes.length);
+            outStream.flush();
+            outStream.close();
+                } catch (Exception e) {
+                    System.out.println("erro ao gerar relatorio jsp "+e);
+                }
+           
+           
+           
+//           
+//            request.setAttribute("paginaOrigem", "cadastroCidade.jsp");
+//
+//            if (retorno == 1) {
+//                redirecionarPagina("cadastroCidade.jsp?m=1", request, response);
+//            } else {
+//                redirecionarPagina("cadastroCidade.jsp?m=" + retorno, request, response);
+//            }
+
+        }
+        
 
         if (parametro.equals("cadCidade")) {
             Cidade cid = new Cidade();

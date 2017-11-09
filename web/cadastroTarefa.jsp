@@ -457,25 +457,34 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-xs-4" >
+                                <div class="col-xs-3 " >
                                     <div class="form-group">
-                                        <label for="dataPrevisao" class="col-sm-6 control-label" >Previsão</label>
+                                        
+                                        
+<!--                                         <div class="col-xs-3" >
+                                    <div class="form-group">
                                         <div class="row">
-                                            <div class="col-sm-5">                                                                                                      <!--data-inputmask='"mask": "99/99/9999"' data-mask -->
+                                            <div class="col-xs-3 col-sm-3">-->  
+                                        
+                                        
+                                        
+                                        <label for="dataPrevisao" class="col-sm-4  control-label" >Previsão</label>
+                                        <div class="row">
+                                            <div class="col-sm-7">                                                                                                      <!--data-inputmask='"mask": "99/99/9999"' data-mask -->
                                                 <input type="date" class="form-control" name="dataPrevisao"  value="<%=tar.getDatahoraPrevisao()%>">
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="col-xs-3" >
+                                <div class="col-xs-3 " >
                                     <div class="form-group">
                                         <div class="row">
-                                            <div class="col-xs-4">
-                                                <label  for="versao" class="col-sm-offset-3 control-label">Versão BUG</label>
+                                            <div class="col-xs-3 ">
+                                                <label  for="versao" class="col-sm-4 control-label">V.BUG</label>
                                             </div>
 
-                                            <div class="col-xs-6">
+                                            <div class="col-xs-8 ">
                                                 <select   class="form-control select2" style="width: 100%;" name="versao" >
                                                     <%
                                                         Versao versaoBug = new Versao();

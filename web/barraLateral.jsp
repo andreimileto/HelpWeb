@@ -81,7 +81,22 @@
                 <ul class="treeview-menu">
                     <li><a href="cadastroTarefa.jsp"><i class="fa fa-vimeo"></i> Cadastro de Tarefa</a></li>
                     <li><a href="listaTarefas.jsp"><i class="fa fa-vimeo"></i> Listagem de Tarefas</a></li>
-                    <li><a href="relTarefas.jsp"><i class="fa fa-vimeo"></i> relatório de Tarefas</a></li>
+                    
+                </ul>
+            </li>
+            
+            <li class="treeview">
+                <a href="">
+                    <i class="fa fa-cogs"> </i>
+                    <span>Relatórios</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    
+                    <li><a href="relTarefas.jsp"><i class="fa fa-vimeo"></i>Geral de Tarefas</a></li>
+                    <li><a href="relTarefasResumo.jsp"><i class="fa fa-vimeo"></i>Resumo Tarefas por período</a></li>
                 </ul>
             </li>
 

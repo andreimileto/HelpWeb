@@ -8,6 +8,8 @@ package apoio;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  *
@@ -33,5 +35,39 @@ public class Formatacao {
         System.out.println(generatedPassword);
         return generatedPassword;
     }
-
-}
+    
+    public static Date formatacaoDataAMD(String data){
+         SimpleDateFormat formato = new SimpleDateFormat("yyyy/mm/dd");
+             Date dataFormatada = new Date();
+        try {
+       
+             dataFormatada = formato.parse(data);  
+            return dataFormatada;
+        } catch (Exception e) {
+            System.out.println("Erro ao formatar data "+e);
+        }
+        return dataFormatada;
+    }
+   
+    
+       
+    public static String ajustaDataDMAJCalendar(Date tffDataInicio) {
+        String dataFormatada = "";
+        
+        if (tffDataInicio.getDate()<10) {
+            dataFormatada = "0"+tffDataInicio.getDate()+"/";
+        }else{
+            dataFormatada = dataFormatada+tffDataInicio.getDate()+"/";
+        }
+        
+        if ((tffDataInicio.getMonth()+1)<10) {
+            dataFormatada = dataFormatada +"0"+(tffDataInicio.getMonth()+1)+"/";
+        }else{
+            dataFormatada = dataFormatada +(tffDataInicio.getMonth()+1)+"/";
+        }
+        dataFormatada= (dataFormatada+(tffDataInicio.getYear()+1900));
+        
+        return dataFormatada;
+    }
+    
+   }

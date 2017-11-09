@@ -6,26 +6,32 @@
 package DAO;
 
 import apoio.HibernateUtil;
-import entidade.Cliente;
 import entidade.Tarefa;
 import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import apoio.ConexaoBD;
+import apoio.Formatacao;
 import java.sql.Connection;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.JasperRunManager;
+
 /**
  *
  * @author Mileto
  */
-public class TarefaDAO extends DAO{
+public class TarefaDAO extends DAO {
+
     Tarefa tarefa;
-     public ArrayList<Tarefa> listar(Tarefa tarefa) {
+
+    public ArrayList<Tarefa> listar(Tarefa tarefa) {
         this.tarefa = tarefa;
         List resultado = null;
 
@@ -34,12 +40,11 @@ public class TarefaDAO extends DAO{
             Session session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             String sql = "";
-            
-                sql = "from Tarefa  "
-                        + "where "
-                        + "situacao ='A'";
-                        
-            
+
+            sql = "from Tarefa  "
+                    + "where "
+                    + "situacao ='A'";
+
             String sel = sql;
             System.out.println(sel);
             org.hibernate.Query q = session.createQuery(sql);
@@ -58,9 +63,8 @@ public class TarefaDAO extends DAO{
 //        }
         return lista;
     }
-    
-     
-        public ArrayList<Tarefa> consultarId(int id) {
+
+    public ArrayList<Tarefa> consultarId(int id) {
         //this.projeto = projeto;
         List resultado = null;
 
@@ -93,16 +97,16 @@ public class TarefaDAO extends DAO{
         return listas;
 
     }
-        
-          public byte[] gerarRelatorio() {
+
+    public byte[] gerarRelatorio() {
         try {
-            
+
             Connection conn = new ConexaoBD().getInstance().getConnection();
-             
-            JasperReport relatorio = JasperCompileManager.compileReport(getClass().getResourceAsStream("/relatorios/listagem de tarefas simplificada.jrxml"));
+
+            JasperReport relatorio = JasperCompileManager.compileReport(getClass().getResourceAsStream("/relatorios/listagemdetarefassimplificada.jrxml"));
 
             Map parameters = new HashMap();
-            
+
             byte[] bytes = JasperRunManager.runReportToPdf(relatorio, parameters, conn);
 
             return bytes;
@@ -111,7 +115,30 @@ public class TarefaDAO extends DAO{
         }
         return null;
     }
-     
-     
-     
+
+    public byte[] gerarRelatorioResumoPorPeriodo(Date dataInicio, Date dataFim) {
+        try {
+
+            Connection conn = new ConexaoBD().getInstance().getConnection();
+
+            JasperReport relatorio = JasperCompileManager.compileReport(getClass().getResourceAsStream("/relatorios/resumodetarefaspordatadeinclusao.jrxml"));
+
+            //SimpleDateFormat formato = new SimpleDateFormat("yyyy/mm/dd");
+            Date dataIni = new Date(Formatacao.ajustaDataDMAJCalendar(dataInicio));
+            Date dataFi = new Date(Formatacao.ajustaDataDMAJCalendar(dataFim));
+
+            Map parameters = new HashMap();
+            parameters.put("datainclusaoinicio", dataIni);
+            System.out.println("data =" + dataIni);
+            parameters.put("datahorainclusaofinal", dataFi);
+
+            byte[] bytes = JasperRunManager.runReportToPdf(relatorio, parameters, conn);
+
+            return bytes;
+        } catch (Exception e) {
+            System.out.println("erro ao gerar relatorio: " + e);
+        }
+        return null;
+    }
+
 }
