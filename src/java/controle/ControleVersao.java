@@ -42,7 +42,7 @@ public class ControleVersao {
             for (int i = 0; i < versoes.size(); i++) {
                 if (this.versao.getDescricao().equalsIgnoreCase(versoes.get(i).getDescricao()) 
                         && versao.getId() != versoes.get(i).getId()
-                        && versao.getProjeto().getId() == versoes.get(i).getId()) {
+                        && versao.getProjeto().getId() == versoes.get(i).getProjeto().getId()) {
                     return 3;
                 }
             }

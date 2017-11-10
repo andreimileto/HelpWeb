@@ -71,72 +71,16 @@
                             <div class="form-group">
                                 <label for="nome" class="col-sm-2 control-label">Nome*</label>
 
-                                <div class="col-sm-7">
+                                <div class="col-sm-8">
                                     <input type="text" class="form-control" name="nome" value="<%=cliente.getRazaoSocial()%>">
 
                                 </div>
                             </div>
-                            <!--
-                    <div class="form-group">
-                        <label for="tipo" class="col-lg-2 control-label" id="tipo" >Tipo*</label>
-
-                        <select class="form-control select2" style="width: 57%;" name="tipo" id="tipo"  >
-                            <%//if (//cliente.getTipoCadastro() != 'F' && cliente.getTipoCadastro() != 'F') {
-                            %>
-                            <option value="0" selected>Selecione </option>
-                            <%
-                                // } else {
-                            %>
-                            <option value="0">Selecione </option>
-                            <%                                        //  }
-                            %>
-                            <%//if (//cliente.getTipoCadastro() == 'F') {
-                            %>
-                            <option value="F" selected>Pessoa Física</option>        
-                            <%                                        // } else {
-                            %>
-                            <option value="F">Pessoa Física</option>
-
-                            <%                                        // }
-                                //  if (//cliente.getTipoCadastro() == 'J') {
-                            %>
-                            <option value="J" selected>Pessoa Jurídica</option>
-                            <%                                        //  } else {
-                            %><option value="J">Pessoa Jurídica</option>
-                            <%// }
-                            %>
-
-
-
-
-                        </select>
-                    </div>
-                            
-                            -->
-                            <!--//                            <div class="form-group">
-                            //                                <label for="CPF/CNPJ" class="col-sm-2 control-label">CPF/CNPJ*</label>
-                            //
-                            //                                <div class="col-md-3 col-sm-3">
-                            //                                    <%//if (cliente.getTipoCadastro() == 'F') {
-//                                    %>
-                            //
-                            //                                    <input  type="text" name="cpfcnpj" class="form-control" data-inputmask='"mask": "999.999.999-99"' data-mask id="grupo_cnpj" value="<%//=cliente.getCpfCnpj()%>">        
-                            //                                    <%
-                                //                                    } else {
-                                //                                    %>
-                            //                                    <input  type="text" name="cpfcnpj" class="form-control" data-inputmask='"mask": "99.999.999/9999-99"' data-mask id="grupo_cpf" value="<%//=cliente.getCpfCnpj()%>">
-                            //<!--                                    <input type="text" class="form-control" name="CPF/CNPJ" value="<//%=cliente.getCpfCnpj()%>">-->
-                            <%//}%>
-
-                            <!--   </div>-->
-
-
-                            <!-- </div>-->
-
+                           
 
 
                             <div class="form-group">
-                                <label class="col-sm-1 control-label">Tipo*</label>
+                                <label class="col-sm-2 control-label">Tipo*</label>
                                 <div class="col-sm-3">
                                     <!-- select -->
                                     <select class="form-control" id="tipo" name="tipo" required >
@@ -201,7 +145,7 @@
                             <div class="form-group">
                                 <label for="cidade" class="col-sm-2 control-label">Cidade*</label>
 
-                                <select class="form-control select2" style="width: 57%;" name="cidade">
+                                <select class="form-control select2" style="width: 65%;" name="cidade">
                                     <option value="0" selected>Selecione </option>
                                     <%
                                         Cidade cid = new Cidade();
@@ -231,7 +175,7 @@
                             <div class="form-group">
                                 <label for="endereco" class="col-sm-2 control-label">Endereço</label>
 
-                                <div class="col-sm-7">
+                                <div class="col-sm-8">
                                     <input type="text" class="form-control" name="endereco" value="<%=cliente.getEndereco()%>">
 
                                 </div>

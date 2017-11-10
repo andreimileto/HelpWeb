@@ -139,8 +139,7 @@ public class acao extends HttpServlet {
             request.setAttribute("objuser", user);
 
             encaminharPagina("cadastroUsuario.jsp", request, response);
-        } 
-        else if (parametro.equals("edProjeto")) {
+        } else if (parametro.equals("edProjeto")) {
             int id = Integer.parseInt(String.valueOf(request.getParameter("id")));
 
             ArrayList<Projeto> projetos = new ProjetoDAO().consultarId(id);
@@ -206,7 +205,7 @@ public class acao extends HttpServlet {
             request.setAttribute("objcli", cliente);
 
             encaminharPagina("cadastroCliente.jsp", request, response);
-        }else if (parametro.equals("edTarefa")) {
+        } else if (parametro.equals("edTarefa")) {
             int id = Integer.parseInt(String.valueOf(request.getParameter("id")));
 
             ArrayList<Tarefa> tarefas = new TarefaDAO().consultarId(id);
@@ -242,8 +241,8 @@ public class acao extends HttpServlet {
             int id = Integer.parseInt(String.valueOf(request.getParameter("id")));
             Usuario user = new Usuario();
             user.setId(id);
-            
-           ControleUsuario controleUsuario = new ControleUsuario();
+
+            ControleUsuario controleUsuario = new ControleUsuario();
             ArrayList<Usuario> usuarios = controleUsuario.consultarId(user.getId());
             user.setLogin(usuarios.get(0).getLogin());
             user.setNome(usuarios.get(0).getNome());
@@ -262,8 +261,7 @@ public class acao extends HttpServlet {
                 encaminharPagina("cadastroUsuario.jsp?m=11", request, response);
             }
 
-        }
-        else if (parametro.equals("exProjeto")) {
+        } else if (parametro.equals("exProjeto")) {
 
             int id = Integer.parseInt(String.valueOf(request.getParameter("id")));
             Projeto proj = new Projeto();
@@ -432,7 +430,7 @@ public class acao extends HttpServlet {
             ControleTarefa controleTarefa = new ControleTarefa();
             ArrayList<Tarefa> tarefas = controleTarefa.consultarId(tar.getId());
             Cidade cid = new Cidade();
-            
+
             Cliente cli = new Cliente();
             cli.setId(tarefas.get(0).getCliente().getId());
             cli.setCidade(cid);
@@ -449,7 +447,7 @@ public class acao extends HttpServlet {
             tar.setDescricao(tarefas.get(0).getDescricao());
             tar.setDatahoraCriacao(tarefas.get(0).getDatahoraCriacao());
             tar.setDatahoraPrevisao(tarefas.get(0).getDatahoraPrevisao());
-            
+
             Modulo modulo = new Modulo();
             modulo.setId(tarefas.get(0).getModulo().getId());
             tar.setModulo(modulo);
@@ -510,65 +508,43 @@ public class acao extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         response.setCharacterEncoding("UTF-8");
         String parametro = request.getParameter("parametro");
-        
+
         if (parametro.equals("relTarefasResumo")) {
-//            Cidade cid = new Cidade();
+
             TarefaDAO tarefaDAO = new TarefaDAO();
-//            int id;
-//            if (request.getParameter("id").equals("")) {
-//                id = 0;
-//            } else {
-//                id = Integer.parseInt(String.valueOf(request.getParameter("id")));
-//            }
-//            cid.setId(id);
-//            cid.setDescricao(request.getParameter("descricao"));
-//            cid.setSituacao('A');
-//            ControleCidade controleCidade = new ControleCidade();
-           
-             SimpleDateFormat formato = new SimpleDateFormat("yyyy/mm/dd");
-             Date dataInicio = new Date();
-             Date dataFim = new Date();
-             
             try {
-                 dataInicio = formato.parse(request.getParameter("datainclusaoinicio").replace("-", "/"));
-                 dataFim = formato.parse(request.getParameter("datainclusaofinal").replace("-", "/"));
-                 System.out.println("data inicio = "+dataInicio);
-            } catch (ParseException ex) {
-                Logger.getLogger(acao.class.getName()).log(Level.SEVERE, null, ex);
-                System.out.println("erro "+ex);
-                // Date date = new Date();
+                byte[] bytes = tarefaDAO.gerarRelatorioResumoPorPeriodo(request.getParameter("datainclusaoinicio"), request.getParameter("datainclusaofinal"));
+
+                response.setContentType("application/pdf");
+                response.setContentLength(bytes.length);
+                ServletOutputStream outStream = response.getOutputStream();
+                outStream.write(bytes, 0, bytes.length);
+                outStream.flush();
+                outStream.close();
+            } catch (Exception e) {
+                System.out.println("erro ao gerar relatorio jsp " + e);
             }
-            
-            
-            
-            //int retorno = controleCidade.salvar(cid);
-           
-            try {
-                    byte[] bytes = tarefaDAO.gerarRelatorioResumoPorPeriodo(dataInicio,dataFim);
-            
-            response.setContentType("application/pdf");
-            response.setContentLength(bytes.length);
-            ServletOutputStream outStream = response.getOutputStream();
-            outStream.write(bytes, 0, bytes.length);
-            outStream.flush();
-            outStream.close();
-                } catch (Exception e) {
-                    System.out.println("erro ao gerar relatorio jsp "+e);
-                }
-           
-           
-           
-//           
-//            request.setAttribute("paginaOrigem", "cadastroCidade.jsp");
-//
-//            if (retorno == 1) {
-//                redirecionarPagina("cadastroCidade.jsp?m=1", request, response);
-//            } else {
-//                redirecionarPagina("cadastroCidade.jsp?m=" + retorno, request, response);
-//            }
 
         }
-        
+
+        if (parametro.equals("excelTarefasResumo")) {
+
+            TarefaDAO tarefaDAO = new TarefaDAO();
+            try {
+                byte[] bytes = tarefaDAO.gerarExcelResumoPorPeriodo(request.getParameter("datainclusaoinicio"), request.getParameter("datainclusaofinal"));
+
+                response.setContentType("application/pdf");
+                response.setContentLength(bytes.length);
+                ServletOutputStream outStream = response.getOutputStream();
+                outStream.write(bytes, 0, bytes.length);
+                outStream.flush();
+                outStream.close();
+                System.out.println("entrou no try");
+            } catch (Exception e) {
+                System.out.println("erro ao gerar excel jsp " + e);
+            }
+
+        }
 
         if (parametro.equals("cadCidade")) {
             Cidade cid = new Cidade();
@@ -752,12 +728,21 @@ public class acao extends HttpServlet {
             cliente.setTipoCadastro(request.getParameter("tipo").charAt(0));
             cliente.setTelefone(request.getParameter("telefone"));
             cliente.setEndereco(request.getParameter("endereco"));
+            System.out.println("cpf = "+request.getParameter("cpf").replace(".", "").replace("-", "").replace("/", ""));
+            System.out.println("cnpj = "+request.getParameter("cnpj").replace(".", "").replace("-", "").replace("/", ""));
             try {
-                cliente.setCpfCnpj(request.getParameter("cpf").replace(".", "").replace("-", "").replace("/", ""));
+                if (request.getParameter("cnpj").replace(".", "").replace("-", "").replace("/", "").replace("_", "  ").length() < 12) {
+                    System.out.println("cpf acao" + request.getParameter("cnpj").replace(".", "").replace("-", "").replace("/", ""));
+                    cliente.setCpfCnpj(request.getParameter("cpf").replace(".", "").replace("-", "").replace("/", ""));
+                } else {
+                    cliente.setCpfCnpj(request.getParameter("cnpj").replace(".", "").replace("-", "").replace("/", ""));
+                }
             } catch (Exception e) {
+                System.out.println("cnpj acao" + request.getParameter("cnpj").replace(".", "").replace("-", "").replace("/", ""));
                 cliente.setCpfCnpj(request.getParameter("cnpj").replace(".", "").replace("-", "").replace("/", ""));
+                System.out.println("Erro validar cpf" + e);
             }
-            
+
             cid.setId(Integer.parseInt(idCidade));
             cliente.setCidade(cid);
             cliente.setSituacao('A');
@@ -832,8 +817,6 @@ public class acao extends HttpServlet {
                 Logger.getLogger(acao.class.getName()).log(Level.SEVERE, null, ex);
                 // Date date = new Date();
             }
-            
-           
 
             //
             // tarefa.setDatahoraCriacao((request.getParameter("datahoraCriacao")));
@@ -853,26 +836,26 @@ public class acao extends HttpServlet {
 
             ControleTarefa controleTarefa = new ControleTarefa();
             int retorno = controleTarefa.salvar(tarefa);
-            
-             MovimentoTarefa movimentacaoTarefa = new MovimentoTarefa();
+
+            MovimentoTarefa movimentacaoTarefa = new MovimentoTarefa();
             try {
                 Usuario autorMovimento = new Usuario();
                 HttpSession sessao = request.getSession();
-               // sessao.getAttribute("usuarioLogado").toString();
-                 autorMovimento.setId(Integer.parseInt(sessao.getAttribute("usuarioLogado").toString())); 
+                // sessao.getAttribute("usuarioLogado").toString();
+                autorMovimento.setId(Integer.parseInt(sessao.getAttribute("usuarioLogado").toString()));
                 // System.out.println(autorMovimento.getId()+".... ESSE É O ID DO NOVO MOVIMENTO");
                 movimentacaoTarefa.setTarefa(tarefa);
                 movimentacaoTarefa.setSituacao('A');
-                
+
                 movimentacaoTarefa.setUsuario(autorMovimento);
                 movimentacaoTarefa.setDatahoraMovimento(new Date());
                 movimentacaoTarefa.setDescricao(request.getParameter("movimentacao"));
                 movimentacaoTarefa.setAnexo("teste");
-             
+
                 ControleMovimentacaoTarefa controleMovimento = new ControleMovimentacaoTarefa();
                 controleMovimento.salvar(movimentacaoTarefa);
             } catch (Exception e) {
-                System.out.println("Erro ao salvar movimentação "+e);
+                System.out.println("Erro ao salvar movimentação " + e);
             }
 
             request.setAttribute("paginaOrigem", "cadastroTarefa.jsp");
@@ -883,7 +866,7 @@ public class acao extends HttpServlet {
                 redirecionarPagina("cadastroTarefa.jsp?m=" + retorno, request, response);
             }
 
-        }else  if (parametro.equals("cadUsuario")) {
+        } else if (parametro.equals("cadUsuario")) {
             Usuario usuario = new Usuario();
             int id;
             if (request.getParameter("id").equals("")) {
@@ -907,7 +890,7 @@ public class acao extends HttpServlet {
                 redirecionarPagina("cadastroUsuario.jsp?m=" + retorno, request, response);
             }
 
-        } 
+        }
 
         if (parametro.equals("login")) {
             Usuario user = new Usuario();

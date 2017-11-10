@@ -41,8 +41,10 @@ public class Validacao {
         CPFCNPJ.replace(".", "").replace("-", "").replace("/", "");
         boolean retorno = false;
         if (CPFCNPJ.length()==11) {
+            System.out.println("cnpj"+ CPFCNPJ);
             retorno = validarCPF(CPFCNPJ);
         }else{
+            System.out.println("cpf");
             retorno = validarCNPJ(CPFCNPJ);
         }
         return retorno;

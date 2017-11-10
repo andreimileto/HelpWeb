@@ -1,4 +1,5 @@
 
+<%@page import="apoio.Formatacao"%>
 <%@page import="DAO.VersaoDAO"%>
 <%@page import="entidade.Versao"%>
 <%@page import="java.lang.Exception"%>
@@ -41,7 +42,7 @@
         Cidade cidade = new Cidade();
         Usuario autor = new Usuario();
         Usuario responsavel = new Usuario();
-        
+
         Cliente cliente = new Cliente();
         cliente.setCidade(cidade);
         tar.setCliente(cliente);
@@ -426,18 +427,23 @@
                                                 <%
                                                     try {
                                                         if (tar.getDatahoraCriacao().toString().length() > 0) {
-
+                                                            System.out.println("tem inclusao" +tar.getDatahoraPrevisao());
+                                                            //System.out.println("tem inclusao" +tar.getDatahoraPrevisao());
 
                                                 %>
-                                                <input type="date" class="form-control" name="datahoraCriacao"  value="<%=tar.getDatahoraCriacao()%>" Use readonly="true" >
+                                                
+                                                <input type="datetime" class="form-control" name="datahoraCriacao"  value="<%=Formatacao.formatacaoDataDMAHMS(tar.getDatahoraCriacao())%>" Use readonly="true" >
                                                 <%
                                                 } else {
+                                                    System.out.println("nao tem inclusao");
                                                 %>
                                                 <input type="date" class="form-control" name="datahoraCriacao"  value="" Use readonly="true" >
 
                                                 <%
+                                                    System.out.println("nao tem inclusao");
                                                     }
                                                 } catch (Exception e) {
+System.out.println("entrou na catch");
                                                 %>
                                                 <input type="date" name="datahoraCriacao" class="form-control" value="" Use readonly="true" >
 
@@ -459,15 +465,15 @@
                             <div class="row">
                                 <div class="col-xs-3 " >
                                     <div class="form-group">
-                                        
-                                        
-<!--                                         <div class="col-xs-3" >
-                                    <div class="form-group">
-                                        <div class="row">
-                                            <div class="col-xs-3 col-sm-3">-->  
-                                        
-                                        
-                                        
+
+
+                                        <!--                                         <div class="col-xs-3" >
+                                                                            <div class="form-group">
+                                                                                <div class="row">
+                                                                                    <div class="col-xs-3 col-sm-3">-->  
+
+
+
                                         <label for="dataPrevisao" class="col-sm-4  control-label" >Previsão</label>
                                         <div class="row">
                                             <div class="col-sm-7">                                                                                                      <!--data-inputmask='"mask": "99/99/9999"' data-mask -->
@@ -604,13 +610,13 @@
                                         <div class="col-xs-12">
 
                                             <textarea id="editor2" name="movimentacao"  rows="5" cols="5">
-                                                </textarea>
+                                            </textarea>
                                         </div>
 
                                     </section>
                                 </div>
                             </div>
-                        
+
 
 
 

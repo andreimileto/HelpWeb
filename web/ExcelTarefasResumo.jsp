@@ -31,7 +31,7 @@
                         <h3 class="box-title">Filtro de relatório</h3>
                     </div>
 
-                    <form name="cadCidade" class="form-horizontal" action="/HelpWeb/acao?parametro=relTarefasResumo" method="post">
+                    <form name="cadCidade" class="form-horizontal" action="/HelpWeb/acao?parametro=excelTarefasResumo" method="post">
                         <div class="box-body">
                             <div class="form-group">
                                 <label for="id" class="col-sm-2 control-label" >Data inicial</label>
