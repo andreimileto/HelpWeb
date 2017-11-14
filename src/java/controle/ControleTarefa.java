@@ -33,7 +33,28 @@ public class ControleTarefa {
                 return 3;
             }
             
-
+            if (tarefa.getCliente().getId()<1) {
+                return 7;
+            }else if (tarefa.getFase().getId()<1) {
+                return 7;
+            }else if (tarefa.getModulo().getId()<1) {
+                return 7;
+            }else if (tarefa.getMotivo().getId()<1) {
+                return 7;
+            }else if (tarefa.getPrioridade().getId()<1) {
+                return 7;
+            }else if (tarefa.getProjeto().getId()<1) {
+                return 7;
+            }else if (tarefa.getUsuarioByIdUsuarioResponsavel().getId()<1) {
+                return 7;
+            }else if (tarefa.getVersaoByIdVersaoBug().getId()<1) {
+                return 7;
+            }else if (tarefa.getVersaoByIdVersaoCorrecao().getId()<1) {
+                return 7;
+            }
+{
+                
+            }
 
         }
         if (tarefaDAO.salvar(tarefa)) {

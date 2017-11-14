@@ -815,15 +815,12 @@ public class acao extends HttpServlet {
                 tarefa.setDatahoraPrevisao(data);
             } catch (ParseException ex) {
                 Logger.getLogger(acao.class.getName()).log(Level.SEVERE, null, ex);
-                // Date date = new Date();
+              
             }
 
-            //
-            // tarefa.setDatahoraCriacao((request.getParameter("datahoraCriacao")));
-//            tarefa.setDatahoraPrevisao((request.getParameter("dataPrevisao")));
+    
             tarefa.setDatahoraCriacao(new Date());
-            //tarefa.setDatahoraPrevisao(new Date());
-            // 
+       
 
             versaoBug.setId(Integer.parseInt(idVersaoBug));
             tarefa.setVersaoByIdVersaoBug(versaoBug);
@@ -841,9 +838,9 @@ public class acao extends HttpServlet {
             try {
                 Usuario autorMovimento = new Usuario();
                 HttpSession sessao = request.getSession();
-                // sessao.getAttribute("usuarioLogado").toString();
+             
                 autorMovimento.setId(Integer.parseInt(sessao.getAttribute("usuarioLogado").toString()));
-                // System.out.println(autorMovimento.getId()+".... ESSE É O ID DO NOVO MOVIMENTO");
+             
                 movimentacaoTarefa.setTarefa(tarefa);
                 movimentacaoTarefa.setSituacao('A');
 

@@ -29,8 +29,7 @@
 <%@include file = "barraLateral.jsp"%>
 
 
-<%
-    // Cidade cid = new Cidade();
+<%    // Cidade cid = new Cidade();
     Tarefa tar = (Tarefa) request.getAttribute("objtar");
 
     if (tar == null) {
@@ -88,7 +87,7 @@
                                 <label for="cliente" class="col-sm-0 control-label">Cliente</label>
 
                                 <select class="form-control select2" style="width: 20%;" name="cliente">
-
+                                    <option value="0" selected>Selecione </option>
                                     <%
                                         Cliente cliente = new Cliente();
                                         cliente.setRazaoSocial("");
@@ -169,7 +168,11 @@
                                             </div>
                                             <div class="col-xs-8">
                                                 <select class="form-control select2" style="width: 100%;" name="responsavel">
-
+                                                    <% if (tar.getId()==0) {%>
+                                                    <option value="0" selected>Selecione </option>
+                                                    <%
+                                                        }
+                                                    %>
                                                     <%
                                                         Usuario responsavel = new Usuario();
                                                         responsavel.setNome("");
@@ -216,7 +219,11 @@
 
                                             <div class="col-xs-8">
                                                 <select  class="form-control select2" style="width: 100%;" name="projeto" >
-
+                                                     <% if (tar.getId()==0) {%>
+                                                    <option value="0" selected>Selecione </option>
+                                                    <%
+                                                        }
+                                                    %>
                                                     <%
                                                         Projeto projeto = new Projeto();
                                                         projeto.setDescricao("");
@@ -261,7 +268,11 @@
 
                                             <div class="col-xs-8 col-sm-8">
                                                 <select  class="form-control select2" style="width: 100%;" name="motivo" >
-
+                                                     <% if (tar.getId()==0) {%>
+                                                    <option value="0" selected>Selecione </option>
+                                                    <%
+                                                        }
+                                                    %>
                                                     <%
                                                         Motivo motivo = new Motivo();
                                                         motivo.setDescricao("");
@@ -308,6 +319,11 @@
 
                                             <div class="col-xs-8 col-lg-8">
                                                 <select   class="form-control select2" style="width: 100%;" name="modulo" >
+                                                     <% if (tar.getId()==0) {%>
+                                                    <option value="0" selected>Selecione </option>
+                                                    <%
+                                                        }
+                                                    %>
                                                     <%
                                                         Modulo modulo = new Modulo();
                                                         modulo.setDescricao("");
@@ -350,7 +366,11 @@
                                             </div>
                                             <div class="col-xs-8">
                                                 <select class="form-control select2" style="width: 100%;" name="fase">
-
+                                                     <% if (tar.getId()==0) {%>
+                                                    <option value="0" selected>Selecione </option>
+                                                    <%
+                                                        }
+                                                    %>
                                                     <%
                                                         Fase fase = new Fase();
                                                         fase.setDescricao("");
@@ -390,6 +410,11 @@
 
                                             <div class="col-xs-8">
                                                 <select   class="form-control select2" style="width: 100%;" name="prioridade" >
+                                                    <% if (tar.getId()==0) {%>
+                                                    <option value="0" selected>Selecione </option>
+                                                    <%
+                                                        }
+                                                    %>
                                                     <%
                                                         Prioridade prioridade = new Prioridade();
                                                         prioridade.setDescricao("");
@@ -427,11 +452,11 @@
                                                 <%
                                                     try {
                                                         if (tar.getDatahoraCriacao().toString().length() > 0) {
-                                                            System.out.println("tem inclusao" +tar.getDatahoraPrevisao());
+                                                            System.out.println("tem inclusao" + tar.getDatahoraPrevisao());
                                                             //System.out.println("tem inclusao" +tar.getDatahoraPrevisao());
 
                                                 %>
-                                                
+
                                                 <input type="datetime" class="form-control" name="datahoraCriacao"  value="<%=Formatacao.formatacaoDataDMAHMS(tar.getDatahoraCriacao())%>" Use readonly="true" >
                                                 <%
                                                 } else {
@@ -440,10 +465,10 @@
                                                 <input type="date" class="form-control" name="datahoraCriacao"  value="" Use readonly="true" >
 
                                                 <%
-                                                    System.out.println("nao tem inclusao");
+                                                        System.out.println("nao tem inclusao");
                                                     }
                                                 } catch (Exception e) {
-System.out.println("entrou na catch");
+//System.out.println("entrou na catch");
                                                 %>
                                                 <input type="date" name="datahoraCriacao" class="form-control" value="" Use readonly="true" >
 
@@ -492,6 +517,12 @@ System.out.println("entrou na catch");
 
                                             <div class="col-xs-8 ">
                                                 <select   class="form-control select2" style="width: 100%;" name="versao" >
+                                                    <% if (tar.getId()==0) {%>
+                                                    <option value="0" selected>Selecione </option>
+                                                    <%
+                                                        }
+                                                    %>
+                                                    
                                                     <%
                                                         Versao versaoBug = new Versao();
                                                         versaoBug.setDescricao("");
@@ -532,6 +563,11 @@ System.out.println("entrou na catch");
 
                                             <div class="col-xs-6">
                                                 <select   class="form-control select2" style="width: 100%;" name="versaoCorrecao" >
+                                                     <% if (tar.getId()==0) {%>
+                                                    <option value="0" selected>Selecione </option>
+                                                    <%
+                                                        }
+                                                    %>
                                                     <%
                                                         Versao versaoCorrecao = new Versao();
                                                         versaoCorrecao.setDescricao("");
@@ -562,7 +598,72 @@ System.out.println("entrou na catch");
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
+
+                            <%
+                                if (request.getParameterMap().containsKey("m") && (request.getParameter("m").equals("1") || request.getParameter("m").equals("10"))) {
+                            %>
+                            <div class="alert alert-success alert-dismissible">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                <h4><i class="icon fa fa-check"></i> Sucesso!</h4>
+                                <%if (request.getParameter("m").equals("1")) {
+                                %>
+                                Cidade salva com sucesso!
+                                <%
+                                } else if (request.getParameter("m").equals("10")) {
+                                %>
+                                Cidade excluída com sucesso!
+                                <%
+                                    }
+                                %>
+
+                            </div>
+                            <%                                        }
+                            %>
+
+                            <%
+                                if (request.getParameterMap().containsKey("m") && (request.getParameter("m").equals("2") || request.getParameter("m").equals("3") || request.getParameter("m").equals("6") || request.getParameter("m").equals("7"))) {
+                            %>
+                            <div class="alert alert-danger">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                <h4><i class="icon fa fa-ban"></i> Erro!</h4>
+                                <%if (request.getParameter("m").equals("2")) {
+                                %>
+                                <h5>Erro ao salvar tarefa!</h5><br>
+                                <h5>Título precisa ter de 3 até 100 caracteres.</h5>   
+                                <% } else if (request.getParameter("m").equals("3")) {
+
+                                %>
+
+                                <h5>Erro ao salvar tarefa!</h5><br>  
+                                <h5>Descrição precisa ter de 3 até 100 caracteres.</h5>
+
+                                <%  } else if (request.getParameter("m").equals("6")) {
+
+                                %>
+                                Erro ao salvar tarefa!<br>  
+                                verifique com o suporte.
+
+
+
+                                <%} else if (request.getParameter("m").equals("7")) {
+
+                                %>
+                                Erro ao salvar tarefa!<br>  
+                                verifique se todos os campos estão preenchidos.
+
+
+                                <%                                        }
+
+                                    }
+                                %>
+                            </div>
+                            <div class="box-footer">
+
+                                <input type="submit" class="btn btn-dropbox pull-right-container" name="enviar" value="Salvar"> 
+
+                            </div>             
                             <div class="row">
                                 <div class="col-xs-6" >
                                     <div class="form-group">
@@ -628,57 +729,10 @@ System.out.println("entrou na catch");
                                 </div>
                             </div>
                         </div>
-                        <%
-                            if (request.getParameterMap().containsKey("m") && (request.getParameter("m").equals("1") || request.getParameter("m").equals("10"))) {
-                        %>
-                        <div class="alert alert-success alert-dismissible">
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            <h4><i class="icon fa fa-check"></i> Sucesso!</h4>
-                            <%if (request.getParameter("m").equals("1")) {
-                            %>
-                            Cidade salva com sucesso!
-                            <%
-                            } else if (request.getParameter("m").equals("10")) {
-                            %>
-                            Cidade excluída com sucesso!
-                            <%
-                                }
-                            %>
 
-                        </div>
-                        <%                                        }
-                        %>
 
-                        <%
-                            if (request.getParameterMap().containsKey("m") && (request.getParameter("m").equals("2") || request.getParameter("m").equals("3"))) {
-                        %>
-                        <div class="alert alert-danger">
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            <h4><i class="icon fa fa-ban"></i> Erro!</h4>
-                            <%if (request.getParameter("m").equals("2")) {
-                            %>
-                            <h5>Erro ao salvar cidade!</h5><br>
-                            <h5>Nome precisa ter de 3 até 45 caracteres.</h5>   
-                            <% } else if (request.getParameter("m").equals("3")) {
 
-                            %>
-
-                            Erro ao salvar cidade!<br>  
-                            Cidade já cadastrada.
-
-                            <%                                }
-
-                            %>
-
-                        </div>
-                        <%                                        }
-                        %>
-
-                        <div class="box-footer">
-
-                            <input type="submit" class="btn btn-dropbox pull-right-container" name="enviar" value="Salvar"> 
-
-                        </div>
+                        <!-- aqui -->
 
                     </form>
 
