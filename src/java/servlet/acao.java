@@ -5,6 +5,7 @@
  */
 package servlet;
 
+
 import DAO.CidadeDAO;
 import DAO.ClienteDAO;
 import DAO.FaseDAO;
@@ -15,6 +16,7 @@ import DAO.ProjetoDAO;
 import DAO.TarefaDAO;
 import DAO.UsuarioDAO;
 import DAO.VersaoDAO;
+import apoio.Arquivo;
 import apoio.Formatacao;
 import controle.ControleCidade;
 import controle.ControleCliente;
@@ -53,7 +55,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
+import java.io.*;
 /**
  *
  * @author Mileto
@@ -530,19 +532,37 @@ public class acao extends HttpServlet {
         if (parametro.equals("excelTarefasResumo")) {
 
             TarefaDAO tarefaDAO = new TarefaDAO();
-            try {
-                byte[] bytes = tarefaDAO.gerarExcelResumoPorPeriodo(request.getParameter("datainclusaoinicio"), request.getParameter("datainclusaofinal"));
+            ArrayList<Tarefa> tarefas = new ArrayList<>();
 
-                response.setContentType("application/pdf");
-                response.setContentLength(bytes.length);
-                ServletOutputStream outStream = response.getOutputStream();
-                outStream.write(bytes, 0, bytes.length);
-                outStream.flush();
-                outStream.close();
-                System.out.println("entrou no try");
-            } catch (Exception e) {
-                System.out.println("erro ao gerar excel jsp " + e);
-            }
+//            try {
+//                tarefas = tarefaDAO.gerarExcelResumoPorPeriodo(request.getParameter("datainclusaoinicio"), request.getParameter("datainclusaofinal"));
+//                Arquivo arquivo = new Arquivo("teste.csv");
+//
+//                if (arquivo.abrirEscrita(true)) {
+//                    for (int i = 0; i < tarefas.size(); i++) {
+//                        String linha = tarefas.get(i).getId() + ";"
+//                                + evento.getTitulo() + ";"
+//                                + evento.getDescricao() + ";"
+//                                + evento.getDataAgenda() + ";"
+//                                + evento.getHoraAgenda() + ";"
+//                                + evento.getDataHoraEncerramento() + ";"
+//                                + evento.getSituacao();
+//                        arquivo.escreverLinha(linha);
+//                    }
+//
+//                    arquivo.fecharArquivo();
+//
+////                response.setContentType("application/pdf");
+////                response.setContentLength(bytes.length);
+////                ServletOutputStream outStream = response.getOutputStream();
+////                outStream.write(bytes, 0, bytes.length);
+////                outStream.flush();
+////                outStream.close();
+//                    System.out.println("entrou no try");
+//                }
+//            } catch (Exception e) {
+//                System.out.println("erro ao gerar excel jsp " + e);
+//            }
 
         }
 
@@ -728,8 +748,8 @@ public class acao extends HttpServlet {
             cliente.setTipoCadastro(request.getParameter("tipo").charAt(0));
             cliente.setTelefone(request.getParameter("telefone"));
             cliente.setEndereco(request.getParameter("endereco"));
-            System.out.println("cpf = "+request.getParameter("cpf").replace(".", "").replace("-", "").replace("/", ""));
-            System.out.println("cnpj = "+request.getParameter("cnpj").replace(".", "").replace("-", "").replace("/", ""));
+            System.out.println("cpf = " + request.getParameter("cpf").replace(".", "").replace("-", "").replace("/", ""));
+            System.out.println("cnpj = " + request.getParameter("cnpj").replace(".", "").replace("-", "").replace("/", ""));
             try {
                 if (request.getParameter("cnpj").replace(".", "").replace("-", "").replace("/", "").replace("_", "  ").length() < 12) {
                     System.out.println("cpf acao" + request.getParameter("cnpj").replace(".", "").replace("-", "").replace("/", ""));

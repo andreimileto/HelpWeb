@@ -149,59 +149,47 @@ public class TarefaDAO extends DAO {
         return null;
     }
 
-    public byte[] gerarExcelResumoPorPeriodo(String dataInicio, String dataFim) {
+    public ArrayList<Tarefa> gerarExcelResumoPorPeriodo(String dataInicio, String dataFim) {
 //        try {
 //
         Connection conn = new ConexaoBD().getInstance().getConnection();
-//
-        try {
-            JasperReport relatorio = JasperCompileManager.compileReport(getClass().getResourceAsStream("/relatorios/resumodetarefaspordatadeinclusao.jrxml"));
-        } catch (Exception e) {
-        }
+        TarefaDAO tarefaDAO = new TarefaDAO();
+        this.tarefa = tarefa;
+        List resultado = null;
 
-//
-//
-//   //System.out.println("dataaaaaaaaaaa " + Formatacao.formatacaoData2(dataInicio.replace("-", "/")));
-//            Map parameters = new HashMap();
-//            parameters.put("datainclusaoinicio", Formatacao.formatacaoData2(dataInicio.replace("-", "/")));
-////            System.out.println("data =" + dataIni);
-//        //    System.out.println("dataaaaaaaaaaa " + Formatacao.formatacaoData2(dataInicio.replace("-", "/")));
-//            parameters.put("datahorainclusaofinal", Formatacao.formatacaoData2(dataFim.replace("-", "/")));
-//
-//            byte[] bytes = JasperRunManager.runReportToPdf(relatorio, parameters, conn);
-//
-//            return bytes;
-//        } catch (Exception e) {
-//            System.out.println("erro ao gerar relatorio: " + e);
+        ArrayList<Tarefa> lista = new ArrayList<>();
+        try {
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+            String sql = "";
+
+            sql = "select count(t.*),f.descricao descricaofase,p.descricao descricaoprojeto,m.descricao descricaomodulo"
+                    + " from tarefa t, fase f, projeto p, MODULO M\n "
+                    + "where t.id_fase = f.id\n "
+                    + "and t.id_projeto = p.id\n "
+                    + "and t.id_modulo = m.id\n "
+                    + "and t.datahora_criacao >='" + dataInicio+"' "
+                    + "and t.datahora_criacao <= '" + dataFim+"' "
+                    + "group by f.id, p.id, m.id\n"
+                    + "order by  count(t.*) desc";
+
+            String sel = sql;
+            System.out.println(sel);
+            org.hibernate.Query q = session.createQuery(sql);
+
+            resultado = q.list();
+
+            for (Object o : resultado) {
+                Tarefa tar = ((Tarefa) ((Object) o));
+                lista.add(tar);
+            }
+
+        } catch (HibernateException he) {
+            he.printStackTrace();
+        }// finally {
+//            session.close();
 //        }
-//        return null;
-        FacesContext context = FacesContext.getCurrentInstance();
-        HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
-        byte[] bytes;
-        try {
-            JRXlsExporter exporter = new JRXlsExporter();
-            ByteArrayOutputStream xlsReport = new ByteArrayOutputStream();
-            //exporter.setParameter(JRXlsExporterParameter.JASPER_PRINT, impressao);  
-            exporter.setParameter(JRXlsExporterParameter.OUTPUT_STREAM, xlsReport);
-            exporter.setParameter(JRXlsExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS, Boolean.TRUE);
-            exporter.setParameter(JRXlsExporterParameter.IS_WHITE_PAGE_BACKGROUND, Boolean.TRUE);
-            exporter.setParameter(JRXlsExporterParameter.IS_ONE_PAGE_PER_SHEET, Boolean.TRUE);
-            exporter.setParameter(JRXlsExporterParameter.OUTPUT_FILE_NAME, "c:/relatorio.xls");
-            exporter.exportReport();
-            bytes = xlsReport.toByteArray();
-            response.setContentType("application/vnd.ms-excel");
-            response.setContentLength(bytes.length);
-            xlsReport.close();
-            OutputStream ouputStream = response.getOutputStream();
-            ouputStream.write(bytes, 0, bytes.length);
-            ouputStream.flush();
-            ouputStream.close();
-            return bytes;
-        } catch (Exception e) {
-            System.out.println("erro excel" + e);
+        return lista;
 
-        }
-        return null;
     }
-
 }
