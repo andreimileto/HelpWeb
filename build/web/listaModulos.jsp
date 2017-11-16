@@ -40,7 +40,7 @@
                             <td><%=modulos.get(i).getDescricao()%></td>
                             <td><%=modulos.get(i).getProjeto().getDescricao()%></td>
                             <td><a href="/HelpWeb/acao?parametro=edModulo&id=<%=modulos.get(i).getId()%>"><span class="label label-primary pull-left-container">Editar</span></a>
-                                <a href="/HelpWeb/acao?parametro=exModulo&id=<%=modulos.get(i).getId()%>"><span class="label label-danger pull-right-container">Excluir</span></a>
+                                <a href="/HelpWeb/acao?parametro=exModulo&id=<%=modulos.get(i).getId()%>"  onclick="return confirm('Tem certeza que deseja excluir o módulo?');"><span class="label label-danger pull-right-container">Excluir</span></a>
                             </td>
 
                         </tr>

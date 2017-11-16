@@ -10,7 +10,7 @@ public class Arquivo {
     private char status;
 
     // Construtor
-    Arquivo(String nomeArquivo) {
+    public Arquivo(String nomeArquivo) {
         this.nomeArquivo = nomeArquivo;
         status = 'C'; // Closed, Read, Write
     }

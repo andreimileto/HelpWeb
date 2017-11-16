@@ -34,7 +34,7 @@
                             <td><%=projetos.get(i).getId()%></td>
                             <td><%=projetos.get(i).getDescricao()%></td>
                             <td><a href="/HelpWeb/acao?parametro=edProjeto&id=<%=projetos.get(i).getId()%>"><span class="label label-primary pull-left-container">Editar</span></a>
-                                <a href="/HelpWeb/acao?parametro=exProjeto&id=<%=projetos.get(i).getId()%>"><span class="label label-danger pull-right-container">Excluir</span></a>
+                                <a href="/HelpWeb/acao?parametro=exProjeto&id=<%=projetos.get(i).getId()%>"  onclick="return confirm('Tem certeza que deseja excluir o projeto?');"><span class="label label-danger pull-right-container">Excluir</span></a>
                             </td>
 
                         </tr>

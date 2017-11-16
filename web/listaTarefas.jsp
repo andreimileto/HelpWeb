@@ -67,7 +67,7 @@
                             <td><%=tarefas.get(i).getUsuarioByIdUsuarioResponsavel().getNome()%></td>
                             <td><%=tarefas.get(i).getFase().getDescricao()%></td>
                             <td><a href="/HelpWeb/acao?parametro=edTarefa&id=<%=tarefas.get(i).getId()%>"><span class="label label-primary pull-left-container">Editar</span></a>
-                                <a href="/HelpWeb/acao?parametro=exTarefa&id=<%=tarefas.get(i).getId()%>"><span class="label label-danger pull-right-container">Excluir</span></a>
+                                <a href="/HelpWeb/acao?parametro=exTarefa&id=<%=tarefas.get(i).getId()%>"  onclick="return confirm('Tem certeza que deseja excluir a tarefa?');"><span class="label label-danger pull-right-container">Excluir</span></a>
                             </td>
                         </tr>
                         <%

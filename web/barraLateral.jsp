@@ -107,8 +107,13 @@
                 <ul class="treeview-menu">
 
                     <li><a href="relTarefas.jsp"><i class="fa fa-vimeo"></i>Geral de Tarefas</a></li>
-                    <li><a href="relTarefasResumo.jsp"><i class="fa fa-vimeo"></i>Resumo Tarefas por período</a></li>
+                    
+                    <li><a href="relTarefasPorResponsavel.jsp"><i class="fa fa-vimeo"></i>Resumo Tarefas<BR>&nbsp&nbsp&nbsp&nbsp por responsável</a></li>
+                    <li><a href="relTarefasResumo.jsp"><i class="fa fa-vimeo"></i>Resumo Tarefas<BR>&nbsp&nbsp&nbsp&nbsp por período</a></li>
+                    <li><a href="relTarefasPorProjeto.jsp"><i class="fa fa-vimeo"></i>Resumo Tarefas <BR>&nbsp &nbsp &nbspde um Projeto</a></li>
                     <li><a href="ExcelTarefasResumo.jsp"><i class="fa fa-vimeo"></i>Excel Tarefas por período</a></li>
+                    <li><a href="ExcelTarefasResumoPorProjeto.jsp"><i class="fa fa-vimeo"></i>Excel Tarefas <BR>&nbsp &nbsp &nbsp por período e de um projeto</a></li>
+                    
 
                 </ul>
             </li>

@@ -42,7 +42,7 @@
                             <td><%=versoes.get(i).getDescricao()%></td>
                             <td><%=versoes.get(i).getProjeto().getDescricao()%></td>
                             <td><a href="/HelpWeb/acao?parametro=edVersao&id=<%=versoes.get(i).getId()%>"><span class="label label-primary pull-left-container">Editar</span></a>
-                                <a href="/HelpWeb/acao?parametro=exVersao&id=<%=versoes.get(i).getId()%>"><span class="label label-danger pull-right-container">Excluir</span></a>
+                                <a href="/HelpWeb/acao?parametro=exVersao&id=<%=versoes.get(i).getId()%>"  onclick="return confirm('Tem certeza que deseja excluir a versão?');"><span class="label label-danger pull-right-container">Excluir</span></a>
                             </td>
 
                         </tr>

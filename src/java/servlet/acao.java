@@ -5,7 +5,6 @@
  */
 package servlet;
 
-
 import DAO.CidadeDAO;
 import DAO.ClienteDAO;
 import DAO.FaseDAO;
@@ -17,6 +16,7 @@ import DAO.TarefaDAO;
 import DAO.UsuarioDAO;
 import DAO.VersaoDAO;
 import apoio.Arquivo;
+
 import apoio.Formatacao;
 import controle.ControleCidade;
 import controle.ControleCliente;
@@ -56,6 +56,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
+
 /**
  *
  * @author Mileto
@@ -72,6 +73,7 @@ public class acao extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     int idRetorno;
+    Arquivo arquivo;
 
     /**
      *
@@ -528,43 +530,140 @@ public class acao extends HttpServlet {
             }
 
         }
+        if (parametro.equals("relTarefasPorProjeto")) {
+
+            TarefaDAO tarefaDAO = new TarefaDAO();
+            try {
+                byte[] bytes = tarefaDAO.gerarRelatorioResumoPorPeriodoEProjeto(request.getParameter("datainclusaoinicio"), request.getParameter("datainclusaofinal"), Integer.parseInt(request.getParameter("idProjeto")));
+
+                response.setContentType("application/pdf");
+                response.setContentLength(bytes.length);
+                ServletOutputStream outStream = response.getOutputStream();
+                outStream.write(bytes, 0, bytes.length);
+                outStream.flush();
+                outStream.close();
+            } catch (Exception e) {
+                System.out.println("erro ao gerar relatorio jsp " + e);
+            }
+
+        }
+        if (parametro.equals("relTarefasPorResponsavel")) {
+
+            TarefaDAO tarefaDAO = new TarefaDAO();
+            try {
+                byte[] bytes = tarefaDAO.gerarRelatorioResumoPorPeriodoEResponsavel(request.getParameter("datainclusaoinicio"), request.getParameter("datainclusaofinal"));
+
+                response.setContentType("application/pdf");
+                response.setContentLength(bytes.length);
+                ServletOutputStream outStream = response.getOutputStream();
+                outStream.write(bytes, 0, bytes.length);
+                outStream.flush();
+                outStream.close();
+            } catch (Exception e) {
+                System.out.println("erro ao gerar relatorio jsp " + e);
+            }
+
+        }
 
         if (parametro.equals("excelTarefasResumo")) {
 
             TarefaDAO tarefaDAO = new TarefaDAO();
             ArrayList<Tarefa> tarefas = new ArrayList<>();
 
-//            try {
-//                tarefas = tarefaDAO.gerarExcelResumoPorPeriodo(request.getParameter("datainclusaoinicio"), request.getParameter("datainclusaofinal"));
-//                Arquivo arquivo = new Arquivo("teste.csv");
-//
-//                if (arquivo.abrirEscrita(true)) {
-//                    for (int i = 0; i < tarefas.size(); i++) {
-//                        String linha = tarefas.get(i).getId() + ";"
-//                                + evento.getTitulo() + ";"
-//                                + evento.getDescricao() + ";"
-//                                + evento.getDataAgenda() + ";"
-//                                + evento.getHoraAgenda() + ";"
-//                                + evento.getDataHoraEncerramento() + ";"
-//                                + evento.getSituacao();
-//                        arquivo.escreverLinha(linha);
-//                    }
-//
-//                    arquivo.fecharArquivo();
-//
-////                response.setContentType("application/pdf");
-////                response.setContentLength(bytes.length);
-////                ServletOutputStream outStream = response.getOutputStream();
-////                outStream.write(bytes, 0, bytes.length);
-////                outStream.flush();
-////                outStream.close();
-//                    System.out.println("entrou no try");
-//                }
-//            } catch (Exception e) {
-//                System.out.println("erro ao gerar excel jsp " + e);
-//            }
+            try {
+                tarefas = tarefaDAO.gerarExcelResumoPorPeriodo(request.getParameter("datainclusaoinicio"), request.getParameter("datainclusaofinal"));
+
+                //arquivo = new Arquivo("C:\\Users\\Mileto\\Documents\\NetBeansProjects\\HelpWeb\\src\\java\\servlet\\Excel.csv");
+                String textoArquivo = "";
+             //   if (arquivo.abrirEscrita(true)) {
+                   
+                  String cabecalho =  "Id;Titulo;Cliente;Projeto;Motivo";
+                         // arquivo.escreverLinha(cabecalho);
+                 //  textoArquivo = textoArquivo + cabecalho + "\n";
+                 textoArquivo = cabecalho + "\n";
+               //  arquivo.escreverLinha(cabecalho);
+                    for (int i = 0; i < tarefas.size(); i++) {
+                       String  linha = tarefas.get(i).getId() + ";"
+                                + tarefas.get(i).getTitulo() + ";"
+                                + tarefas.get(i).getCliente().getRazaoSocial() + ";"
+                                + tarefas.get(i).getProjeto().getDescricao() + ";"
+                                + tarefas.get(i).getMotivo().getDescricao() + ";";
+
+                        textoArquivo = textoArquivo + linha + "\n";
+                     //   arquivo.escreverLinha(linha);
+
+                    }
+                   // arquivo.fecharArquivo();
+
+              //  }
+
+                String txt = textoArquivo;
+                File file = new File(txt);
+                FileOutputStream teste = new FileOutputStream("Excel");
+                teste.write(txt.getBytes());
+                teste.flush();
+                teste.close();
+                response.setContentType("text/plain");
+                response.setHeader("Content-disposition", "attachment; filename=" + "Tarefas por periodo" + ".csv");
+                ServletOutputStream os = response.getOutputStream();
+                os.write(txt.getBytes());
+                os.flush();
+                os.close();
+
+            } catch (Exception e) {
+                System.out.println("erro ao gerar excel jsp " + e);
+            }
 
         }
+        
+        
+         if (parametro.equals("excelTarefasResumoPorProjeto")) {
+
+            TarefaDAO tarefaDAO = new TarefaDAO();
+            ArrayList<Tarefa> tarefas = new ArrayList<>();
+
+            try {
+                tarefas = tarefaDAO.gerarExcelResumoPorPeriodoEProjeto(request.getParameter("datainclusaoinicio"), request.getParameter("datainclusaofinal"),Integer.parseInt(request.getParameter("idProjeto")));
+
+                
+                String textoArquivo = "";
+             
+                   
+                  String cabecalho =  "Id;Titulo;Cliente;Projeto;Motivo";
+             
+                 textoArquivo = cabecalho + "\n";
+             
+                    for (int i = 0; i < tarefas.size(); i++) {
+                       String  linha = tarefas.get(i).getId() + ";"
+                                + tarefas.get(i).getTitulo() + ";"
+                                + tarefas.get(i).getCliente().getRazaoSocial() + ";"
+                                + tarefas.get(i).getProjeto().getDescricao() + ";"
+                                + tarefas.get(i).getMotivo().getDescricao() + ";";
+
+                        textoArquivo = textoArquivo + linha + "\n";
+                   
+                    }
+
+                String txt = textoArquivo;
+                File file = new File(txt);
+                FileOutputStream teste = new FileOutputStream("Excel");
+                teste.write(txt.getBytes());
+                teste.flush();
+                teste.close();
+                response.setContentType("text/plain");
+                response.setHeader("Content-disposition", "attachment; filename=" + "Tarefas por periodo e projeto" + ".csv");
+                ServletOutputStream os = response.getOutputStream();
+                os.write(txt.getBytes());
+                os.flush();
+                os.close();
+
+            } catch (Exception e) {
+                System.out.println("erro ao gerar excel jsp " + e);
+            }
+
+        }
+        
+        
 
         if (parametro.equals("cadCidade")) {
             Cidade cid = new Cidade();
@@ -828,19 +927,17 @@ public class acao extends HttpServlet {
             tarefa.setSituacao('A');
             tarefa.setTitulo(request.getParameter("titulo"));
 
-            SimpleDateFormat formato = new SimpleDateFormat("yyyy/mm/dd");
+            SimpleDateFormat formato = new SimpleDateFormat("yyyy/MM/dd");
 
             try {
                 Date data = formato.parse(request.getParameter("dataPrevisao").replace("-", "/"));
                 tarefa.setDatahoraPrevisao(data);
             } catch (ParseException ex) {
                 Logger.getLogger(acao.class.getName()).log(Level.SEVERE, null, ex);
-              
+
             }
 
-    
             tarefa.setDatahoraCriacao(new Date());
-       
 
             versaoBug.setId(Integer.parseInt(idVersaoBug));
             tarefa.setVersaoByIdVersaoBug(versaoBug);
@@ -858,9 +955,9 @@ public class acao extends HttpServlet {
             try {
                 Usuario autorMovimento = new Usuario();
                 HttpSession sessao = request.getSession();
-             
+
                 autorMovimento.setId(Integer.parseInt(sessao.getAttribute("usuarioLogado").toString()));
-             
+
                 movimentacaoTarefa.setTarefa(tarefa);
                 movimentacaoTarefa.setSituacao('A');
 

@@ -744,10 +744,10 @@
             <!--/.col (right) -->
         <!--</div>-->
         <!-- /.row -->
-        <%@include file = "listaMovimentacoes.jsp"%>
+        <%//@include file = "listaMovimentacoes.jsp"%>
     </section>
 
-    <%//@include file = "listaMovimentacoes.jsp"%>
+    <%@include file = "listaMovimentacoes.jsp"%>
     <!-- /.content -->
 
 </div>

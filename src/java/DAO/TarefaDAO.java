@@ -148,6 +148,56 @@ public class TarefaDAO extends DAO {
         }
         return null;
     }
+    
+      public byte[] gerarRelatorioResumoPorPeriodoEProjeto(String dataInicio, String dataFim, int idProjeto) {
+        try {
+
+            Connection conn = new ConexaoBD().getInstance().getConnection();
+
+            JasperReport relatorio = JasperCompileManager.compileReport(getClass().getResourceAsStream("/relatorios/resumodetarefaspordatadeinclusaoEProjetos.jrxml"));
+
+            //System.out.println("dataaaaaaaaaaa " + Formatacao.formatacaoData2(dataInicio.replace("-", "/")));
+            Map parameters = new HashMap();
+            parameters.put("datainclusaoinicio", Formatacao.formatacaoData2(dataInicio.replace("-", "/")));
+//            System.out.println("data =" + dataIni);
+            //    System.out.println("dataaaaaaaaaaa " + Formatacao.formatacaoData2(dataInicio.replace("-", "/")));
+            parameters.put("datahorainclusaofinal", Formatacao.formatacaoData2(dataFim.replace("-", "/")));
+            parameters.put("idprojeto", idProjeto);
+
+            byte[] bytes = JasperRunManager.runReportToPdf(relatorio, parameters, conn);
+
+            return bytes;
+        } catch (Exception e) {
+            System.out.println("erro ao gerar relatorio: " + e);
+        }
+        return null;
+    }
+      public byte[] gerarRelatorioResumoPorPeriodoEResponsavel(String dataInicio, String dataFim) {
+        try {
+
+            Connection conn = new ConexaoBD().getInstance().getConnection();
+
+            JasperReport relatorio = JasperCompileManager.compileReport(getClass().getResourceAsStream("/relatorios/resumodetarefaspordatadeinclusaoFaseResponsavel.jrxml"));
+
+            //System.out.println("dataaaaaaaaaaa " + Formatacao.formatacaoData2(dataInicio.replace("-", "/")));
+            Map parameters = new HashMap();
+            parameters.put("datainclusaoinicio", Formatacao.formatacaoData2(dataInicio.replace("-", "/")));
+//            System.out.println("data =" + dataIni);
+            //    System.out.println("dataaaaaaaaaaa " + Formatacao.formatacaoData2(dataInicio.replace("-", "/")));
+            parameters.put("datahorainclusaofinal", Formatacao.formatacaoData2(dataFim.replace("-", "/")));
+            
+
+            byte[] bytes = JasperRunManager.runReportToPdf(relatorio, parameters, conn);
+
+            return bytes;
+        } catch (Exception e) {
+            System.out.println("erro ao gerar relatorio: " + e);
+        }
+        return null;
+    }
+      
+    
+    
 
     public ArrayList<Tarefa> gerarExcelResumoPorPeriodo(String dataInicio, String dataFim) {
 //        try {
@@ -163,15 +213,12 @@ public class TarefaDAO extends DAO {
             session.beginTransaction();
             String sql = "";
 
-            sql = "select count(t.*),f.descricao descricaofase,p.descricao descricaoprojeto,m.descricao descricaomodulo"
-                    + " from tarefa t, fase f, projeto p, MODULO M\n "
-                    + "where t.id_fase = f.id\n "
-                    + "and t.id_projeto = p.id\n "
-                    + "and t.id_modulo = m.id\n "
-                    + "and t.datahora_criacao >='" + dataInicio+"' "
-                    + "and t.datahora_criacao <= '" + dataFim+"' "
-                    + "group by f.id, p.id, m.id\n"
-                    + "order by  count(t.*) desc";
+            sql = 
+                     " from Tarefa "
+                    + "where datahora_criacao >='" + dataInicio+"' "
+                    + "and datahora_criacao <= '" + dataFim+"' "
+                   
+                 ;
 
             String sel = sql;
             System.out.println(sel);
@@ -183,6 +230,7 @@ public class TarefaDAO extends DAO {
                 Tarefa tar = ((Tarefa) ((Object) o));
                 lista.add(tar);
             }
+            //System.out.println(lista.toString());
 
         } catch (HibernateException he) {
             he.printStackTrace();
@@ -192,4 +240,47 @@ public class TarefaDAO extends DAO {
         return lista;
 
     }
+    
+    public ArrayList<Tarefa> gerarExcelResumoPorPeriodoEProjeto(String dataInicio, String dataFim, int idProjeto) {
+//        try {
+//
+        Connection conn = new ConexaoBD().getInstance().getConnection();
+        TarefaDAO tarefaDAO = new TarefaDAO();
+        this.tarefa = tarefa;
+        List resultado = null;
+
+        ArrayList<Tarefa> lista = new ArrayList<>();
+        try {
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+            String sql = "";
+
+            sql = 
+                     " from Tarefa "
+                    + "where datahora_criacao >='" + dataInicio+"' "
+                    + "and datahora_criacao <= '" + dataFim+"' "
+                    + " and id_projeto ="+idProjeto;
+
+            String sel = sql;
+            System.out.println(sel);
+            org.hibernate.Query q = session.createQuery(sql);
+
+            resultado = q.list();
+
+            for (Object o : resultado) {
+                Tarefa tar = ((Tarefa) ((Object) o));
+                lista.add(tar);
+            }
+            //System.out.println(lista.toString());
+
+        } catch (HibernateException he) {
+            he.printStackTrace();
+        }// finally {
+//            session.close();
+//        }
+        return lista;
+
+    }
+    
+    
 }
