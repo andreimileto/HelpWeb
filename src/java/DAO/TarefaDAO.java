@@ -216,7 +216,7 @@ public class TarefaDAO extends DAO {
             sql = 
                      " from Tarefa "
                     + "where datahora_criacao >='" + dataInicio+"' "
-                    + "and datahora_criacao <= '" + dataFim+"' "
+                    + "and datahora_criacao <= '" + dataFim+"' order by id"
                    
                  ;
 
@@ -259,7 +259,7 @@ public class TarefaDAO extends DAO {
                      " from Tarefa "
                     + "where datahora_criacao >='" + dataInicio+"' "
                     + "and datahora_criacao <= '" + dataFim+"' "
-                    + " and id_projeto ="+idProjeto;
+                    + " and id_projeto ="+idProjeto+" order by id";
 
             String sel = sql;
             System.out.println(sel);

@@ -43,10 +43,24 @@
         Usuario responsavel = new Usuario();
 
         Cliente cliente = new Cliente();
+        Projeto projeto = new Projeto();
+        Motivo motivo = new Motivo();
+        Modulo modulo = new Modulo();
+        Fase fase = new Fase();
+        tar.setFase(fase);
+        Prioridade prioridade = new Prioridade();
+        tar.setPrioridade(prioridade);
+        Versao versaoBug = new Versao();
+        tar.setVersaoByIdVersaoBug(versaoBug);
+        Versao versaoCorrecao = new Versao();
+        tar.setVersaoByIdVersaoCorrecao(versaoCorrecao);
+        tar.setModulo(modulo);
+        tar.setMotivo(motivo);
         cliente.setCidade(cidade);
         tar.setCliente(cliente);
         tar.setUsuarioByIdUsuarioAutor(autor);
         tar.setUsuarioByIdUsuarioResponsavel(responsavel);
+        tar.setProjeto(projeto);
 
     }
 %>
@@ -84,10 +98,10 @@
                                     %>
 
                                 </div>
-                                <label for="cliente" class="col-sm-0 control-label">Cliente</label>
+                                <label for="cliente" class="col-sm-0 control-label">Cliente*</label>
 
                                 <select class="form-control select2" style="width: 20%;" name="cliente">
-                                    <option value="0" selected>Selecione </option>
+                                    <option value="0">Selecione </option>
                                     <%
                                         Cliente cliente = new Cliente();
                                         cliente.setRazaoSocial("");
@@ -128,7 +142,7 @@
                                                             autor.setId(Integer.parseInt(session.getAttribute("usuarioLogado").toString()));
                                                         }
 
-                                                        System.out.println(autor.getId() + "....id");
+                                                        //System.out.println(autor.getId() + "....id");
                                                         autor.setNome("");
                                                         autor.setLogin("");
                                                         autor.setSituacao('A');
@@ -163,28 +177,29 @@
                                     <div class="form-group">
                                         <div class="row">
                                             <div class="col-xs-3 col-sm-3">
-                                                <label for="responsavel" class="col-sm-1 control-label">Responsavel</label>
+                                                <label for="responsavel" class="col-sm-1 control-label">Responsavel*</label>
 
                                             </div>
                                             <div class="col-xs-8">
                                                 <select class="form-control select2" style="width: 100%;" name="responsavel">
-                                                    <% if (tar.getId()==0) {%>
-                                                    <option value="0" selected>Selecione </option>
-                                                    <%
-                                                        }
-                                                    %>
+                                                   
+                                                    <option value="0" >Selecione </option>
+                                                   
                                                     <%
                                                         Usuario responsavel = new Usuario();
                                                         responsavel.setNome("");
                                                         responsavel.setLogin("");
+                                                        responsavel.setRepetirSenha("");
+                                                        responsavel.setSenha("");
+                                                        
                                                         responsavel.setSituacao('A');
-                                                        tar.setUsuarioByIdUsuarioResponsavel(responsavel);
+                                                        //tar.setUsuarioByIdUsuarioResponsavel(responsavel);
 
                                                         UsuarioDAO responsavelDAO = new UsuarioDAO();
-                                                        ArrayList<Usuario> responsaveis = usuarioDAO.listar(responsavel);
+                                                        ArrayList<Usuario> responsaveis = responsavelDAO.listar(responsavel);
 
                                                         for (int i = 0; i < responsaveis.size(); i++) {
-                                                            System.out.println(responsaveis.size() + ".. tamanho");
+                                                           // System.out.println(responsaveis.size() + ".. tamanho");
                                                             if (tar.getUsuarioByIdUsuarioResponsavel().getId() == responsaveis.get(i).getId()) {
                                                     %>
                                                     <option value="<%=responsaveis.get(i).getId()%>" selected><%=responsaveis.get(i).getNome()%> </option>
@@ -214,21 +229,19 @@
                                     <div class="form-group">
                                         <div class="row">
                                             <div class="col-xs-3 ">
-                                                <label style="float: right;" for="projeto" class="col-sm-0 control-label">Projeto</label>
+                                                <label style="float: right;" for="projeto" class="col-sm-0 control-label">Projeto*</label>
                                             </div>
 
                                             <div class="col-xs-8">
                                                 <select  class="form-control select2" style="width: 100%;" name="projeto" >
-                                                     <% if (tar.getId()==0) {%>
-                                                    <option value="0" selected>Selecione </option>
-                                                    <%
-                                                        }
-                                                    %>
+                                             
+                                                    <option value="0" >Selecione </option>
+                                                   
                                                     <%
                                                         Projeto projeto = new Projeto();
                                                         projeto.setDescricao("");
                                                         projeto.setSituacao('A');
-                                                        tar.setProjeto(projeto);
+                                                       // tar.setProjeto(projeto);
 
                                                         ProjetoDAO projetoDAO = new ProjetoDAO();
                                                         ArrayList<Projeto> projetos = projetoDAO.listar(projeto);
@@ -263,21 +276,20 @@
                                     <div class="form-group">
                                         <div class="row">
                                             <div class="col-xs-4 col-sm-3">
-                                                <label style="float: right;" for="motivo" class="col-sm-0 control-label">Motivo</label>
+                                                <label style="float: right;" for="motivo" class="col-sm-0 control-label">Motivo*</label>
                                             </div>
 
                                             <div class="col-xs-8 col-sm-8">
                                                 <select  class="form-control select2" style="width: 100%;" name="motivo" >
-                                                     <% if (tar.getId()==0) {%>
-                                                    <option value="0" selected>Selecione </option>
-                                                    <%
-                                                        }
-                                                    %>
+                                                    
+                                                    <option value="0">Selecione </option>
+                                                   
                                                     <%
                                                         Motivo motivo = new Motivo();
                                                         motivo.setDescricao("");
                                                         motivo.setSituacao('A');
-                                                        tar.setMotivo(motivo);
+                                                        
+                                                        //tar.setMotivo(motivo);
 
                                                         MotivoDAO motivoDAO = new MotivoDAO();
                                                         ArrayList<Motivo> motivos = motivoDAO.listar(motivo);
@@ -314,22 +326,20 @@
                                     <div class="form-group">
                                         <div class="row">
                                             <div class="col-xs-3 col-md-3 col-sm-3 col-lg-4">
-                                                <label style="float: right;" for="moculo" class="col-sm-3 col-lg-5   control-label">Módulo</label>
+                                                <label style="float: right;" for="moculo" class="col-sm-3 col-lg-5   control-label">Módulo*</label>
                                             </div>
 
                                             <div class="col-xs-8 col-lg-8">
                                                 <select   class="form-control select2" style="width: 100%;" name="modulo" >
-                                                     <% if (tar.getId()==0) {%>
-                                                    <option value="0" selected>Selecione </option>
-                                                    <%
-                                                        }
-                                                    %>
+                                                   
+                                                    <option value="0">Selecione </option>
+                                                    
                                                     <%
                                                         Modulo modulo = new Modulo();
                                                         modulo.setDescricao("");
                                                         modulo.setSituacao('A');
-                                                        modulo.setProjeto(projeto);
-                                                        tar.setModulo(modulo);
+                                                       // modulo.setProjeto(projeto);
+                                                        //tar.setModulo(modulo);
 
                                                         ModuloDAO moduloDAO = new ModuloDAO();
                                                         ArrayList<Modulo> modulos = moduloDAO.listar(modulo);
@@ -361,21 +371,19 @@
                                     <div class="form-group">
                                         <div class="row">
                                             <div class="col-xs-3 col-sm-3">
-                                                <label for="fase" class="col-sm-1 control-label">Fase</label>
+                                                <label for="fase" class="col-sm-1 control-label">Fase*</label>
 
                                             </div>
                                             <div class="col-xs-8">
                                                 <select class="form-control select2" style="width: 100%;" name="fase">
-                                                     <% if (tar.getId()==0) {%>
-                                                    <option value="0" selected>Selecione </option>
-                                                    <%
-                                                        }
-                                                    %>
+                                                    
+                                                    <option value="0" >Selecione </option>
+                                                    
                                                     <%
                                                         Fase fase = new Fase();
                                                         fase.setDescricao("");
                                                         fase.setSituacao('A');
-                                                        tar.setFase(fase);
+                                                        //tar.setFase(fase);
 
                                                         FaseDAO faseDAO = new FaseDAO();
                                                         ArrayList<Fase> fases = faseDAO.listar(fase);
@@ -405,21 +413,19 @@
                                     <div class="form-group">
                                         <div class="row">
                                             <div class="col-xs-4 col-sm-3">
-                                                <label style="float: right;" for="prioridade" class="col-lg-0  control-label">Prioridade</label>
+                                                <label style="float: right;" for="prioridade" class="col-lg-0  control-label">Prioridade*</label>
                                             </div>
 
                                             <div class="col-xs-8">
                                                 <select   class="form-control select2" style="width: 100%;" name="prioridade" >
-                                                    <% if (tar.getId()==0) {%>
-                                                    <option value="0" selected>Selecione </option>
-                                                    <%
-                                                        }
-                                                    %>
+                                                   
+                                                    <option value="0">Selecione </option>
+                                                   
                                                     <%
                                                         Prioridade prioridade = new Prioridade();
                                                         prioridade.setDescricao("");
                                                         prioridade.setSituacao('A');
-                                                        tar.setPrioridade(prioridade);
+                                                      
 
                                                         PrioridadeDAO prioridadeDAO = new PrioridadeDAO();
                                                         ArrayList<Prioridade> prioridades = prioridadeDAO.listar(prioridade);
@@ -492,14 +498,7 @@
                                     <div class="form-group">
 
 
-                                        <!--                                         <div class="col-xs-3" >
-                                                                            <div class="form-group">
-                                                                                <div class="row">
-                                                                                    <div class="col-xs-3 col-sm-3">-->  
-
-
-
-                                        <label for="dataPrevisao" class="col-sm-4  control-label" >Previsão</label>
+                                        <label for="dataPrevisao" class="col-sm-4  control-label" >Previsão*</label>
                                         <div class="row">
                                             <div class="col-sm-7">                                                                                                      <!--data-inputmask='"mask": "99/99/9999"' data-mask -->
                                                 <input type="date" class="form-control" name="dataPrevisao"  value="<%=tar.getDatahoraPrevisao()%>">
@@ -512,23 +511,21 @@
                                     <div class="form-group">
                                         <div class="row">
                                             <div class="col-xs-3 ">
-                                                <label  for="versao" class="col-sm-4 control-label">V.BUG</label>
+                                                <label  for="versao" class="col-sm-4 control-label">V.BUG*</label>
                                             </div>
 
                                             <div class="col-xs-8 ">
                                                 <select   class="form-control select2" style="width: 100%;" name="versao" >
-                                                    <% if (tar.getId()==0) {%>
-                                                    <option value="0" selected>Selecione </option>
-                                                    <%
-                                                        }
-                                                    %>
+                                                  
+                                                    <option value="0">Selecione </option>
+                                                  
                                                     
                                                     <%
                                                         Versao versaoBug = new Versao();
                                                         versaoBug.setDescricao("");
                                                         versaoBug.setSituacao('A');
-                                                        versaoBug.setProjeto(projeto);
-                                                        tar.setVersaoByIdVersaoBug(versaoBug);
+                                                      //  versaoBug.setProjeto(projeto);
+                                                    //    tar.setVersaoByIdVersaoBug(versaoBug);
 
                                                         VersaoDAO versaoBugDAO = new VersaoDAO();
                                                         ArrayList<Versao> versoesBug = versaoBugDAO.listar(versaoBug);
@@ -558,22 +555,21 @@
                                     <div class="form-group">
                                         <div class="row">
                                             <div class="col-xs-3">
-                                                <label  for="versaoCorrecao" class="col-xs-4 control-label">Correção</label>
+                                                <label  for="versaoCorrecao" class="col-xs-4 control-label">Correção*</label>
                                             </div>
 
                                             <div class="col-xs-6">
                                                 <select   class="form-control select2" style="width: 100%;" name="versaoCorrecao" >
-                                                     <% if (tar.getId()==0) {%>
-                                                    <option value="0" selected>Selecione </option>
-                                                    <%
-                                                        }
-                                                    %>
+                                                    
+                                                    
+                                                    <option value="0" >Selecione </option>
+                                                    
                                                     <%
                                                         Versao versaoCorrecao = new Versao();
                                                         versaoCorrecao.setDescricao("");
                                                         versaoCorrecao.setSituacao('A');
-                                                        versaoCorrecao.setProjeto(projeto);
-                                                        tar.setVersaoByIdVersaoCorrecao(versaoCorrecao);
+                                                      //  versaoCorrecao.setProjeto(projeto);
+                                                        //tar.setVersaoByIdVersaoCorrecao(versaoCorrecao);
 
                                                         VersaoDAO versaoCorrecaoDAO = new VersaoDAO();
                                                         ArrayList<Versao> versoesCorrecao = versaoCorrecaoDAO.listar(versaoCorrecao);
@@ -668,7 +664,7 @@
                                 <div class="col-xs-6" >
                                     <div class="form-group">
                                         <div class="row">
-                                            <label for="nome" class="col-xs-2 control-label">Título</label>
+                                            <label for="nome" class="col-xs-2 control-label">Título*</label>
 
                                             <div class="col-xs-10">
                                                 <input type="text" class="form-control" name="titulo" value="<%= tar.getTitulo()%>">
@@ -682,7 +678,7 @@
                                 <div class="form-group">
 
                                     <h4>
-                                        Descrição
+                                        Descrição*
 
                                     </h4>
 

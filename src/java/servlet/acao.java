@@ -577,7 +577,7 @@ public class acao extends HttpServlet {
                 String textoArquivo = "";
              //   if (arquivo.abrirEscrita(true)) {
                    
-                  String cabecalho =  "Id;Titulo;Cliente;Projeto;Motivo";
+                  String cabecalho =  "Id;Titulo;Cliente;Projeto;Motivo;Modulo;Prioridade;Fase;Autor;Responsavel;Versao Bug;Versao Correção";
                          // arquivo.escreverLinha(cabecalho);
                  //  textoArquivo = textoArquivo + cabecalho + "\n";
                  textoArquivo = cabecalho + "\n";
@@ -587,7 +587,15 @@ public class acao extends HttpServlet {
                                 + tarefas.get(i).getTitulo() + ";"
                                 + tarefas.get(i).getCliente().getRazaoSocial() + ";"
                                 + tarefas.get(i).getProjeto().getDescricao() + ";"
-                                + tarefas.get(i).getMotivo().getDescricao() + ";";
+                                + tarefas.get(i).getMotivo().getDescricao() + ";"
+                                + tarefas.get(i).getModulo().getDescricao() + ";"
+                                + tarefas.get(i).getPrioridade().getDescricao() + ";"
+                               + tarefas.get(i).getFase().getDescricao() + ";"
+                               + tarefas.get(i).getUsuarioByIdUsuarioAutor().getNome() + ";"
+                               + tarefas.get(i).getUsuarioByIdUsuarioResponsavel().getNome() + ";"
+                               + tarefas.get(i).getVersaoByIdVersaoBug().getDescricao() + ";"
+                               + tarefas.get(i).getVersaoByIdVersaoCorrecao().getDescricao() + ";"
+                               ;
 
                         textoArquivo = textoArquivo + linha + "\n";
                      //   arquivo.escreverLinha(linha);
@@ -629,7 +637,7 @@ public class acao extends HttpServlet {
                 String textoArquivo = "";
              
                    
-                  String cabecalho =  "Id;Titulo;Cliente;Projeto;Motivo";
+                  String cabecalho =  "Id;Titulo;Cliente;Projeto;Motivo;Modulo;Prioridade;Fase;Autor;Responsavel;Versao Bug;Versao Correção";
              
                  textoArquivo = cabecalho + "\n";
              
@@ -638,7 +646,14 @@ public class acao extends HttpServlet {
                                 + tarefas.get(i).getTitulo() + ";"
                                 + tarefas.get(i).getCliente().getRazaoSocial() + ";"
                                 + tarefas.get(i).getProjeto().getDescricao() + ";"
-                                + tarefas.get(i).getMotivo().getDescricao() + ";";
+                                + tarefas.get(i).getMotivo().getDescricao() + ";"
+                               + tarefas.get(i).getModulo().getDescricao() + ";"
+                                + tarefas.get(i).getPrioridade().getDescricao() + ";"
+                               + tarefas.get(i).getFase().getDescricao() + ";"
+                               + tarefas.get(i).getUsuarioByIdUsuarioAutor().getNome() + ";"
+                               + tarefas.get(i).getUsuarioByIdUsuarioResponsavel().getNome() + ";"
+                               + tarefas.get(i).getVersaoByIdVersaoBug().getDescricao() + ";"
+                               + tarefas.get(i).getVersaoByIdVersaoCorrecao().getDescricao() + ";";
 
                         textoArquivo = textoArquivo + linha + "\n";
                    
