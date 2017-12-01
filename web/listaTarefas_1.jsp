@@ -10,12 +10,9 @@
 <%@page import="java.util.ArrayList"%>
 <!DOCTYPE html>
 
-<%@include file = "topo.jsp"%>
-<%@include file = "barraLateral.jsp"%>
 
 
 
-<div class="content-wrapper">
     
     <section class="content-header">
 
@@ -38,28 +35,31 @@
                     </thead>
                     <tbody>
                         <%
-                            //Cliente clien = new Cliente();
-                            // clien.setRazaoSocial("");
-                            //  clien.setTelefone("");
-                            //clien.setCpfCnpj("");
-                            //clien.setEndereco("");
-                            
+                          Cliente clien = new Cliente();
+                             clien.setRazaoSocial("");
+                              clien.setTelefone("");
+                            clien.setCpfCnpj("");
+                            clien.setEndereco("");
+
                             Tarefa tarefa = new Tarefa();
-                            Cidade cid = new Cidade();
-                            Cliente cli = new Cliente();
-                            cli.setCidade(cid);
+                           Cidade cidade = new Cidade();
+                            Cliente cliente = new Cliente();
+                            cliente.setCidade(cidade);
                             Usuario aut = new Usuario();
                             Usuario respons = new Usuario();
 
                             Fase fas = new Fase();
-                            tarefa.setCliente(cli);
+                            tarefa.setCliente(cliente);
                             tarefa.setUsuarioByIdUsuarioAutor(aut);
                             tarefa.setUsuarioByIdUsuarioResponsavel(respons);
                             tarefa.setFase(fas);
+                            
+                            
+                                     ArrayList<Tarefa>  tarefas = new TarefaDAO().listarComParametro(tarefa);
+                              
+                      
 
-                            ArrayList<Tarefa> tarefas = new TarefaDAO().listar(tarefa);
-
-//                            tarefas.get(0).getUsuarioByIdUsuarioAutor()
+                           tarefas.get(0).getUsuarioByIdUsuarioAutor();
                             for (int i = 0; i < tarefas.size(); i++) {
                         %>
 
@@ -82,41 +82,6 @@
         </div>
 
     </section>
-</div>
-                    <%@include file = "inferior.jsp"%>
-
-<script src="bower_components/jquery/dist/jquery.min.js"></script>
-<script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
-<script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="bower_components/select2/dist/js/select2.full.js"></script>
-
-<script src="bower_components/moment/min/moment.min.js"></script>
-<script src="bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
-<script src="bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-<script src="bower_components/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js"></script>
-<script src="plugins/timepicker/bootstrap-timepicker.min.js"></script>
-<script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-<script src="plugins/iCheck/icheck.min.js"></script>
-<script src="bower_components/fastclick/lib/fastclick.js"></script>
-<script src="dist/js/adminlte.min.js"></script>
-<script src="dist/js/demo.js"></script>
-
-<script>
-    $(function () {
-        $('#example1').DataTable()
-        $('#example2').DataTable({
-            'paging': true,
-            'lengthChange': false,
-            'searching': false,
-            'ordering': true,
-            'info': true,
-            'autoWidth': false
-        })
-    })
-</script> 
-
-
 <aside class="control-sidebar control-sidebar-dark">
 
 </aside>
@@ -124,4 +89,4 @@
 <div class="control-sidebar-bg">
 
 </div>
-
+                  

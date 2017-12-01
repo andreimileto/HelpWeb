@@ -219,7 +219,7 @@ public class acao extends HttpServlet {
 
             encaminharPagina("cadastroTarefa.jsp", request, response);
 
-        } else if (parametro.equals("exCidade")) {
+        }  else if (parametro.equals("exCidade")) {
 
             int id = Integer.parseInt(String.valueOf(request.getParameter("id")));
             Cidade cid = new Cidade();
@@ -239,6 +239,9 @@ public class acao extends HttpServlet {
             } else {
                 encaminharPagina("cadastroCidade.jsp?m=11", request, response);
             }
+            
+            
+            
 
         } else if (parametro.equals("exUsuario")) {
 
@@ -575,36 +578,34 @@ public class acao extends HttpServlet {
 
                 //arquivo = new Arquivo("C:\\Users\\Mileto\\Documents\\NetBeansProjects\\HelpWeb\\src\\java\\servlet\\Excel.csv");
                 String textoArquivo = "";
-             //   if (arquivo.abrirEscrita(true)) {
-                   
-                  String cabecalho =  "Id;Titulo;Cliente;Projeto;Motivo;Modulo;Prioridade;Fase;Autor;Responsavel;Versao Bug;Versao Correção";
-                         // arquivo.escreverLinha(cabecalho);
-                 //  textoArquivo = textoArquivo + cabecalho + "\n";
-                 textoArquivo = cabecalho + "\n";
-               //  arquivo.escreverLinha(cabecalho);
-                    for (int i = 0; i < tarefas.size(); i++) {
-                       String  linha = tarefas.get(i).getId() + ";"
-                                + tarefas.get(i).getTitulo() + ";"
-                                + tarefas.get(i).getCliente().getRazaoSocial() + ";"
-                                + tarefas.get(i).getProjeto().getDescricao() + ";"
-                                + tarefas.get(i).getMotivo().getDescricao() + ";"
-                                + tarefas.get(i).getModulo().getDescricao() + ";"
-                                + tarefas.get(i).getPrioridade().getDescricao() + ";"
-                               + tarefas.get(i).getFase().getDescricao() + ";"
-                               + tarefas.get(i).getUsuarioByIdUsuarioAutor().getNome() + ";"
-                               + tarefas.get(i).getUsuarioByIdUsuarioResponsavel().getNome() + ";"
-                               + tarefas.get(i).getVersaoByIdVersaoBug().getDescricao() + ";"
-                               + tarefas.get(i).getVersaoByIdVersaoCorrecao().getDescricao() + ";"
-                               ;
+                //   if (arquivo.abrirEscrita(true)) {
 
-                        textoArquivo = textoArquivo + linha + "\n";
-                     //   arquivo.escreverLinha(linha);
+                String cabecalho = "Id;Titulo;Cliente;Projeto;Motivo;Modulo;Prioridade;Fase;Autor;Responsavel;Versao Bug;Versao Correção";
+                // arquivo.escreverLinha(cabecalho);
+                //  textoArquivo = textoArquivo + cabecalho + "\n";
+                textoArquivo = cabecalho + "\n";
+                //  arquivo.escreverLinha(cabecalho);
+                for (int i = 0; i < tarefas.size(); i++) {
+                    String linha = tarefas.get(i).getId() + ";"
+                            + tarefas.get(i).getTitulo() + ";"
+                            + tarefas.get(i).getCliente().getRazaoSocial() + ";"
+                            + tarefas.get(i).getProjeto().getDescricao() + ";"
+                            + tarefas.get(i).getMotivo().getDescricao() + ";"
+                            + tarefas.get(i).getModulo().getDescricao() + ";"
+                            + tarefas.get(i).getPrioridade().getDescricao() + ";"
+                            + tarefas.get(i).getFase().getDescricao() + ";"
+                            + tarefas.get(i).getUsuarioByIdUsuarioAutor().getNome() + ";"
+                            + tarefas.get(i).getUsuarioByIdUsuarioResponsavel().getNome() + ";"
+                            + tarefas.get(i).getVersaoByIdVersaoBug().getDescricao() + ";"
+                            + tarefas.get(i).getVersaoByIdVersaoCorrecao().getDescricao() + ";";
 
-                    }
-                   // arquivo.fecharArquivo();
+                    textoArquivo = textoArquivo + linha + "\n";
+                    //   arquivo.escreverLinha(linha);
 
-              //  }
+                }
+                // arquivo.fecharArquivo();
 
+                //  }
                 String txt = textoArquivo;
                 File file = new File(txt);
                 FileOutputStream teste = new FileOutputStream("Excel");
@@ -623,41 +624,38 @@ public class acao extends HttpServlet {
             }
 
         }
-        
-        
-         if (parametro.equals("excelTarefasResumoPorProjeto")) {
+
+        if (parametro.equals("excelTarefasResumoPorProjeto")) {
 
             TarefaDAO tarefaDAO = new TarefaDAO();
             ArrayList<Tarefa> tarefas = new ArrayList<>();
 
             try {
-                tarefas = tarefaDAO.gerarExcelResumoPorPeriodoEProjeto(request.getParameter("datainclusaoinicio"), request.getParameter("datainclusaofinal"),Integer.parseInt(request.getParameter("idProjeto")));
+                tarefas = tarefaDAO.gerarExcelResumoPorPeriodoEProjeto(request.getParameter("datainclusaoinicio"), request.getParameter("datainclusaofinal"), Integer.parseInt(request.getParameter("idProjeto")));
 
-                
                 String textoArquivo = "";
-             
-                   
-                  String cabecalho =  "Id;Titulo;Cliente;Projeto;Motivo;Modulo;Prioridade;Fase;Autor;Responsavel;Versao Bug;Versao Correção";
-             
-                 textoArquivo = cabecalho + "\n";
-             
-                    for (int i = 0; i < tarefas.size(); i++) {
-                       String  linha = tarefas.get(i).getId() + ";"
-                                + tarefas.get(i).getTitulo() + ";"
-                                + tarefas.get(i).getCliente().getRazaoSocial() + ";"
-                                + tarefas.get(i).getProjeto().getDescricao() + ";"
-                                + tarefas.get(i).getMotivo().getDescricao() + ";"
-                               + tarefas.get(i).getModulo().getDescricao() + ";"
-                                + tarefas.get(i).getPrioridade().getDescricao() + ";"
-                               + tarefas.get(i).getFase().getDescricao() + ";"
-                               + tarefas.get(i).getUsuarioByIdUsuarioAutor().getNome() + ";"
-                               + tarefas.get(i).getUsuarioByIdUsuarioResponsavel().getNome() + ";"
-                               + tarefas.get(i).getVersaoByIdVersaoBug().getDescricao() + ";"
-                               + tarefas.get(i).getVersaoByIdVersaoCorrecao().getDescricao() + ";";
 
-                        textoArquivo = textoArquivo + linha + "\n";
-                   
-                    }
+                String cabecalho = "Id;Titulo;Cliente;Projeto;Motivo;Modulo;Prioridade;Fase;Autor;Responsavel;Versao Bug;Versao Correção";
+
+                textoArquivo = cabecalho + "\n";
+
+                for (int i = 0; i < tarefas.size(); i++) {
+                    String linha = tarefas.get(i).getId() + ";"
+                            + tarefas.get(i).getTitulo() + ";"
+                            + tarefas.get(i).getCliente().getRazaoSocial() + ";"
+                            + tarefas.get(i).getProjeto().getDescricao() + ";"
+                            + tarefas.get(i).getMotivo().getDescricao() + ";"
+                            + tarefas.get(i).getModulo().getDescricao() + ";"
+                            + tarefas.get(i).getPrioridade().getDescricao() + ";"
+                            + tarefas.get(i).getFase().getDescricao() + ";"
+                            + tarefas.get(i).getUsuarioByIdUsuarioAutor().getNome() + ";"
+                            + tarefas.get(i).getUsuarioByIdUsuarioResponsavel().getNome() + ";"
+                            + tarefas.get(i).getVersaoByIdVersaoBug().getDescricao() + ";"
+                            + tarefas.get(i).getVersaoByIdVersaoCorrecao().getDescricao() + ";";
+
+                    textoArquivo = textoArquivo + linha + "\n";
+
+                }
 
                 String txt = textoArquivo;
                 File file = new File(txt);
@@ -677,8 +675,6 @@ public class acao extends HttpServlet {
             }
 
         }
-        
-        
 
         if (parametro.equals("cadCidade")) {
             Cidade cid = new Cidade();
@@ -995,7 +991,129 @@ public class acao extends HttpServlet {
                 redirecionarPagina("cadastroTarefa.jsp?m=" + retorno, request, response);
             }
 
-        } else if (parametro.equals("cadUsuario")) {
+        }else if (parametro.equals("listarTarefas")) {
+//            int id = Integer.parseInt(String.valueOf(request.getParameter("id")));
+//
+//            ArrayList<Tarefa> tarefas = new TarefaDAO().consultarId(id);
+//            Tarefa tarefa = new Tarefa();
+//            tarefa = tarefas.get(0);
+//            request.setAttribute("objtar", tarefa);
+//
+//            encaminharPagina("cadastroTarefa.jsp", request, response);
+            
+            
+            
+            //-----------------------//
+            String idCliente = request.getParameter("cliente");
+            String idProjeto = request.getParameter("projeto");
+            String idPrioridade = request.getParameter("prioridade");
+            String idMotivo = request.getParameter("motivo");
+            String idModulo = request.getParameter("modulo");
+            String idFase = request.getParameter("fase");
+            String idVersaoBug = request.getParameter("versao");
+            String idVersaoCorrecao = request.getParameter("versaoCorrecao");
+            String idAutor = request.getParameter("autor");
+            String idResponsavel = request.getParameter("responsavel");
+//
+            Tarefa tarefa = new Tarefa();
+
+            Cliente cliente = new Cliente();
+            Fase fase = new Fase();
+            Modulo modulo = new Modulo();
+            Motivo motivo = new Motivo();
+            Prioridade prioridade = new Prioridade();
+            Projeto projeto = new Projeto();
+            Versao versaoBug = new Versao();
+            Versao versaoCorrecao = new Versao();
+            Usuario autor = new Usuario();
+            Usuario responsavel = new Usuario();
+//
+//            int idTarefa;
+//            if (request.getParameter("id").equals("")) {
+//                idTarefa = 0;
+//            } else {
+//                idTarefa = Integer.parseInt(String.valueOf(request.getParameter("id")));
+//            }
+//
+//            tarefa.setId(idTarefa);
+            cliente.setId(Integer.parseInt(idCliente));
+            tarefa.setCliente(cliente);
+            tarefa.setDescricao(request.getParameter("descricao"));
+            fase.setId(Integer.parseInt(idFase));
+            tarefa.setFase(fase);
+            modulo.setId(Integer.parseInt(idModulo));
+            tarefa.setModulo(modulo);
+            motivo.setId(Integer.parseInt(idMotivo));
+            tarefa.setMotivo(motivo);
+            prioridade.setId(Integer.parseInt(idPrioridade));
+            tarefa.setPrioridade(prioridade);
+            projeto.setId(Integer.parseInt(idProjeto));
+            tarefa.setProjeto(projeto);
+            tarefa.setSituacao('A');
+//            tarefa.setTitulo(request.getParameter("titulo"));
+//
+//            SimpleDateFormat formato = new SimpleDateFormat("yyyy/MM/dd");
+//
+//            try {
+//                Date data = formato.parse(request.getParameter("dataPrevisao").replace("-", "/"));
+//                tarefa.setDatahoraPrevisao(data);
+//            } catch (ParseException ex) {
+//                Logger.getLogger(acao.class.getName()).log(Level.SEVERE, null, ex);
+//
+//            }
+//
+//            tarefa.setDatahoraCriacao(new Date());
+//
+            versaoBug.setId(Integer.parseInt(idVersaoBug));
+            tarefa.setVersaoByIdVersaoBug(versaoBug);
+            versaoCorrecao.setId(Integer.parseInt(idVersaoCorrecao));
+            tarefa.setVersaoByIdVersaoCorrecao(versaoCorrecao);
+            responsavel.setId(Integer.parseInt(idResponsavel));
+            tarefa.setUsuarioByIdUsuarioResponsavel(responsavel);
+            autor.setId(Integer.parseInt(idAutor));
+            tarefa.setUsuarioByIdUsuarioAutor(autor);
+
+            TarefaDAO tarefaDAO = new TarefaDAO();
+            ArrayList<Tarefa> tarefas = new ArrayList<>();
+            tarefas = tarefaDAO.listarComParametro(tarefa);
+            
+            
+//            ControleTarefa controleTarefa = new ControleTarefa();
+//            int retorno = controleTarefa.salvar(tarefa);
+//
+//            MovimentoTarefa movimentacaoTarefa = new MovimentoTarefa();
+//            try {
+//                Usuario autorMovimento = new Usuario();
+//                HttpSession sessao = request.getSession();
+//
+//                autorMovimento.setId(Integer.parseInt(sessao.getAttribute("usuarioLogado").toString()));
+//
+//                movimentacaoTarefa.setTarefa(tarefa);
+//                movimentacaoTarefa.setSituacao('A');
+//
+//                movimentacaoTarefa.setUsuario(autorMovimento);
+//                movimentacaoTarefa.setDatahoraMovimento(new Date());
+//                movimentacaoTarefa.setDescricao(request.getParameter("movimentacao"));
+//                movimentacaoTarefa.setAnexo("teste");
+//
+//                ControleMovimentacaoTarefa controleMovimento = new ControleMovimentacaoTarefa();
+//                controleMovimento.salvar(movimentacaoTarefa);
+//            } catch (Exception e) {
+//                System.out.println("Erro ao salvar movimentação " + e);
+//            }
+//
+//            request.setAttribute("paginaOrigem", "cadastroTarefa.jsp");
+//
+           // if (retorno == 1) {
+                redirecionarPagina("listaTarefas1.jsp?m=1", request, response);
+          //  } else {
+              //  redirecionarPagina("cadastroTarefa.jsp?m=" + retorno, request, response);
+         //   }
+
+        }
+        
+        
+        else if (parametro.equals("cadUsuario")) {
             Usuario usuario = new Usuario();
             int id;
             if (request.getParameter("id").equals("")) {

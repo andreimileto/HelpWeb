@@ -13,7 +13,10 @@
 <%@include file = "topo.jsp"%>
 <%@include file = "barraLateral.jsp"%>
 
+
+
 <div class="content-wrapper">
+    
     <section class="content-header">
 
         <div class="box box-info">
@@ -40,7 +43,7 @@
                             //  clien.setTelefone("");
                             //clien.setCpfCnpj("");
                             //clien.setEndereco("");
-
+                            
                             Tarefa tarefa = new Tarefa();
                             Cidade cid = new Cidade();
                             Cliente cli = new Cliente();
