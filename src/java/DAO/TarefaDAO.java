@@ -74,8 +74,7 @@ public class TarefaDAO extends DAO {
         return lista;
     }
 
-    
-      public ArrayList<Tarefa> listarComParametro(Tarefa tarefa) {
+    public ArrayList<Tarefa> listarComParametro(Tarefa tarefa) {
         this.tarefa = tarefa;
         List resultado = null;
 
@@ -100,20 +99,19 @@ public class TarefaDAO extends DAO {
                 sql = sql + " and id_fase = " + tarefa.getFase().getId() + " ";
             }
 
-//            if (tarefa.getModulo().getId() > 0) {
-//                sql = sql + " and id_modulo = " + tarefa.getModulo().getId() + " ";
-//            }
-//            if (tarefa.getMotivo().getId() > 0) {
-//                sql = sql + " and id_motivo = " + tarefa.getMotivo().getId() + " ";
-//            }
-//
-//            if (tarefa.getPrioridade().getId() > 0) {
-//                sql = sql + " and id_prioridade = " + tarefa.getPrioridade().getId() + " ";
-//            }
-//            if (tarefa.getProjeto().getId() > 0) {
-//                sql = sql + " and id_projeto = " + tarefa.getProjeto().getId() + " ";
-//            }
+            if (tarefa.getModulo().getId() > 0) {
+                sql = sql + " and id_modulo = " + tarefa.getModulo().getId() + " ";
+            }
+            if (tarefa.getMotivo().getId() > 0) {
+                sql = sql + " and id_motivo = " + tarefa.getMotivo().getId() + " ";
+            }
 
+            if (tarefa.getPrioridade().getId() > 0) {
+                sql = sql + " and id_prioridade = " + tarefa.getPrioridade().getId() + " ";
+            }
+            if (tarefa.getProjeto().getId() > 0) {
+                sql = sql + " and id_projeto = " + tarefa.getProjeto().getId() + " ";
+            }
             if (tarefa.getUsuarioByIdUsuarioAutor().getId() > 0) {
                 sql = sql + " and id_usuario_autor = " + tarefa.getUsuarioByIdUsuarioAutor().getId() + " ";
             }
@@ -121,14 +119,13 @@ public class TarefaDAO extends DAO {
                 sql = sql + " and id_usuario_responsavel = " + tarefa.getUsuarioByIdUsuarioResponsavel().getId() + " ";
             }
 
-//            if (tarefa.getVersaoByIdVersaoBug().getId() > 0) {
-//                sql = sql + " and id_versao_bug = " + tarefa.getVersaoByIdVersaoBug().getId() + " ";
-//            }
-//            if (tarefa.getVersaoByIdVersaoCorrecao().getId() > 0) {
-//                sql = sql + " and id_versao_correcao = " + tarefa.getVersaoByIdVersaoCorrecao().getId() + " ";
-//            }
-
-            sql = sql 
+            if (tarefa.getVersaoByIdVersaoBug().getId() > 0) {
+                sql = sql + " and id_versao_bug = " + tarefa.getVersaoByIdVersaoBug().getId() + " ";
+            }
+            if (tarefa.getVersaoByIdVersaoCorrecao().getId() > 0) {
+                sql = sql + " and id_versao_correcao = " + tarefa.getVersaoByIdVersaoCorrecao().getId() + " ";
+            }
+            sql = sql
                     + " and situacao = 'A' "
                     + "order by id";
 
@@ -148,11 +145,10 @@ public class TarefaDAO extends DAO {
         }// finally {
 //            session.close();
 //        }
+
         return lista;
     }
-    
-    
-    
+
     public ArrayList<Tarefa> consultarId(int id) {
         //this.projeto = projeto;
         List resultado = null;
@@ -227,8 +223,8 @@ public class TarefaDAO extends DAO {
         }
         return null;
     }
-    
-      public byte[] gerarRelatorioResumoPorPeriodoEProjeto(String dataInicio, String dataFim, int idProjeto) {
+
+    public byte[] gerarRelatorioResumoPorPeriodoEProjeto(String dataInicio, String dataFim, int idProjeto) {
         try {
 
             Connection conn = new ConexaoBD().getInstance().getConnection();
@@ -251,7 +247,8 @@ public class TarefaDAO extends DAO {
         }
         return null;
     }
-      public byte[] gerarRelatorioResumoPorPeriodoEResponsavel(String dataInicio, String dataFim) {
+
+    public byte[] gerarRelatorioResumoPorPeriodoEResponsavel(String dataInicio, String dataFim) {
         try {
 
             Connection conn = new ConexaoBD().getInstance().getConnection();
@@ -264,7 +261,6 @@ public class TarefaDAO extends DAO {
 //            System.out.println("data =" + dataIni);
             //    System.out.println("dataaaaaaaaaaa " + Formatacao.formatacaoData2(dataInicio.replace("-", "/")));
             parameters.put("datahorainclusaofinal", Formatacao.formatacaoData2(dataFim.replace("-", "/")));
-            
 
             byte[] bytes = JasperRunManager.runReportToPdf(relatorio, parameters, conn);
 
@@ -274,9 +270,6 @@ public class TarefaDAO extends DAO {
         }
         return null;
     }
-      
-    
-    
 
     public ArrayList<Tarefa> gerarExcelResumoPorPeriodo(String dataInicio, String dataFim) {
 //        try {
@@ -292,12 +285,10 @@ public class TarefaDAO extends DAO {
             session.beginTransaction();
             String sql = "";
 
-            sql = 
-                     " from Tarefa "
-                    + "where datahora_criacao >='" + dataInicio+"' "
-                    + "and datahora_criacao <= '" + dataFim+"' order by id"
-                   
-                 ;
+            sql
+                    = " from Tarefa "
+                    + "where datahora_criacao >='" + dataInicio + "' "
+                    + "and datahora_criacao <= '" + dataFim + "' order by id";
 
             String sel = sql;
             System.out.println(sel);
@@ -319,7 +310,7 @@ public class TarefaDAO extends DAO {
         return lista;
 
     }
-    
+
     public ArrayList<Tarefa> gerarExcelResumoPorPeriodoEProjeto(String dataInicio, String dataFim, int idProjeto) {
 //        try {
 //
@@ -334,11 +325,11 @@ public class TarefaDAO extends DAO {
             session.beginTransaction();
             String sql = "";
 
-            sql = 
-                     " from Tarefa "
-                    + "where datahora_criacao >='" + dataInicio+"' "
-                    + "and datahora_criacao <= '" + dataFim+"' "
-                    + " and id_projeto ="+idProjeto+" order by id";
+            sql
+                    = " from Tarefa "
+                    + "where datahora_criacao >='" + dataInicio + "' "
+                    + "and datahora_criacao <= '" + dataFim + "' "
+                    + " and id_projeto =" + idProjeto + " order by id";
 
             String sel = sql;
             System.out.println(sel);
@@ -360,6 +351,5 @@ public class TarefaDAO extends DAO {
         return lista;
 
     }
-    
-    
+
 }

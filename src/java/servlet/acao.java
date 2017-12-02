@@ -1004,6 +1004,7 @@ public class acao extends HttpServlet {
             
             
             //-----------------------//
+            String idTarefa = request.getParameter("id");
             String idCliente = request.getParameter("cliente");
             String idProjeto = request.getParameter("projeto");
             String idPrioridade = request.getParameter("prioridade");
@@ -1038,8 +1039,9 @@ public class acao extends HttpServlet {
 //            tarefa.setId(idTarefa);
             cliente.setId(Integer.parseInt(idCliente));
             tarefa.setCliente(cliente);
-            tarefa.setDescricao(request.getParameter("descricao"));
+          //  tarefa.setDescricao(request.getParameter("descricao"));
             fase.setId(Integer.parseInt(idFase));
+            System.out.println("id da fase = "+idFase);
             tarefa.setFase(fase);
             modulo.setId(Integer.parseInt(idModulo));
             tarefa.setModulo(modulo);
@@ -1050,20 +1052,12 @@ public class acao extends HttpServlet {
             projeto.setId(Integer.parseInt(idProjeto));
             tarefa.setProjeto(projeto);
             tarefa.setSituacao('A');
-//            tarefa.setTitulo(request.getParameter("titulo"));
-//
-//            SimpleDateFormat formato = new SimpleDateFormat("yyyy/MM/dd");
-//
-//            try {
-//                Date data = formato.parse(request.getParameter("dataPrevisao").replace("-", "/"));
-//                tarefa.setDatahoraPrevisao(data);
-//            } catch (ParseException ex) {
-//                Logger.getLogger(acao.class.getName()).log(Level.SEVERE, null, ex);
-//
-//            }
-//
-//            tarefa.setDatahoraCriacao(new Date());
-//
+            try {
+            tarefa.setId(Integer.parseInt(idTarefa));    
+            } catch (Exception e) {
+            }
+            
+
             versaoBug.setId(Integer.parseInt(idVersaoBug));
             tarefa.setVersaoByIdVersaoBug(versaoBug);
             versaoCorrecao.setId(Integer.parseInt(idVersaoCorrecao));
@@ -1105,7 +1099,9 @@ public class acao extends HttpServlet {
 //            request.setAttribute("paginaOrigem", "cadastroTarefa.jsp");
 //
            // if (retorno == 1) {
-                redirecionarPagina("listaTarefas1.jsp?m=1", request, response);
+           request.setAttribute("tarefas", tarefas);
+           request.setAttribute("tarefa", tarefa);
+                encaminharPagina("listaTarefas1.jsp", request, response);
           //  } else {
               //  redirecionarPagina("cadastroTarefa.jsp?m=" + retorno, request, response);
          //   }
@@ -1197,9 +1193,9 @@ public class acao extends HttpServlet {
 
     private void redirecionarPagina(String pagina, HttpServletRequest request, HttpServletResponse response) {
         try {
-            // RequestDispatcher rd = request.getRequestDispatcher(pagina);
-            // rd.forward(request, response);
-
+//             RequestDispatcher rd = request.getRequestDispatcher(pagina);
+//             rd.forward(request, response);
+//
             response.sendRedirect(pagina);
         } catch (Exception e) {
             System.out.println("Erro ao encaminhar: " + e);

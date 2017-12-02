@@ -22,12 +22,46 @@
 
 <%
     // Cidade cid = new Cidade();
-   // Cidade cid = (Cidade) request.getAttribute("objcid");
-   
-   Tarefa tar = (Tarefa) request.getAttribute("objtar");
+    // Cidade cid = (Cidade) request.getAttribute("objcid");
+    ArrayList<Tarefa> tarefas = (ArrayList<Tarefa>) request.getAttribute("tarefas");
+    Tarefa tar = (Tarefa) request.getAttribute("tarefa");
 
-     if (tar == null) {
+    if (tarefas == null) {
+        tarefas = new ArrayList<Tarefa>();
 
+//        tar = new Tarefa();
+//        tar.setTitulo("");
+//        tar.setDescricao("");
+//        tar.setSituacao('A');
+//        Cidade cidade = new Cidade();
+//        Usuario autor = new Usuario();
+//        Usuario responsavel = new Usuario();
+//
+//        Cliente cli = new Cliente();
+//        Projeto projeto = new Projeto();
+//        Motivo motivo = new Motivo();
+//        Modulo modulo = new Modulo();
+//        Fase fase = new Fase();
+//        tar.setFase(fase);
+//        Prioridade prioridade = new Prioridade();
+//        tar.setPrioridade(prioridade);
+//        Versao versaoBug = new Versao();
+//        tar.setVersaoByIdVersaoBug(versaoBug);
+//        Versao versaoCorrecao = new Versao();
+//        tar.setVersaoByIdVersaoCorrecao(versaoCorrecao);
+//        tar.setModulo(modulo);
+//        tar.setMotivo(motivo);
+//        cli.setCidade(cidade);
+//        tar.setCliente(cli);
+//        tar.setUsuarioByIdUsuarioAutor(autor);
+//        tar.setUsuarioByIdUsuarioResponsavel(responsavel);
+//        tar.setProjeto(projeto);
+        //  ArrayList<Tarefa> tarefas = new ArrayList<>();
+    } else {
+        System.out.println("tamanho tela - " + tarefas.size());
+    }
+
+    if (tar == null) {
         tar = new Tarefa();
         tar.setTitulo("");
         tar.setDescricao("");
@@ -55,9 +89,6 @@
         tar.setUsuarioByIdUsuarioAutor(autor);
         tar.setUsuarioByIdUsuarioResponsavel(responsavel);
         tar.setProjeto(projeto);
-        
-      //  ArrayList<Tarefa> tarefas = new ArrayList<>();
-
     }
 %>
 
@@ -78,19 +109,19 @@
 
                     <form name="cadCidade" class="form-horizontal" action="/HelpWeb/acao?parametro=listarTarefas" method="post">
                         <div class="box-body">
-                                    
-                                    
-                                    <div class="form-group">
+
+
+                            <div class="form-group">
                                 <label for="id" class="col-sm-1 control-label" >ID</label>
 
-                                
+
                                 <div class="col-sm-1">
                                     <%                                                       if (tar.getId() > 0) {%>
-                                    <input type="text" class="form-control" name="id" value="<%= tar.getId()%>" Use readonly="true" >
+                                    <input type="text" class="form-control" name="id" value="<%= tar.getId()%>"  >
                                     <%} else {
                                     %>
 
-                                    <input type="text" class="form-control" name="id" value="" Use readonly="true" >
+                                    <input type="text" class="form-control" name="id" value=""  >
                                     <%
                                         }
                                     %>
@@ -180,16 +211,16 @@
                                             </div>
                                             <div class="col-xs-8">
                                                 <select class="form-control select2" style="width: 100%;" name="responsavel">
-                                                   
+
                                                     <option value="0" >Selecione </option>
-                                                   
+
                                                     <%
                                                         Usuario responsavel = new Usuario();
                                                         responsavel.setNome("");
                                                         responsavel.setLogin("");
                                                         responsavel.setRepetirSenha("");
                                                         responsavel.setSenha("");
-                                                        
+
                                                         responsavel.setSituacao('A');
                                                         //tar.setUsuarioByIdUsuarioResponsavel(responsavel);
 
@@ -197,7 +228,7 @@
                                                         ArrayList<Usuario> responsaveis = responsavelDAO.listar(responsavel);
 
                                                         for (int i = 0; i < responsaveis.size(); i++) {
-                                                           // System.out.println(responsaveis.size() + ".. tamanho");
+                                                            // System.out.println(responsaveis.size() + ".. tamanho");
                                                             if (tar.getUsuarioByIdUsuarioResponsavel().getId() == responsaveis.get(i).getId()) {
                                                     %>
                                                     <option value="<%=responsaveis.get(i).getId()%>" selected><%=responsaveis.get(i).getNome()%> </option>
@@ -232,14 +263,14 @@
 
                                             <div class="col-xs-8">
                                                 <select  class="form-control select2" style="width: 100%;" name="projeto" >
-                                             
+
                                                     <option value="0" >Selecione </option>
-                                                   
+
                                                     <%
                                                         Projeto projeto = new Projeto();
                                                         projeto.setDescricao("");
                                                         projeto.setSituacao('A');
-                                                       // tar.setProjeto(projeto);
+                                                        // tar.setProjeto(projeto);
 
                                                         ProjetoDAO projetoDAO = new ProjetoDAO();
                                                         ArrayList<Projeto> projetos = projetoDAO.listar(projeto);
@@ -279,16 +310,15 @@
 
                                             <div class="col-xs-8 col-sm-8">
                                                 <select  class="form-control select2" style="width: 100%;" name="motivo" >
-                                                    
+
                                                     <option value="0">Selecione </option>
-                                                   
+
                                                     <%
                                                         Motivo motivo = new Motivo();
                                                         motivo.setDescricao("");
                                                         motivo.setSituacao('A');
-                                                        
-                                                        //tar.setMotivo(motivo);
 
+                                                        //tar.setMotivo(motivo);
                                                         MotivoDAO motivoDAO = new MotivoDAO();
                                                         ArrayList<Motivo> motivos = motivoDAO.listar(motivo);
 
@@ -329,14 +359,14 @@
 
                                             <div class="col-xs-8 col-lg-8">
                                                 <select   class="form-control select2" style="width: 100%;" name="modulo" >
-                                                   
+
                                                     <option value="0">Selecione </option>
-                                                    
+
                                                     <%
                                                         Modulo modulo = new Modulo();
                                                         modulo.setDescricao("");
                                                         modulo.setSituacao('A');
-                                                       // modulo.setProjeto(projeto);
+                                                        // modulo.setProjeto(projeto);
                                                         //tar.setModulo(modulo);
 
                                                         ModuloDAO moduloDAO = new ModuloDAO();
@@ -374,9 +404,9 @@
                                             </div>
                                             <div class="col-xs-8">
                                                 <select class="form-control select2" style="width: 100%;" name="fase">
-                                                    
+
                                                     <option value="0" >Selecione </option>
-                                                    
+
                                                     <%
                                                         Fase fase = new Fase();
                                                         fase.setDescricao("");
@@ -416,14 +446,13 @@
 
                                             <div class="col-xs-8">
                                                 <select   class="form-control select2" style="width: 100%;" name="prioridade" >
-                                                   
+
                                                     <option value="0">Selecione </option>
-                                                   
+
                                                     <%
                                                         Prioridade prioridade = new Prioridade();
                                                         prioridade.setDescricao("");
                                                         prioridade.setSituacao('A');
-                                                      
 
                                                         PrioridadeDAO prioridadeDAO = new PrioridadeDAO();
                                                         ArrayList<Prioridade> prioridades = prioridadeDAO.listar(prioridade);
@@ -514,16 +543,16 @@
 
                                             <div class="col-xs-8 ">
                                                 <select   class="form-control select2" style="width: 100%;" name="versao" >
-                                                  
+
                                                     <option value="0">Selecione </option>
-                                                  
-                                                    
+
+
                                                     <%
                                                         Versao versaoBug = new Versao();
                                                         versaoBug.setDescricao("");
                                                         versaoBug.setSituacao('A');
-                                                      //  versaoBug.setProjeto(projeto);
-                                                    //    tar.setVersaoByIdVersaoBug(versaoBug);
+                                                        //  versaoBug.setProjeto(projeto);
+                                                        //    tar.setVersaoByIdVersaoBug(versaoBug);
 
                                                         VersaoDAO versaoBugDAO = new VersaoDAO();
                                                         ArrayList<Versao> versoesBug = versaoBugDAO.listar(versaoBug);
@@ -558,15 +587,15 @@
 
                                             <div class="col-xs-6">
                                                 <select   class="form-control select2" style="width: 100%;" name="versaoCorrecao" >
-                                                    
-                                                    
+
+
                                                     <option value="0" >Selecione </option>
-                                                    
+
                                                     <%
                                                         Versao versaoCorrecao = new Versao();
                                                         versaoCorrecao.setDescricao("");
                                                         versaoCorrecao.setSituacao('A');
-                                                      //  versaoCorrecao.setProjeto(projeto);
+                                                        //  versaoCorrecao.setProjeto(projeto);
                                                         //tar.setVersaoByIdVersaoCorrecao(versaoCorrecao);
 
                                                         VersaoDAO versaoCorrecaoDAO = new VersaoDAO();
@@ -595,57 +624,57 @@
 
                             </div>
 
-                        <%
-                            if (request.getParameterMap().containsKey("m") && (request.getParameter("m").equals("1") || request.getParameter("m").equals("10"))) {
-                        %>
-                        <div class="alert alert-success alert-dismissible">
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            <h4><i class="icon fa fa-check"></i> Sucesso!</h4>
-                            <%if (request.getParameter("m").equals("1")) {
-                            %>
-                            Cidade salva com sucesso!
                             <%
-                            } else if (request.getParameter("m").equals("10")) {
+                                if (request.getParameterMap().containsKey("m") && (request.getParameter("m").equals("1") || request.getParameter("m").equals("10"))) {
                             %>
-                            Cidade excluída com sucesso!
+                            <div class="alert alert-success alert-dismissible">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                <h4><i class="icon fa fa-check"></i> Sucesso!</h4>
+                                <%if (request.getParameter("m").equals("1")) {
+                                %>
+                                Cidade salva com sucesso!
+                                <%
+                                } else if (request.getParameter("m").equals("10")) {
+                                %>
+                                Cidade excluída com sucesso!
+                                <%
+                                    }
+                                %>
+
+                            </div>
+                            <%                                        }
+                            %>
+
                             <%
-                                }
+                                if (request.getParameterMap().containsKey("m") && (request.getParameter("m").equals("2") || request.getParameter("m").equals("3"))) {
+                            %>
+                            <div class="alert alert-danger">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                <h4><i class="icon fa fa-ban"></i> Erro!</h4>
+                                <%if (request.getParameter("m").equals("2")) {
+                                %>
+                                <h5>Erro ao salvar cidade!</h5><br>
+                                <h5>Nome precisa ter de 3 até 45 caracteres.</h5>   
+                                <% } else if (request.getParameter("m").equals("3")) {
+
+                                %>
+
+                                Erro ao salvar cidade!<br>  
+                                Cidade já cadastrada.
+
+                                <%                                }
+
+                                %>
+
+                            </div>
+                            <%                                        }
                             %>
 
-                        </div>
-                        <%                                        }
-                        %>
+                            <div class="box-footer">
 
-                        <%
-                            if (request.getParameterMap().containsKey("m") && (request.getParameter("m").equals("2") || request.getParameter("m").equals("3"))) {
-                        %>
-                        <div class="alert alert-danger">
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            <h4><i class="icon fa fa-ban"></i> Erro!</h4>
-                            <%if (request.getParameter("m").equals("2")) {
-                            %>
-                            <h5>Erro ao salvar cidade!</h5><br>
-                            <h5>Nome precisa ter de 3 até 45 caracteres.</h5>   
-                            <% } else if (request.getParameter("m").equals("3")) {
+                                <input type="submit" class="btn btn-dropbox pull-right-container" name="enviar" value="Listar"> 
 
-                            %>
-
-                            Erro ao salvar cidade!<br>  
-                            Cidade já cadastrada.
-
-                            <%                                }
-
-                            %>
-
-                        </div>
-                        <%                                        }
-                        %>
-
-                        <div class="box-footer">
-
-                            <input type="submit" class="btn btn-dropbox pull-right-container" name="enviar" value="Listar"> 
-
-                        </div>
+                            </div>
 
                     </form>
 
