@@ -477,68 +477,31 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-xs-6 col-sm-3">
-                                    <div class="form-group">
-                                        <label for="datahoraCriacao" class="col-sm-3 control-label" >Inclusão</label>
-                                        <div class="row">
-                                            <div class="col-xs-4 col-sm-8">
-                                                <%
-                                                    try {
-                                                        if (tar.getDatahoraCriacao().toString().length() > 0) {
-                                                            System.out.println("tem inclusao" + tar.getDatahoraPrevisao());
-                                                            //System.out.println("tem inclusao" +tar.getDatahoraPrevisao());
-
-                                                %>
-
-                                                <input type="datetime" class="form-control" name="datahoraCriacao"  value="<%=Formatacao.formatacaoDataDMAHMS(tar.getDatahoraCriacao())%>" Use readonly="true" >
-                                                <%
-                                                } else {
-                                                    System.out.println("nao tem inclusao");
-                                                %>
-                                                <input type="date" class="form-control" name="datahoraCriacao"  value="" Use readonly="true" >
-
-                                                <%
-                                                        System.out.println("nao tem inclusao");
-                                                    }
-                                                } catch (Exception e) {
-//System.out.println("entrou na catch");
-                                                %>
-                                                <input type="date" name="datahoraCriacao" class="form-control" value="" Use readonly="true" >
-
-                                                <%
-                                                    }
-                                                %>
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-                                </div>
+                                
 
 
 
                                 <!-- -->
                             </div>
 
-                            <div class="row">
-                                <div class="col-xs-3 " >
+                            <div class="row">                                <!--<div class="col-xs-3 " >
+//                                    <div class="form-group">
+//
+//
+//                                        <label for="dataPrevisao" class="col-sm-4  control-label" >Previsão*</label>
+//                                        <div class="row">
+//                                            <div class="col-sm-7">                                                                                                      data-inputmask='"mask": "99/99/9999"' data-mask 
+//                                                <input type="date" class="form-control" name="dataPrevisao"  value="<%//=tar.getDatahoraPrevisao()%>">
+//                                            </div>
+//                                        </div>
+//                                    </div>
+//                                </div> -->
+
+                                <div class="col-xs-3 col-sm-3 " >
                                     <div class="form-group">
-
-
-                                        <label for="dataPrevisao" class="col-sm-4  control-label" >Previsão*</label>
                                         <div class="row">
-                                            <div class="col-sm-7">                                                                                                      <!--data-inputmask='"mask": "99/99/9999"' data-mask -->
-                                                <input type="date" class="form-control" name="dataPrevisao"  value="<%=tar.getDatahoraPrevisao()%>">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-xs-3 " >
-                                    <div class="form-group">
-                                        <div class="row">
-                                            <div class="col-xs-3 ">
-                                                <label  for="versao" class="col-sm-4 control-label">V.BUG*</label>
+                                            <div class="col-xs-3 col-md-3 col-sm-3 col-lg-4">
+                                                <label style="float: right;" for="versao" class="col-sm-3 col-lg-5   control-label">V.Bug*</label>
                                             </div>
 
                                             <div class="col-xs-8 ">
